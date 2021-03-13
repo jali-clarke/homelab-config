@@ -35,7 +35,7 @@
 
       (
         lib.mkIf (cfg.zfsARCSizeMaxGB != null) {
-          boot.kernelParams = ["zfs.zfs_arc_max=${cfg.zfsARCSizeGB * 1024 * 1024 * 1024}"];
+          boot.kernelParams = ["zfs.zfs_arc_max=${toString (cfg.zfsARCSizeMaxGB * 1024 * 1024 * 1024)}"];
         }
       )
 
