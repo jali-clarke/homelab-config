@@ -24,13 +24,6 @@
 
   networking.useDHCP = true;
 
-  users.mutableUsers = false;
-  users.users.pi = {
-    hashedPassword = passwordHashes.pi;
-    isNormalUser = true;
-    extraGroups = ["wheel"];
-  };
-
   environment.systemPackages = [
     pkgs.nfs-utils
   ];
