@@ -19,4 +19,8 @@
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
   networking.hostName = "nixos-oblivion"; # Define your hostname.
+
+  environment.systemPackages = [
+    pkgs.nixos-generators
+  ];
 }
