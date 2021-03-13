@@ -27,5 +27,17 @@ in
         isNormalUser = true;
         extraGroups = ["wheel"] ++ cfg.extraGroups; # Enable ‘sudo’ for the user.
       };
+
+      security.sudo.extraRules = [
+        {
+          users = ["pi"];
+          commands = [
+            {
+              command = "ALL";
+              options = ["NOPASSWD"];
+            }
+          ];
+        }
+      ];
     };
 }
