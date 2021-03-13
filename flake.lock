@@ -1,6 +1,40 @@
 {
   "nodes": {
+    "nixos-generators": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1613307374,
+        "narHash": "sha256-iQh1DM1myNm5sTO8Jp3geYzQxMLr1hL6Yam8LHPZiJk=",
+        "owner": "nix-community",
+        "repo": "nixos-generators",
+        "rev": "537b572d3ab1549b26801ba2d5fc023fab963747",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixos-generators",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
+      "locked": {
+        "lastModified": 1612916640,
+        "narHash": "sha256-VqMq/cs+9Bcc/DY7JIXlRHvwg7xRqLSntscWcMCKg/8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "66e66b9d481386f4c7a6b998f32ce794af0182ae",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
       "locked": {
         "lastModified": 1605218886,
         "narHash": "sha256-OiZfyNrK7pcnsqoQeewUlvARn0Y+bWf5PA5H1jxbnMc=",
@@ -16,7 +50,8 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixos-generators": "nixos-generators",
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },
