@@ -17,7 +17,7 @@
         let
           nixosSystemFromDir =
             {system, subdirName}:
-            nixpkgs.lib.nixosSystem {
+            nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem {
               inherit system;
               pkgs = mkPkgs system;
               modules = [
