@@ -1,4 +1,4 @@
-{config, pkgs, ...}:
+{extraGroups ? []}: {config, pkgs, ...}:
 let
   passwordHashes = import ./pw-hashes.nix;
   sshPubKeys = import ./ssh-pub-keys.nix;
@@ -9,9 +9,6 @@ in
     hashedPassword = passwordHashes.pi;
     openssh.authorizedKeys.keys = [sshPubKeys.nixops];
     isNormalUser = true;
-    extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
-    packages = [
-      pkgs.vim
-    ];
+    extraGroups = ["wheel"] ++ extraGroups; # Enable ‘sudo’ for the user.
   };
 }
