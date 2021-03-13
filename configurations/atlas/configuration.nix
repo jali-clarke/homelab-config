@@ -12,5 +12,8 @@
     hostId = "c083c64b";
   };
 
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   networking.hostName = "atlas"; # Define your hostname.
 }
