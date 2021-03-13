@@ -1,7 +1,7 @@
 {
   description = "env for managing bare metal infra";
 
-  input.nixos-generators.url = "github:nix-community/nixos-generators";
+  inputs.nixos-generators.url = "github:nix-community/nixos-generators";
 
   outputs = {self, nixpkgs, nixos-generators}:
     let
