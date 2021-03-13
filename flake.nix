@@ -9,6 +9,8 @@
         final: prev: {
           nixos-generators = nixos-generators.defaultPackage.${system};
         };
+
+      mkPkgs = system: import nixpkgs {inherit system; overlays = [(overlay system)];};
     in
     {
       nixosConfigurations =
@@ -17,7 +19,7 @@
             {system, subdirName}:
             nixpkgs.lib.nixosSystem {
               inherit system;
-              pkgs = import nixpkgs {inherit system; overlays = [(overlay system)];};
+              pkgs = mkPkgs system;
               modules = [
                 (./configurations + "/${subdirName}/configuration.nix")
               ];
@@ -33,7 +35,7 @@
 
       devShell.x86_64-linux =
         let
-          pkgs = import nixpkgs {inherit system; overlays = [(overlay "x86_64-linux")];};
+          pkgs = mkPkgs "x86_64-linux";
         in pkgs.mkShell {
           name = "bare-metal-shell";
           buildInputs = [
