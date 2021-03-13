@@ -1,8 +1,13 @@
-{config, pkgs, ...}:
+{...}:
 let
   metaconfig = import ./metaconfig.nix;
 in
 {
+  import = [
+    ./packages.nix
+    ./services.nix
+  ];
+
   networking.extraHosts = "${metaconfig.kubernetesMasterAddress} ${metaconfig.kubernetesMasterHostname}";
 
   services.kubernetes = {
