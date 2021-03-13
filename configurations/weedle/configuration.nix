@@ -9,6 +9,7 @@
 
   homelab-config.zfs-support = {
     zfsARCSizeMaxGB = 2;
+    hostId = "74004318";
   };
 
   boot.loader.systemd-boot.enable = true;
