@@ -12,11 +12,11 @@
           };
       in
       {
-        atlas = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "atlas"};
-        bootstrap-bill = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "bootstrap-bill"};
-        nixos-oblivion = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "nixos-oblivion"};
-        speet = nixosSystemFromDir {system = "aarch64-linux"; subdirName = "speet"};
-        weedle = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "weedle"};
+        atlas = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "atlas";};
+        bootstrap-bill = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "bootstrap-bill";};
+        nixos-oblivion = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "nixos-oblivion";};
+        speet = nixosSystemFromDir {system = "aarch64-linux"; subdirName = "speet";};
+        weedle = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "weedle";};
       };
 
     devShell.x86_64-linux =
