@@ -8,7 +8,9 @@
           {system, subdirName}:
           nixpkgs.lib.nixosSystem {
             inherit system;
-            modules = ["${./configurations}/${subdirName}/configuration.nix"];
+            modules = [
+              (./configurations + "/${subdirName}/configuration.nix")
+            ];
           };
       in
       {
