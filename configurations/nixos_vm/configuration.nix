@@ -4,7 +4,7 @@
 
 { config, pkgs, ... }:
 let
-  passwordHashes = import ./pw-hashes.nix;
+  passwordHashes = import ../common/pw-hashes.nix;
 in
 {
   imports =
