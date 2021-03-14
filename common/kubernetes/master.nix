@@ -10,7 +10,7 @@
     in
     {
       masterIP = mkOption {
-        type = types.string;
+        type = types.str;
       };
 
       schedulable = mkOption {

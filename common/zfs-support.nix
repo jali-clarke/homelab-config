@@ -10,7 +10,7 @@
       };
 
       hostId = mkOption {
-        type = types.nullOr types.string;
+        type = types.nullOr types.str;
         default = null;
       };
 

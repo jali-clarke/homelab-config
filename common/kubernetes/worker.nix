@@ -10,15 +10,15 @@
     in
     {
       workerIP = mkOption {
-        type = types.string;
+        type = types.str;
       };
 
       masterIP = mkOption {
-        type = types.string;
+        type = types.str;
       };
 
       masterHostname = mkOption {
-        type = types.string;
+        type = types.str;
       };
 
       schedulable = mkOption {
