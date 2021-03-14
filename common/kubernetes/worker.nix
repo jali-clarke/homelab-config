@@ -1,11 +1,22 @@
-{...}:
+{pkgs, ...}:
 let
   metaconfig = import ./metaconfig.nix;
+
+  joinCluster = pkgs.writeScriptBin "join_cluster" ''
+    #!${pkgs.runtimeShell} -xe
+
+    ssh=${pkgs.openssh}/bin/ssh
+    $ssh pi@${metaconfig.kubernetesMasterAddress} -- "sudo cat /var/lib/kubernetes/secrets/apitoken.secret" | sudo nixos-kubernetes-node-join
+  '';
 in
 {
   import = [
     ./packages.nix
     ./services.nix
+  ];
+
+  environment.systemPackages = [
+    joinCluster
   ];
 
   networking.extraHosts = "${metaconfig.kubernetesMasterAddress} ${metaconfig.kubernetesMasterHostname}";
