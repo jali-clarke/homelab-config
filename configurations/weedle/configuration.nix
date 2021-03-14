@@ -3,6 +3,7 @@
     ./hardware-configuration.nix
 
     ../../common/common-config.nix
+    ../../common/kubernetes/master.nix
     ../../common/users
     ../../common/zfs-support.nix
   ];
