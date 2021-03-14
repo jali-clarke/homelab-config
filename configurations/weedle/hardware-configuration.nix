@@ -23,8 +23,8 @@
       fsType = "vfat";
     };
 
-  fileSystems."/mnt/backups" =
-    { device = "backups";
+  fileSystems."/mnt/backups/storage" =
+    { device = "backups/storage";
       fsType = "zfs";
     };
 
