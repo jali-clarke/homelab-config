@@ -16,6 +16,8 @@
 
   environment.systemPackages = [
     pkgs.git
+    pkgs.nmon
+    pkgs.pv
     pkgs.vim
   ];
 
