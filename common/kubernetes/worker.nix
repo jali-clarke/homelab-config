@@ -1,33 +1,61 @@
-{pkgs, ...}:
-let
-  metaconfig = import ./metaconfig.nix;
-
-  joinCluster = pkgs.writeScriptBin "join_cluster" ''
-    #!${pkgs.runtimeShell} -xe
-
-    ssh=${pkgs.openssh}/bin/ssh
-    $ssh pi@${metaconfig.kubernetesMasterAddress} -- "sudo cat /var/lib/kubernetes/secrets/apitoken.secret" | sudo nixos-kubernetes-node-join
-  '';
-in
-{
+{config, pkgs, lib, ...}: {
   imports = [
     ./packages.nix
     ./services.nix
   ];
 
-  environment.systemPackages = [
-    joinCluster
-  ];
+  options.homelab-config.k8s-support =
+    let
+      inherit (lib) types mkOption;
+    in
+    {
+      workerIP = mkOption {
+        type = types.string;
+      };
 
-  networking.extraHosts = "${metaconfig.kubernetesMasterAddress} ${metaconfig.kubernetesMasterHostname}";
+      masterIP = mkOption {
+        type = types.string;
+      };
 
-  services.kubernetes = {
-    roles = ["node"];
-    masterAddress = metaconfig.kubernetesMasterHostname;
-    easyCerts = true;
-    kubelet.kubeconfig.server = "https://${metaconfig.kubernetesMasterHostname}:443";
-    apiserverAddress = "https://${metaconfig.kubernetesMasterHostname}:443";
-    addons.dns.enable = true;
-    kubelet.extraOpts = "--fail-swap-on=false";
-  };
+      masterHostname = mkOption {
+        type = types.string;
+      };
+
+      schedulable = mkOption {
+        type = types.bool;
+        default = true;
+      };
+    };
+
+  config =
+    let
+      cfg = config.homelab-config.k8s-support;
+
+      joinCluster = pkgs.writeScriptBin "join_cluster" ''
+        #!${pkgs.runtimeShell} -xe
+
+        ssh=${pkgs.openssh}/bin/ssh
+        $ssh pi@${cfg.masterIP} -- "sudo cat /var/lib/kubernetes/secrets/apitoken.secret" | sudo nixos-kubernetes-node-join
+      '';
+    in
+    {
+      environment.systemPackages = [
+        joinCluster
+      ];
+
+      networking.extraHosts = ''
+        ${cfg.masterIP} ${cfg.masterHostname}
+        ${cfg.workerIP} ${config.networking.hostName}
+      '';
+
+      services.kubernetes = {
+        roles = lib.optionals cfg.schedulable ["node"];
+        masterAddress = cfg.masterHostname;
+        easyCerts = true;
+        kubelet.kubeconfig.server = "https://${cfg.masterHostname}:443";
+        apiserverAddress = "https://${cfg.masterHostname}:443";
+        addons.dns.enable = true;
+        kubelet.extraOpts = "--fail-swap-on=false";
+      };
+    };
 }

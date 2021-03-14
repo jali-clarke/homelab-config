@@ -17,6 +17,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "weedle"; # Define your hostname.
+  homelab-config.k8s-support.masterIP = "192.168.0.102";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
