@@ -37,6 +37,18 @@
       devShell.x86_64-linux =
         let
           pkgs = mkPkgs "x86_64-linux";
+          nixos-generate = "${pkgs.nixos-generators}/bin/nixos-generate";
+
+          buildBootstrapBill = pkgs.writeScriptBin "build_bootstrap_bill" ''
+            #!${pkgs.runtimeShell} -xe
+            ${nixos-generate} -f install-iso --flake '.#bootstrap-bill'
+          '';
+
+          buildPiBaker = pkgs.writeScriptBin "build_pi_baker" ''
+            #!${pkgs.runtimeShell} -xe
+            ${nixos-generate} -f sd-aarch64-installer --flake '.#pi-baker'
+          '';
+
         in pkgs.mkShell {
           name = "bare-metal-shell";
           buildInputs = [
@@ -44,6 +56,9 @@
             pkgs.kubectl
             pkgs.nixos-generators
             pkgs.vim
+
+            buildBootstrapBill
+            buildPiBaker
           ];
         };
     };
