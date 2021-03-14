@@ -16,12 +16,12 @@
       nixosConfigurations =
         let
           nixosSystemFromDir =
-            {system, subdirName}:
+            {system, subdirName, configurationFile ? "configuration.nix"}:
             nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem {
               inherit system;
               pkgs = mkPkgs system;
               modules = [
-                (./configurations + "/${subdirName}/configuration.nix")
+                (./configurations + "/${subdirName}/${configurationFile}")
               ];
             };
         in
@@ -29,7 +29,8 @@
           atlas = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "atlas";};
           bootstrap-bill = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "bootstrap-bill";};
           nixos-oblivion = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "nixos-oblivion";};
-          # speet = nixosSystemFromDir {system = "aarch64-linux"; subdirName = "speet";};
+          speet = nixosSystemFromDir {system = "aarch64-linux"; subdirName = "speet";};
+          speet-installer = nixosSystemFromDir {system = "aarch64-linux"; subdirName = "speet"; configurationFile = "installer-configuration.nix";};
           weedle = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "weedle";};
         };
 
