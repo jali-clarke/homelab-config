@@ -31,7 +31,6 @@
 
   networking.hostName = "speet"; # Define your hostname.
   homelab-config.k8s-support = {
-    workerIP = "192.168.0.101";
     masterIP = "192.168.0.102";
     masterHostname = "weedle";
   };

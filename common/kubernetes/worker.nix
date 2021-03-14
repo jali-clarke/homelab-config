@@ -9,10 +9,6 @@
       inherit (lib) types mkOption;
     in
     {
-      workerIP = mkOption {
-        type = types.str;
-      };
-
       masterIP = mkOption {
         type = types.str;
       };
@@ -43,10 +39,7 @@
         joinCluster
       ];
 
-      networking.extraHosts = ''
-        ${cfg.masterIP} ${cfg.masterHostname}
-        ${cfg.workerIP} ${config.networking.hostName}
-      '';
+      networking.extraHosts = "${cfg.masterIP} ${cfg.masterHostname}";
 
       services.kubernetes = {
         roles = lib.optionals cfg.schedulable ["node"];
