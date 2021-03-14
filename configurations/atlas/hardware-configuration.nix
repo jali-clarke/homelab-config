@@ -23,8 +23,13 @@
       fsType = "vfat";
     };
 
-  fileSystems."/mnt/storage" =
-    { device = "storage";
+  fileSystems."/mnt/storage/recordsize-128K" =
+    { device = "storage/recordsize-128K";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/storage/recordsize-1M" =
+    { device = "storage/recordsize-1M";
       fsType = "zfs";
     };
 
