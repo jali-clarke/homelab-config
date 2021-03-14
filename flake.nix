@@ -17,13 +17,13 @@
         let
           nixosSystemFromDir =
             {system, subdirName, configurationFile ? "configuration.nix"}:
-            nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem {
-              inherit system;
-              pkgs = mkPkgs system;
-              modules = [
-                (./configurations + "/${subdirName}/${configurationFile}")
-              ];
-            };
+              nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem {
+                inherit system;
+                pkgs = mkPkgs system;
+                modules = [
+                  (./configurations + "/${subdirName}/${configurationFile}")
+                ];
+              };
         in
         {
           atlas = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "atlas";};
