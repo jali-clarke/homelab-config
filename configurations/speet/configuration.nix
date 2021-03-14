@@ -32,4 +32,3 @@
   networking.hostName = "speet"; # Define your hostname.
   # systemd.services.etcd.environment.ETCD_UNSUPPORTED_ARCH = "arm64"; # only if the pi is the k8s master
 }
-

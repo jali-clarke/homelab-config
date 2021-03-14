@@ -31,4 +31,3 @@ in
     kubelet.extraOpts = "--fail-swap-on=false";
   };
 }
-
