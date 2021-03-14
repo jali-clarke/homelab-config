@@ -29,8 +29,8 @@
           atlas = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "atlas";};
           bootstrap-bill = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "bootstrap-bill";};
           nixos-oblivion = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "nixos-oblivion";};
+          pi-baker = nixosSystemFromDir {system = "aarch64-linux"; subdirName = "pi-baker";};
           speet = nixosSystemFromDir {system = "aarch64-linux"; subdirName = "speet";};
-          speet-installer = nixosSystemFromDir {system = "aarch64-linux"; subdirName = "speet"; configurationFile = "installer-configuration.nix";};
           weedle = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "weedle";};
         };
 
