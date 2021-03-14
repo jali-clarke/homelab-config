@@ -10,7 +10,7 @@ let
   '';
 in
 {
-  import = [
+  imports = [
     ./packages.nix
     ./services.nix
   ];

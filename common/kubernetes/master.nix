@@ -3,7 +3,7 @@ let
   metaconfig = import ./metaconfig.nix;
 in
 {
-  import = [
+  imports = [
     ./packages.nix
     ./services.nix
   ];
