@@ -39,11 +39,37 @@
         #!${pkgs.runtimeShell} -xe
         ${ssh} pi@${cfg.masterIP} -- "sudo cat /var/lib/kubernetes/secrets/apitoken.secret" | sudo nixos-kubernetes-node-join
       '';
+
+      containerdConfigFile = pkgs.writeText "containerd.toml" ''
+        version = 2
+        root = "/var/lib/containerd/daemon"
+        state = "/var/run/containerd/daemon"
+        oom_score = 0
+        [grpc]
+          address = "/var/run/containerd/containerd.sock"
+        [plugins."io.containerd.grpc.v1.cri"]
+          sandbox_image = "pause:latest"
+        [plugins."io.containerd.grpc.v1.cri".cni]
+          bin_dir = "/opt/cni/bin"
+          max_conf_num = 0
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+          runtime_type = "io.containerd.runc.v2"
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes."io.containerd.runc.v2".options]
+          SystemdCgroup = true
+
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
+          [plugins."io.containerd.grpc.v1.cri".registry.mirrors."http.docker.lan"]
+            endpoint = ["http://docker.lan:5000"]
+          [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
+            endpoint = ["https://registry-1.docker.io"]
+      '';
     in
     lib.mkMerge [
       (
         {
           networking.extraHosts = "${cfg.masterIP} ${masterHostname}";
+
+          virtualisation.containerd.configFile = lib.mkForce containerdConfigFile;
 
           services.kubernetes = {
             roles = lib.optionals cfg.isMaster ["master"] ++ lib.optionals cfg.schedulable ["node"];
