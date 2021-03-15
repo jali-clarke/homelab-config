@@ -1,7 +1,7 @@
 {
   description = "env for managing bare metal infra";
 
-  inputs.nixpkgs.url = "github:jali-clarke/nixpkgs/fix-coredns-import-on-arm64";
+  inputs.nixpkgs.url = "github:nixos/nixpkgs";
   inputs.nixos-generators.url = "github:nix-community/nixos-generators";
 
   outputs = {self, nixpkgs, nixos-generators}:
