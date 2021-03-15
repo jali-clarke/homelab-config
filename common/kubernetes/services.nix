@@ -15,25 +15,4 @@
       "noauto"
     ];
   };
-
-  # !!! hack to get image import working on arm64 for coredns
-  systemd.services.kubelet.preStart =
-  let
-    cfg = config.services.kubernetes.kubelet;
-  in
-  lib.mkForce ''
-    ${lib.concatMapStrings (img: ''
-      echo "Seeding container image: ${img}"
-      ${if (lib.hasSuffix "gz" img) then
-        ''${pkgs.gzip}/bin/zcat "${img}" | ${pkgs.containerd}/bin/ctr -n k8s.io image import --all-platforms -''
-      else
-        ''${pkgs.coreutils}/bin/cat "${img}" | ${pkgs.containerd}/bin/ctr -n k8s.io image import --all-platforms -''
-      }
-    '') cfg.seedDockerImages}
-    rm /opt/cni/bin/* || true
-    ${lib.concatMapStrings (package: ''
-      echo "Linking cni package: ${package}"
-      ln -fs ${package}/bin/* /opt/cni/bin
-    '') cfg.cni.packages}
-  '';
 }
