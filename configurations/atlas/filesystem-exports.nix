@@ -9,4 +9,25 @@
       /mnt/storage/recordsize-1M 192.168.0.0/24(rw,no_subtree_check,no_root_squash)
     '';
   };
+
+  # STILL NEED TO DO `sudo smbpasswd -a pi`
+  services.samba = {
+    enable = true;
+
+    shares = {
+      backup_drive = {
+        path = "/mnt/storage/recordsize-1M/backup_drive";
+        browseable = "no";
+        "guest ok" = "no";
+        "read only" = "no";
+      };
+
+      media_and_such = {
+        path = "/mnt/storage/recordsize-1M/data_drive";
+        browseable = "no";
+        "guest ok" = "no";
+        "read only" = "no";
+      };
+    };
+  };
 }
