@@ -87,4 +87,4 @@ for raspberry pis specifically
 
 ### upgrading
 
-once installed, the above configurations will automatically use their own hostname with the configurations when installing; you need only do `sudo nixos-rebuild switch --flake github:jali-clarke/homelab-config/${ref}`, where `ref` is optional but if provided can be a `tag`, `commit` sha, `branch`, etc.
+once installed, the above configurations will automatically use their own hostname with the configurations when installing; you need only do `sudo nixos-rebuild switch --flake github:jali-clarke/homelab-config/${ref}`, where `ref` is optional but if provided can be a `tag`, `commit` sha, `branch`, etc.  usually no reboot is necessary after but if the kernel is upgraded or something you should probably reboot to make sure all is well (rolling back if not)
