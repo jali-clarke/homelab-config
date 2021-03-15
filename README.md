@@ -39,7 +39,7 @@ all ips below are made static in our router instead of in code for my own conven
 
 * `aarch64-linux` server
 * `192.168.0.101`
-* `aarch64-linux` k8s worker
+* `aarch64-linux` k8s worker - can join k8s cluster simply with `join_cluster`
 
 ### [weedle](./configurations/weedle)
 
