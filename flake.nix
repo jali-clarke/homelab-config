@@ -47,6 +47,7 @@
         let
           pkgs = mkPkgs "x86_64-linux";
           nixos-generate = "${pkgs.nixos-generators}/bin/nixos-generate";
+          ssh = "${pkgs.openssh}/bin/ssh";
 
           buildBootstrapBill = pkgs.writeScriptBin "build_bootstrap_bill" ''
             #!${pkgs.runtimeShell} -xe
@@ -58,6 +59,24 @@
             ${nixos-generate} -f sd-aarch64-installer --flake '.#pi-baker'
           '';
 
+          fetchKubeconfig = pkgs.writeScriptBin "fetch_kubeconfig" ''
+            #!${pkgs.runtimeShell} -e
+            mkdir -p ~/.kube /var/lib/kubernetes/secrets
+            mkdir -p /var/lib/kubernetes/secrets
+
+            for target_file in ~/.kube/config /var/lib/kubernetes/secrets/ca.pem /var/lib/kubernetes/secrets/cluster-admin.pem /var/lib/kubernetes/secrets/cluster-admin-key.pem; do
+              if [ -e $target_file ]; then
+                echo warning! $target_file already exists, moving to $target_file.old
+                mv $target_file $target_file.old
+              fi
+            done
+
+            # need to figure out how to un-hardcode this
+            ${ssh} pi@192.168.0.102 -- sudo cat /etc/kubernetes/cluster-admin.kubeconfig > ~/.kube/config
+            ${ssh} pi@192.168.0.102 -- sudo cat /var/lib/kubernetes/secrets/ca.pem > /var/lib/kubernetes/secrets/ca.pem
+            ${ssh} pi@192.168.0.102 -- sudo cat /var/lib/kubernetes/secrets/cluster-admin.pem > /var/lib/kubernetes/secrets/cluster-admin.pem
+            ${ssh} pi@192.168.0.102 -- sudo cat /var/lib/kubernetes/secrets/cluster-admin-key.pem > /var/lib/kubernetes/secrets/cluster-admin-key.pem
+          '';
         in pkgs.mkShell {
           name = "bare-metal-shell";
           buildInputs = [
@@ -68,6 +87,7 @@
 
             buildBootstrapBill
             buildPiBaker
+            fetchKubeconfig
           ];
         };
     };
