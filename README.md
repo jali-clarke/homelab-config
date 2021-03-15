@@ -83,3 +83,7 @@ for raspberry pis specifically
 3. slot that into the pi and power it on
 4. on the pi (either via ssh or locally) `sudo nixos-rebuild switch --flake github:jali-clarke/homelab-config#${configuration_name}`
 5. logout and then log back in, or reboot
+
+### upgrading
+
+once installed, the above configurations will automatically use their own hostname with the configurations when installing; you need only do `sudo nixos-rebuild switch --flake github:jali-clarke/homelab-config/${ref}`, where `ref` is optional but if provided can be a `tag`, `commit` sha, `branch`, etc.
