@@ -36,16 +36,18 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1615666330,
-        "narHash": "sha256-HGB/XKLYj9sXxHsHglVAkbc0/c0YV4sjcfq/y01+xWQ=",
-        "owner": "NixOS",
+        "lastModified": 1615813420,
+        "narHash": "sha256-dr+fnaZMo9Er5Aa0Ykz7dAQj72FCKTNFgCdbOtceXdg=",
+        "owner": "jali-clarke",
         "repo": "nixpkgs",
-        "rev": "312390ca50c87ef93c3d7661791ea546e79d2b76",
+        "rev": "cc582f1f59fc2ee617127163c95aa79edb9df6de",
         "type": "github"
       },
       "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
+        "owner": "jali-clarke",
+        "ref": "fix-coredns-import-on-arm64",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "root": {
