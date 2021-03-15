@@ -1,5 +1,6 @@
 {config, pkgs, ...}: {
   imports = [
+    ./filesystem-exports.nix
     ./hardware-configuration.nix
 
     ../../common/common-config.nix
