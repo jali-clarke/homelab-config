@@ -82,6 +82,7 @@ for raspberry pis specifically
 2. flash the resulting image to a micro sd card
 3. slot that into the pi and power it on
 4. on the pi (either via ssh or locally) `sudo nixos-rebuild switch --flake github:jali-clarke/homelab-config#${configuration_name}`
+    * if the pi runs out of memory and the process is killed, simply rerun the command and it will continue from where it left off (continue to rerun until done)
 5. logout and then log back in, or reboot
 
 ### upgrading
