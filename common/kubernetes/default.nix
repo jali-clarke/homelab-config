@@ -1,6 +1,5 @@
 {config, pkgs, lib, ...}: {
   imports = [
-    ../docker.nix
     ./packages.nix
     ./services.nix
   ];
@@ -57,27 +56,27 @@
       )
 
       (
-        if cfg.isMaster
-          then
-          {
-            services.kubernetes = {
-              apiserver = {
-                securePort = 443;
-                advertiseAddress = cfg.masterIP;
-              };
+        lib.mkIf cfg.isMaster {
+          services.kubernetes = {
+            apiserver = {
+              securePort = 443;
+              advertiseAddress = cfg.masterIP;
             };
-          }
-          else
-          {
-            environment.systemPackages = [
-              joinCluster
-            ];
+          };
+        }
+      )
 
-            services.kubernetes = {
-              kubelet.kubeconfig.server = "https://${cfg.masterHostname}:443";
-              apiserverAddress = "https://${cfg.masterHostname}:443";
-            };
-          }
+      (
+        lib.mkIf (!cfg.isMaster) {
+          environment.systemPackages = [
+            joinCluster
+          ];
+
+          services.kubernetes = {
+            kubelet.kubeconfig.server = "https://${masterHostname}:443";
+            apiserverAddress = "https://${masterHostname}:443";
+          };
+        }
       )
     ];
 }
