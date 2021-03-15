@@ -35,12 +35,12 @@
           weedle = nixosSystemFromDir {system = "x86_64-linux"; subdirName = "weedle";};
         };
 
-      packages.x86_64-linux =
+      overlays.x86_64-linux = final: prev:
         let
           pkgs = mkPkgs "x86_64-linux";
         in
         {
-          inherit (pkgs) kubectl;
+          inherit (pkgs) kubectl nixos-generators;
         };
 
       devShell.x86_64-linux =
