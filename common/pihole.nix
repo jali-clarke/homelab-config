@@ -51,7 +51,9 @@ in
     ];
 
     extraOptions = [
+      "--hostname=pihole"
       "--dns=127.0.0.1"
+
       "--cpus=0.1"
       "--memory=128m"
     ];
