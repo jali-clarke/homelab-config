@@ -34,10 +34,7 @@
       # bare-metal services
 
       cname=pihole.lan,pihole,atlas.lan
-
-      # k8s services
-
-      host-record=docker.lan,docker,192.168.0.203
+      cname=nexus.lan,nexus,atlas.lan
 
       # k8s ingress
 
