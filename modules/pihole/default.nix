@@ -1,4 +1,4 @@
-{config, pkgs, lib, ...}: {
+{ config, pkgs, lib, ... }: {
   options.homelab-config.pihole =
     let
       inherit (lib) mkOption types;

@@ -1,4 +1,4 @@
-{config, pkgs, ...}:
+{ config, pkgs, ... }:
 let
   nexusPort = 8080;
   piholePort = 8081;

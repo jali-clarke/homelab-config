@@ -1,4 +1,4 @@
-{config, pkgs, lib, ...}: {
+{ config, pkgs, lib, ... }: {
   imports = [
     ./packages.nix
     ./services.nix
@@ -76,7 +76,7 @@
           virtualisation.containerd.configFile = lib.mkForce containerdConfigFile;
 
           services.kubernetes = {
-            roles = lib.optionals cfg.isMaster ["master"] ++ lib.optionals cfg.schedulable ["node"];
+            roles = lib.optionals cfg.isMaster [ "master" ] ++ lib.optionals cfg.schedulable [ "node" ];
             masterAddress = masterHostname;
             easyCerts = true;
             addons.dns.enable = true;

@@ -1,4 +1,4 @@
-{config, lib, ...}: {
+{ config, lib, ... }: {
   options.homelab-config.nginx-proxy =
     let
       inherit (lib) mkOption types;
@@ -6,7 +6,7 @@
     {
       serviceMap = mkOption {
         type = types.attrsOf types.port;
-        default = {};
+        default = { };
       };
     };
 

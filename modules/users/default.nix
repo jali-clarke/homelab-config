@@ -1,4 +1,4 @@
-{config, lib, ...}:
+{ config, lib, ... }:
 let
   passwordHashes = import ./pw-hashes.nix;
   sshPubKeys = import ./ssh-pub-keys.nix;
@@ -11,7 +11,7 @@ in
     {
       extraGroups = mkOption {
         type = types.listOf types.str;
-        default = [];
+        default = [ ];
       };
     };
 
@@ -23,18 +23,18 @@ in
       users.mutableUsers = false;
       users.users.pi = {
         hashedPassword = passwordHashes.pi;
-        openssh.authorizedKeys.keys = [sshPubKeys.nixops];
+        openssh.authorizedKeys.keys = [ sshPubKeys.nixops ];
         isNormalUser = true;
-        extraGroups = ["wheel"] ++ cfg.extraGroups; # Enable ‘sudo’ for the user.
+        extraGroups = [ "wheel" ] ++ cfg.extraGroups; # Enable ‘sudo’ for the user.
       };
 
       security.sudo.extraRules = [
         {
-          users = ["pi"];
+          users = [ "pi" ];
           commands = [
             {
               command = "ALL";
-              options = ["NOPASSWD"];
+              options = [ "NOPASSWD" ];
             }
           ];
         }

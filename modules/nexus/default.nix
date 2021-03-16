@@ -1,5 +1,4 @@
-
-{config, lib, ...}: {
+{ config, lib, ... }: {
   options.homelab-config.nexus =
     let
       inherit (lib) mkOption types;

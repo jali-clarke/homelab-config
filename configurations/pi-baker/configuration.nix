@@ -1,4 +1,4 @@
-{pkgs, lib, ...}:
+{ pkgs, lib, ... }:
 {
   imports = [
     <nixpkgs/nixos/modules/installer/cd-dvd/sd-image-aarch64.nix>
@@ -7,6 +7,6 @@
   ];
 
   networking.hostName = "pi-baker"; # Define your hostname.
-  systemd.services.sshd.wantedBy = lib.mkOverride 40 ["multi-user.target"];
+  systemd.services.sshd.wantedBy = lib.mkOverride 40 [ "multi-user.target" ];
   sdImage.compressImage = false;
 }

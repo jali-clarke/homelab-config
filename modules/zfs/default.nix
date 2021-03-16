@@ -1,4 +1,4 @@
-{config, lib, ...}: {
+{ config, lib, ... }: {
   options.homelab-config.zfs =
     let
       inherit (lib) types mkOption;
@@ -28,14 +28,14 @@
       (
         {
           boot.loader.grub.copyKernels = true;
-          boot.supportedFilesystems = ["zfs"];
+          boot.supportedFilesystems = [ "zfs" ];
           services.zfs.autoScrub.enable = cfg.doAutoScrub;
         }
       )
 
       (
         lib.mkIf (cfg.zfsARCSizeMaxGB != null) {
-          boot.kernelParams = ["zfs.zfs_arc_max=${toString (cfg.zfsARCSizeMaxGB * 1024 * 1024 * 1024)}"];
+          boot.kernelParams = [ "zfs.zfs_arc_max=${toString (cfg.zfsARCSizeMaxGB * 1024 * 1024 * 1024)}" ];
         }
       )
 

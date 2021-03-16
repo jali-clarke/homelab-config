@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   services.nfs.server = {
     enable = true;
     nproc = 4; # 4 threads
