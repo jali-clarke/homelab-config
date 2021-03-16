@@ -3,13 +3,13 @@
     ./filesystem-exports.nix
     ./hardware-configuration.nix
 
-    ../../modules/common-config.nix
-    ../../modules/pihole.nix
+    ../../modules/common-config
+    ../../modules/pihole
     ../../modules/users
-    ../../modules/zfs-support.nix
+    ../../modules/zfs
   ];
 
-  homelab-config.zfs-support = {
+  homelab-config.zfs = {
     zfsARCSizeMaxGB = 8;
     hostId = "c083c64b";
   };
@@ -19,7 +19,7 @@
 
   networking.hostName = "atlas"; # Define your hostname.
 
-  homelab-config.pihole-support = {
+  homelab-config.pihole = {
     webPortListenInterface = "80"; # soon to change to 127.0.0.1:<port> when i get proxying going
 
     extraDnsmasqConfig = ''

@@ -4,9 +4,9 @@
 
 {pkgs, ...}: {
   imports = [
-    ../../modules/common-config.nix
+    ../../modules/common-config
     ../../modules/users
-    ../../modules/zfs-support.nix
+    ../../modules/zfs
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -21,5 +21,5 @@
     pkgs.nfs-utils
   ];
 
-  homelab-config.zfs-support.doAutoScrub = false;
+  homelab-config.zfs.doAutoScrub = false;
 }

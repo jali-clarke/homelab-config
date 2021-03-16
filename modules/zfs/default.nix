@@ -1,5 +1,5 @@
 {config, lib, ...}: {
-  options.homelab-config.zfs-support =
+  options.homelab-config.zfs =
     let
       inherit (lib) types mkOption;
     in
@@ -22,7 +22,7 @@
 
   config =
     let
-      cfg = config.homelab-config.zfs-support;
+      cfg = config.homelab-config.zfs;
     in
     lib.mkMerge [
       (

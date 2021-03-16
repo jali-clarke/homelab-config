@@ -1,7 +1,7 @@
 {pkgs, ...}:
 {
   imports = [
-    ../../modules/common-config.nix
+    ../../modules/common-config
     ../../modules/kubernetes
     ../../modules/users
   ];
@@ -30,7 +30,7 @@
   # swapDevices = [ { device = "/swapfile"; size = 3072; } ]; # does not play nice with k8s
 
   networking.hostName = "speet"; # Define your hostname.
-  homelab-config.k8s-support = {
+  homelab-config.k8s = {
     masterIP = "192.168.0.102";
     masterHostname = "weedle";
   };

@@ -4,7 +4,7 @@
     ./services.nix
   ];
 
-  options.homelab-config.k8s-support =
+  options.homelab-config.k8s =
     let
       inherit (lib) types mkOption;
     in
@@ -31,7 +31,7 @@
 
   config =
     let
-      cfg = config.homelab-config.k8s-support;
+      cfg = config.homelab-config.k8s;
       masterHostname = if cfg.isMaster then config.networking.hostName else assert (cfg.masterHostname != null); cfg.masterHostname;
 
       ssh = "${pkgs.openssh}/bin/ssh";

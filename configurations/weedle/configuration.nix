@@ -2,13 +2,13 @@
   imports = [
     ./hardware-configuration.nix
 
-    ../../modules/common-config.nix
+    ../../modules/common-config
     ../../modules/kubernetes
     ../../modules/users
-    ../../modules/zfs-support.nix
+    ../../modules/zfs
   ];
 
-  homelab-config.zfs-support = {
+  homelab-config.zfs = {
     zfsARCSizeMaxGB = 2;
     hostId = "74004318";
   };
@@ -17,7 +17,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "weedle"; # Define your hostname.
-  homelab-config.k8s-support = {
+  homelab-config.k8s = {
     isMaster = true;
     masterIP = "192.168.0.102";
   };

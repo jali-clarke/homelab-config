@@ -1,5 +1,5 @@
 {config, pkgs, lib, ...}: {
-  options.homelab-config.pihole-support =
+  options.homelab-config.pihole =
     let
       inherit (lib) mkOption types;
     in
@@ -22,7 +22,7 @@
 
   config =
     let
-      cfg = config.homelab-config.pihole-support;
+      cfg = config.homelab-config.pihole;
       piholeLanConf = pkgs.writeText "02-lan.conf" cfg.extraDnsmasqConfig;
     in
     {

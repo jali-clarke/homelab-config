@@ -2,7 +2,7 @@
 {
   imports = [
     <nixpkgs/nixos/modules/installer/cd-dvd/sd-image-aarch64.nix>
-    ../../modules/common-config.nix
+    ../../modules/common-config
     ../../modules/users
   ];
 
