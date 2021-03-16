@@ -1,10 +1,16 @@
-{config, pkgs, ...}: {
+{config, pkgs, ...}:
+let
+  nexusPort = 8080;
+  piholePort = 8081;
+in
+{
   imports = [
     ./filesystem-exports.nix
     ./hardware-configuration.nix
 
     ../../modules/common-config
     ../../modules/nexus
+    ../../modules/nginx-proxy
     ../../modules/pihole
     ../../modules/users
     ../../modules/zfs
@@ -20,13 +26,24 @@
 
   networking.hostName = "atlas"; # Define your hostname.
 
+  homelab-config.nginx-proxy.serviceMap = {
+    "nexus.lan" = nexusPort;
+    "pihole.lan" = piholePort;
+  };
+
   homelab-config.nexus = {
     dockerInterface.port = 5000;
-    webInterface.port = 8081;
+    webInterface = {
+      ip = "127.0.0.1";
+      port = nexusPort;
+    };
   };
 
   homelab-config.pihole = {
-    webInterface.port = 8080;
+    webInterface = {
+      ip = "127.0.0.1";
+      port = piholePort;
+    };
 
     extraDnsmasqConfig = ''
       # bare-metal infra
