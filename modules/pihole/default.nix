@@ -14,9 +14,16 @@
         default = false;
       };
 
-      webPortListenInterface = mkOption {
-        type = types.nullOr types.str;
-        default = null;
+      webInterface = {
+        ip = mkOption {
+          type = types.str;
+          default = "0.0.0.0";
+        };
+
+        port = mkOption {
+          type = types.port;
+          default = 80;
+        };
       };
     };
 
@@ -33,14 +40,15 @@
           IPv6 = if cfg.ipv6Enabled then "True" else "False";
         };
 
-        ports = lib.optionals (cfg.webPortListenInterface != null) ["${cfg.webPortListenInterface}:80/tcp"] ++ [
+        ports = [
+          "${cfg.webInterface.ip}:${toString cfg.webInterface.port}:80/tcp"
           "53:53/tcp"
           "53:53/udp"
         ];
 
         volumes = [
-          "/mnt/stroage/recordsize-128K/pihole/config:/etc/pihole"
-          "/mnt/stroage/recordsize-128K/pihole/dnsmasq:/etc/dnsmasq.d"
+          "/mnt/storage/recordsize-128K/atlas_services/pihole/config:/etc/pihole"
+          "/mnt/storage/recordsize-128K/atlas_services/pihole/dnsmasq:/etc/dnsmasq.d"
           "${piholeLanConf}:/etc/dnsmasq.d/02-lan.conf:ro"
         ];
 

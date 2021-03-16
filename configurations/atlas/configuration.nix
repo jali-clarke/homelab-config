@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
 
     ../../modules/common-config
+    ../../modules/nexus
     ../../modules/pihole
     ../../modules/users
     ../../modules/zfs
@@ -19,8 +20,13 @@
 
   networking.hostName = "atlas"; # Define your hostname.
 
+  homelab-config.nexus = {
+    dockerInterface.port = 5000;
+    webInterface.port = 8081;
+  };
+
   homelab-config.pihole = {
-    webPortListenInterface = "80"; # soon to change to 127.0.0.1:<port> when i get proxying going
+    webInterface.port = 8080;
 
     extraDnsmasqConfig = ''
       # bare-metal infra
