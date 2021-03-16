@@ -17,8 +17,9 @@ in
   ];
 
   homelab-config.zfs = {
-    zfsARCSizeMaxGB = 8;
+    doAutoSnapshot = true;
     hostId = "c083c64b";
+    zfsARCSizeMaxGB = 8;
   };
 
   boot.loader.systemd-boot.enable = true;

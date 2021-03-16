@@ -9,6 +9,11 @@
         default = true;
       };
 
+      doAutoSnapshot = mkOption {
+        type = types.bool;
+        default = false;
+      };
+
       hostId = mkOption {
         type = types.nullOr types.str;
         default = null;
@@ -42,6 +47,15 @@
       (
         lib.mkIf (cfg.hostId != null) {
           networking.hostId = cfg.hostId;
+        }
+      )
+
+      (
+        lib.mkIf cfg.doAutoSnapshot {
+          services.zfs.autoSnapshot = {
+            enable = true;
+            flags = "-k -p --utc";
+          };
         }
       )
     ];
