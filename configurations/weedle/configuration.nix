@@ -2,10 +2,10 @@
   imports = [
     ./hardware-configuration.nix
 
-    ../../common/common-config.nix
-    ../../common/kubernetes
-    ../../common/users
-    ../../common/zfs-support.nix
+    ../../modules/common-config.nix
+    ../../modules/kubernetes
+    ../../modules/users
+    ../../modules/zfs-support.nix
   ];
 
   homelab-config.zfs-support = {

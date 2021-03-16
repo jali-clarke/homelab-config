@@ -1,9 +1,9 @@
 {pkgs, ...}:
 {
   imports = [
-    ../../common/common-config.nix
-    ../../common/kubernetes
-    ../../common/users
+    ../../modules/common-config.nix
+    ../../modules/kubernetes
+    ../../modules/users
   ];
 
   # NixOS wants to enable GRUB by default

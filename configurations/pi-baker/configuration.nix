@@ -2,8 +2,8 @@
 {
   imports = [
     <nixpkgs/nixos/modules/installer/cd-dvd/sd-image-aarch64.nix>
-    ../../common/common-config.nix
-    ../../common/users
+    ../../modules/common-config.nix
+    ../../modules/users
   ];
 
   networking.hostName = "pi-baker"; # Define your hostname.

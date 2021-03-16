@@ -4,9 +4,9 @@
 
 {pkgs, ...}: {
   imports = [
-    ../../common/common-config.nix
-    ../../common/users
-    ../../common/zfs-support.nix
+    ../../modules/common-config.nix
+    ../../modules/users
+    ../../modules/zfs-support.nix
   ];
 
   # Use the systemd-boot EFI boot loader.

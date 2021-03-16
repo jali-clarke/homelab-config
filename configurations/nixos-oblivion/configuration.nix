@@ -7,8 +7,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../common/common-config.nix
-      ../../common/users
+      ../../modules/common-config.nix
+      ../../modules/users
     ];
 
   # Use the systemd-boot EFI boot loader.
