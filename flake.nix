@@ -83,6 +83,7 @@
             pkgs.git
             pkgs.kubectl
             pkgs.nixos-generators
+            pkgs.nixpkgs-fmt
             pkgs.vim
 
             buildBootstrapBill
