@@ -17,7 +17,8 @@ all ips below are made static in our router instead of in code for my own conven
 * `x86_64-linux` server
 * `192.168.0.103`
 * fileserver exporting `nfs` and `smb` (`samba`) shares backed by `zfs`
-* will eventually host `pihole` dns and `nexus` for container images
+* `pihole` dns
+* will eventually host `nexus` for container images
 
 ### [bootstrap-bill](./configurations/bootstrap-bill)
 

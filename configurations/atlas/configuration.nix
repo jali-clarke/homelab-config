@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
 
     ../../common/common-config.nix
+    ../../common/pihole.nix
     ../../common/users
     ../../common/zfs-support.nix
   ];
