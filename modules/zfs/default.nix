@@ -51,6 +51,7 @@
       )
 
       (
+        # must still do `zfs set com.sun:auto-snapshot=true <dataset>`
         lib.mkIf cfg.doAutoSnapshot {
           services.zfs.autoSnapshot = {
             enable = true;

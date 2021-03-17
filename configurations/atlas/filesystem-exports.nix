@@ -10,7 +10,7 @@
     '';
   };
 
-  # STILL NEED TO DO `sudo smbpasswd -a pi`
+  # still need to do `sudo smbpasswd -a pi`
   services.samba = {
     enable = true;
 

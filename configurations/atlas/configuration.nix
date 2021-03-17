@@ -5,7 +5,7 @@ let
 in
 {
   imports = [
-    ./filesystem-exports.nix
+    ./filesystem-exports.nix # still need to do `sudo smbpasswd -a pi`
     ./hardware-configuration.nix
 
     ../../modules/common-config
@@ -17,7 +17,7 @@ in
   ];
 
   homelab-config.zfs = {
-    doAutoSnapshot = true;
+    doAutoSnapshot = true; # must still do `zfs set com.sun:auto-snapshot=true <dataset>`
     hostId = "c083c64b";
     zfsARCSizeMaxGB = 8;
   };
