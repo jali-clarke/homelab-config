@@ -81,6 +81,7 @@
         pkgs.mkShell {
           name = "bare-metal-shell";
           buildInputs = [
+            pkgs.ccrypt
             pkgs.git
             pkgs.kubectl
             pkgs.nixos-generators
