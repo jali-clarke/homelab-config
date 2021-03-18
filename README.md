@@ -109,7 +109,7 @@ all to be performed on `speet` unless specified otherwise
 * `x86_64-linux` server
 * `192.168.0.102`
 * k8s master and `x86_64-linux` k8s worker (i know that having the master be a worker is against best practices, don't @ me)
-* eventually will receive zfs backup snapshots from [atlas](#atlas) via `sanoid` + `syncoid`
+* eventually will receive zfs backup snapshots from [atlas](#atlas) via `syncoid`
 
 #### manual steps
 
