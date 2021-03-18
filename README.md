@@ -20,6 +20,13 @@ all ips below are made static in our router instead of in code for my own conven
 * `pihole` dns + other dnsmasq config
 * `nexus` artifact hosting for container images and other artifacts
 
+#### manual steps
+
+all to be performed on `atlas` unless specified otherwise
+
+1. do `sudo smbpasswd -a pi` and set a password in order to setup the `pi` `samba` user
+2. generate an ssh key pair at `~pi/.ssh/id_rsa[.pub]` (else copy a known-good one) and make sure the public key is associated with the `pi` user on `weedle` by adding it to the user's configuration
+
 ### [bootstrap-bill](./configurations/bootstrap-bill)
 
 * `x86_64-linux` [bootstrap image](#bootstrap-images)
@@ -74,6 +81,7 @@ in order to actually use these configs on a fresh system, we need to create some
 5. copy the `hardware-configuration.nix` back to this repo into the configuration dir of your choice, reference it correctly in the corresponding `configuration.nix` and commit + push it.  delete both `hardware-configuration.nix` and `configuration.nix` from the machine but not this repo
 6. on the machine (either via ssh or locally) `sudo nixos-install --no-root-passwd --flake github:jali-clarke/homelab-config#${configuration_name}`
 7. reboot
+8. see relevant `manual steps` for the chosen configuration
 
 #### for `aarch64-linux` systems
 
@@ -85,6 +93,7 @@ for raspberry pis specifically
 4. on the pi (either via ssh or locally) `sudo nixos-rebuild switch --flake github:jali-clarke/homelab-config#${configuration_name}`
     * if the pi runs out of memory and the process is killed, simply rerun the command and it will continue from where it left off (continue to rerun until done)
 5. logout and then log back in, or reboot
+6. see relevant `manual steps` for the chosen configuration
 
 ### upgrading
 
