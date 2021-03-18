@@ -25,7 +25,7 @@ all ips below are made static in our router instead of in code for my own conven
 all to be performed on `atlas` unless specified otherwise
 
 1. do `sudo smbpasswd -a pi` and set a password in order to setup the `pi` `samba` user
-2. generate an ssh key pair at `~pi/.ssh/id_rsa[.pub]` (else copy a known-good one) and make sure the public key is associated with the `pi` user on `weedle` by adding it to the user's configuration
+2. as `pi`, run `load_ssh_key` with `SECRETS_PASSPHRASE` set to the appropriate value
 
 ### [bootstrap-bill](./configurations/bootstrap-bill)
 
@@ -38,6 +38,12 @@ all to be performed on `atlas` unless specified otherwise
 * no fixed address
 * useful when there are no other `x86_64-linux` environments available, e.g. rebuilding everything from scratch and i need to produce [bootstrap images](#bootstrap-images)
 
+#### manual steps
+
+all to be performed on `nixos-oblivion` unless specified otherwise
+
+1. as `pi`, run `load_ssh_key` with `SECRETS_PASSPHRASE` set to the appropriate value
+
 ### [pi-baker](./configurations/pi-baker)
 
 * `aarch64-linux` [bootstrap image](#bootstrap-images)
@@ -49,12 +55,24 @@ all to be performed on `atlas` unless specified otherwise
 * `192.168.0.101`
 * `aarch64-linux` k8s worker - can join k8s cluster simply with `join_cluster`
 
+#### manual steps
+
+all to be performed on `speet` unless specified otherwise
+
+1. as `pi`, run `load_ssh_key` with `SECRETS_PASSPHRASE` set to the appropriate value
+
 ### [weedle](./configurations/weedle)
 
 * `x86_64-linux` server
 * `192.168.0.102`
 * k8s master and `x86_64-linux` k8s worker (i know that having the master be a worker is against best practices, don't @ me)
 * eventually will receive zfs backup snapshots from [atlas](#atlas) via `sanoid` + `syncoid`
+
+#### manual steps
+
+all to be performed on `weedle` unless specified otherwise
+
+1. as `pi`, run `load_ssh_key` with `SECRETS_PASSPHRASE` set to the appropriate value
 
 ## how to use
 
