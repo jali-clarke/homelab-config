@@ -21,7 +21,7 @@ in
   ];
 
   homelab-config.zfs = {
-    doAutoSnapshot = true; # must still do `zfs set com.sun:auto-snapshot=true <dataset>`
+    doAutoSnapshotDataset = "storage";
     hostId = "c083c64b";
     zfsARCSizeMaxGB = 8;
   };

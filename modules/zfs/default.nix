@@ -9,9 +9,9 @@
         default = true;
       };
 
-      doAutoSnapshot = mkOption {
-        type = types.bool;
-        default = false;
+      doAutoSnapshotDataset = mkOption {
+        type = types.nullOr types.str;
+        default = null;
       };
 
       hostId = mkOption {
@@ -51,10 +51,10 @@
       )
 
       (
-        lib.mkIf cfg.doAutoSnapshot {
+        lib.mkIf (cfg.doAutoSnapshotDataset != null) {
           services.sanoid = {
             enable = true;
-            datasets.storage = { # hardcoding the dataset name for now
+            datasets.${cfg.doAutoSnapshotDataset} = {
               autosnap = true;
               autoprune = true;
               recursive = true;
