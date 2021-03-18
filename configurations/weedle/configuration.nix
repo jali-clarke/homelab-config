@@ -8,6 +8,10 @@
     ../../modules/zfs
   ];
 
+  environment.systemPackages = [
+    (import ../../lib/load-ssh-key.nix {inherit pkgs;})
+  ];
+
   homelab-config.zfs = {
     zfsARCSizeMaxGB = 2;
     hostId = "74004318";

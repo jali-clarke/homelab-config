@@ -16,6 +16,10 @@ in
     ../../modules/zfs
   ];
 
+  environment.systemPackages = [
+    (import ../../lib/load-ssh-key.nix {inherit pkgs;})
+  ];
+
   homelab-config.zfs = {
     doAutoSnapshot = true; # must still do `zfs set com.sun:auto-snapshot=true <dataset>`
     hostId = "c083c64b";

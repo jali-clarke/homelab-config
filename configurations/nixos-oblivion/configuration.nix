@@ -12,6 +12,11 @@
       ../../modules/users
     ];
 
+  environment.systemPackages = [
+    (import ../../lib/load-ssh-key.nix {inherit pkgs;})
+    pkgs.nixos-generators
+  ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -19,8 +24,4 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   networking.hostName = "nixos-oblivion"; # Define your hostname.
-
-  environment.systemPackages = [
-    pkgs.nixos-generators
-  ];
 }
