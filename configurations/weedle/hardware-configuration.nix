@@ -26,12 +26,6 @@
       fsType = "vfat";
     };
 
-  fileSystems."/mnt/backups/storage" =
-    {
-      device = "backups/storage";
-      fsType = "zfs";
-    };
-
   swapDevices =
     [{ device = "/dev/disk/by-uuid/67f6bc68-7401-474d-afa6-e010b738d3f5"; }];
 
