@@ -51,11 +51,20 @@
       )
 
       (
-        # must still do `zfs set com.sun:auto-snapshot=true <dataset>`
         lib.mkIf cfg.doAutoSnapshot {
-          services.zfs.autoSnapshot = {
+          services.sanoid = {
             enable = true;
-            flags = "-k -p --utc";
+            datasets.storage = { # hardcoding the dataset name for now
+              autosnap = true;
+              autoprune = true;
+              recursive = true;
+              processChildrenOnly = true;
+
+              hourly = 24;
+              daily = 30;
+              monthly = 6;
+              yearly = 0;
+            };
           };
         }
       )
