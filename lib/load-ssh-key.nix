@@ -13,4 +13,4 @@ pkgs.writeScriptBin "load_ssh_key" ''
   chmod 600 ~/.ssh/id_rsa_nixops
   ${pkgs.openssh}/bin/ssh-keygen -y -f ~/.ssh/id_rsa_nixops > ~/.ssh/id_rsa_nixops.pub
   chmod 644 ~/.ssh/id_rsa_nixops.pub
-'';
+''
