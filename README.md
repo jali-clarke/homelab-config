@@ -103,6 +103,7 @@ all to be performed on `nixos-oblivion` unless specified otherwise
 all to be performed on `speet` unless specified otherwise
 
 1. as `pi`, run `load_ssh_key` with `SECRETS_PASSPHRASE` set to the appropriate value
+2. join the cluster with `join_cluster`
 
 ### [weedle](./configurations/weedle)
 

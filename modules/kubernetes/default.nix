@@ -37,7 +37,7 @@
       ssh = "${pkgs.openssh}/bin/ssh";
       joinCluster = pkgs.writeScriptBin "join_cluster" ''
         #!${pkgs.runtimeShell} -xe
-        ${ssh} pi@${cfg.masterIP} -- "sudo cat /var/lib/kubernetes/secrets/apitoken.secret" | sudo nixos-kubernetes-node-join
+        ${ssh} -i ~/.ssh/id_rsa_nixops pi@${cfg.masterIP} -- "sudo cat /var/lib/kubernetes/secrets/apitoken.secret" | sudo nixos-kubernetes-node-join
       '';
 
       containerdConfigFile = pkgs.writeText "containerd.toml" ''
