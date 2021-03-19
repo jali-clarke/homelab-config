@@ -14,6 +14,33 @@
         default = null;
       };
 
+      doSnapshotReplication = mkOption {
+        type = types.nullOr (
+          types.submodule {
+            options = {
+              source = mkOption {
+                type = types.str;
+              };
+
+              target = mkOption {
+                type = types.str;
+              };
+
+              sshKey = mkOption {
+                type = types.path;
+              };
+
+              sshNoVerify = mkOption {
+                type = types.bool;
+                default = false;
+              };
+            };
+          }
+        );
+
+        default = null;
+      };
+
       hostId = mkOption {
         type = types.nullOr types.str;
         default = null;
@@ -64,6 +91,38 @@
               daily = 30;
               monthly = 6;
               yearly = 0;
+            };
+          };
+        }
+      )
+
+      (
+        let
+          cfgReplication = cfg.doSnapshotReplication;
+        in
+        lib.mkIf (cfgReplication != null) {
+          services.syncoid = {
+            enable = true;
+
+            # relies on permission delegation
+            # should do `zfs allow <user> create,mount,receive,rollback <target>` on target host
+            user = "pi";
+            group = "users";
+
+            commands.${cfgReplication.source} = {
+              target = cfgReplication.target;
+              sshKey = cfgReplication.sshKey;
+
+              recursive = true;
+              extraArgs = [
+                "--create-bookmark"
+                "--compress" "lz4"
+                "--no-sync-snap"
+                "--skip-parent"
+              ] ++ lib.optionals cfgReplication.sshNoVerify [
+                "--sshoption" "StrictHostKeyChecking=no"
+                "--sshoption" "UserKnownHostsFile=/dev/null"
+              ];
             };
           };
         }

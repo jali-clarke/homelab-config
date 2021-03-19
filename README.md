@@ -59,7 +59,7 @@ all ips below are made static in our router instead of in code for my own conven
 
 * `x86_64-linux` server
 * `192.168.0.103`
-* fileserver exporting `nfs` and `smb` (`samba`) shares backed by `zfs` with auto-snapshotting via `sanoid`
+* fileserver exporting `nfs` and `smb` (`samba`) shares backed by `zfs` with auto-snapshotting via `sanoid`, replicated to [weedle](#weedle) via `syncoid`
 * `pihole` dns + other dnsmasq config
 * `nexus` artifact hosting for container images and other artifacts
 

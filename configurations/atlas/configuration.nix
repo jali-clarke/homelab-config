@@ -24,6 +24,13 @@ in
     doAutoSnapshotDataset = "storage";
     hostId = "c083c64b";
     zfsARCSizeMaxGB = 8;
+
+    doSnapshotReplication = {
+      source = "storage";
+      target = "pi@192.168.0.102:backups/storage";
+      sshKey = "/home/pi/.ssh/id_rsa_nixops";
+      sshNoVerify = true; # should be ok i promise
+    };
   };
 
   boot.loader.systemd-boot.enable = true;
