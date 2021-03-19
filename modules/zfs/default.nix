@@ -111,7 +111,8 @@
             enable = true;
 
             # relies on permission delegation
-            # should do `zfs allow <user> create,mount,receive,rollback <target>` on target host
+            # should do `zfs allow <user> bookmark,hold,send <source>` on source host
+            # should do `zfs allow <user> bookmark,create,mount,receive,rollback <target>` on target host
             user = "pi";
             group = "users";
 
