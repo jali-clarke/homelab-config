@@ -72,10 +72,10 @@
             done
 
             # need to figure out how to un-hardcode this
-            ${ssh} pi@192.168.0.102 -- sudo cat /etc/kubernetes/cluster-admin.kubeconfig > ~/.kube/config
-            ${ssh} pi@192.168.0.102 -- sudo cat /var/lib/kubernetes/secrets/ca.pem > /var/lib/kubernetes/secrets/ca.pem
-            ${ssh} pi@192.168.0.102 -- sudo cat /var/lib/kubernetes/secrets/cluster-admin.pem > /var/lib/kubernetes/secrets/cluster-admin.pem
-            ${ssh} pi@192.168.0.102 -- sudo cat /var/lib/kubernetes/secrets/cluster-admin-key.pem > /var/lib/kubernetes/secrets/cluster-admin-key.pem
+            ${ssh} -i ~/.ssh/id_rsa_nixops pi@192.168.0.102 -- sudo cat /etc/kubernetes/cluster-admin.kubeconfig > ~/.kube/config
+            ${ssh} -i ~/.ssh/id_rsa_nixops pi@192.168.0.102 -- sudo cat /var/lib/kubernetes/secrets/ca.pem > /var/lib/kubernetes/secrets/ca.pem
+            ${ssh} -i ~/.ssh/id_rsa_nixops pi@192.168.0.102 -- sudo cat /var/lib/kubernetes/secrets/cluster-admin.pem > /var/lib/kubernetes/secrets/cluster-admin.pem
+            ${ssh} -i ~/.ssh/id_rsa_nixops pi@192.168.0.102 -- sudo cat /var/lib/kubernetes/secrets/cluster-admin-key.pem > /var/lib/kubernetes/secrets/cluster-admin-key.pem
           '';
         in
         pkgs.mkShell {
