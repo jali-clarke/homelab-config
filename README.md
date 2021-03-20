@@ -60,6 +60,7 @@ all ips below are made static in our router instead of in code for my own conven
 * `x86_64-linux` server
 * `192.168.0.103`
 * fileserver exporting `nfs` and `smb` (`samba`) shares backed by `zfs` with auto-snapshotting via `sanoid`, replicated to [weedle](#weedle) via `syncoid`
+* eventually setup email notifications out of `zed`
 * `pihole` dns + other dnsmasq config
 * `nexus` artifact hosting for container images and other artifacts
 
@@ -110,7 +111,8 @@ all to be performed on `speet` unless specified otherwise
 * `x86_64-linux` server
 * `192.168.0.102`
 * k8s master and `x86_64-linux` k8s worker (i know that having the master be a worker is against best practices, don't @ me)
-* eventually will receive zfs backup snapshots from [atlas](#atlas) via `syncoid`
+* receives zfs backup snapshots from [atlas](#atlas) via `syncoid`
+* eventually setup email notifications out of `zed`
 
 #### manual steps
 
