@@ -2,6 +2,8 @@
 let
   nexusPort = 8080;
   piholePort = 8081;
+
+  meta = config.homelab-config.meta;
 in
 {
   imports = [
@@ -9,6 +11,7 @@ in
     ./hardware-configuration.nix
 
     ../../modules/common-config
+    ../../modules/meta
     ../../modules/nexus
     ../../modules/nginx-proxy
     ../../modules/pihole
@@ -31,7 +34,7 @@ in
 
     syncoidOpts = {
       source = "storage";
-      target = "pi@192.168.0.102:backups/storage";
+      target = "pi@${meta.weedle.networkIP}:backups/storage";
       sshKey = "/home/pi/.ssh/id_rsa_nixops";
       sshNoVerify = true; # should be ok i promise
     };
@@ -61,32 +64,42 @@ in
       port = piholePort;
     };
 
-    extraDnsmasqConfig = ''
-      # bare-metal infra
+    extraDnsmasqConfig =
+      let
+        mkHostRecord = hostName:
+          let
+            hostMeta = meta.${hostName};
+          in
+          ''
+            host-record=${hostMeta.hostNameWithDomain},${hostMeta.hostName},${hostMeta.networkIP}
+          '';
+      in
+      ''
+        # bare-metal infra
 
-      host-record=speet.lan,speet,192.168.0.101
-      host-record=weedle.lan,weedle,192.168.0.102
-      host-record=atlas.lan,atlas,192.168.0.103
-      host-record=osmc.lan,osmc,192.168.0.104
-      host-record=scribe.lan,scribe,192.168.0.105
+        ${mkHostRecord "speet"}
+        ${mkHostRecord "weedle"}
+        ${mkHostRecord "atlas"}
+        ${mkHostRecord "osmc"}
+        ${mkHostRecord "scribe"}
 
-      # bare-metal services
+        # bare-metal services
 
-      cname=pihole.lan,pihole,atlas.lan
-      cname=nexus.lan,nexus,atlas.lan
+        cname=pihole.lan,pihole,${meta.atlas.hostNameWithDomain}
+        cname=nexus.lan,nexus,${meta.atlas.hostNameWithDomain}
 
-      # k8s ingress
+        # k8s ingress
 
-      host-record=ingress.lan,ingress,192.168.0.200
+        host-record=ingress.lan,ingress,192.168.0.200
 
-      cname=emby.lan,emby,ingress.lan
-      cname=web.dev.lan,files.dev.lan,dev.lan,dev,ingress.lan
-      cname=web.dev-staging.lan,files.dev-staging.lan,dev-staging.lan,dev-staging,ingress.lan
-      cname=grafana.lan,grafana,ingress.lan
-      cname=markov.lan,markov,ingress.lan
-      cname=markov-app.lan,markov-app,ingress.lan
-      cname=torrents.lan,torrents,ingress.lan
-    '';
+        cname=emby.lan,emby,ingress.lan
+        cname=web.dev.lan,files.dev.lan,dev.lan,dev,ingress.lan
+        cname=web.dev-staging.lan,files.dev-staging.lan,dev-staging.lan,dev-staging,ingress.lan
+        cname=grafana.lan,grafana,ingress.lan
+        cname=markov.lan,markov,ingress.lan
+        cname=markov-app.lan,markov-app,ingress.lan
+        cname=torrents.lan,torrents,ingress.lan
+      '';
   };
 
   # This value determines the NixOS release from which the default

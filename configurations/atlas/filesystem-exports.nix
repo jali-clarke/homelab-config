@@ -1,8 +1,16 @@
-{ ... }: {
+{ config, ... }:
+let
+  meta = config.homelab-config.meta;
+in
+{
+  imports = [
+    ../../modules/meta
+  ];
+
   services.nfs.server = {
     enable = true;
     nproc = 4; # 4 threads
-    hostName = "192.168.0.103";
+    hostName = meta.atlas.networkIP;
 
     exports = ''
       /mnt/storage/recordsize-128K 192.168.0.0/24(rw,no_subtree_check,no_root_squash)
