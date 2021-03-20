@@ -109,6 +109,7 @@
       (
         let
           sanoidOpts = cfg.sanoidOpts;
+          userPerms = "bookmark,create,hold,mount,receive,rollback,send";
         in
         lib.mkIf (sanoidOpts != null) {
           services.sanoid = {
@@ -125,6 +126,18 @@
               yearly = 0;
             };
           };
+
+          systemd.services.zfs-pi-delegation = {
+            description = "Gives the pi user zfs permissions";
+            serviceConfig = {
+              RemainAfterExit = "yes";
+              Type = "oneshot";
+            };
+
+            script = "/run/booted-system/sw/bin/zfs allow pi ${userPerms} ${sanoidOpts.dataset}";
+            after = [ "zfs.target" ];
+            wantedBy = [ "multi-user.target" ];
+          };
         }
       )
 
@@ -136,9 +149,6 @@
           services.syncoid = {
             enable = true;
 
-            # relies on permission delegation
-            # should do `zfs allow <user> bookmark,hold,send <source>` on source host
-            # should do `zfs allow <user> bookmark,create,mount,receive,rollback <target>` on target host
             user = "pi";
             group = "users";
 
