@@ -15,6 +15,11 @@
   homelab-config.zfs = {
     zfsARCSizeMaxGB = 2;
     hostId = "74004318";
+
+    sanoidOpts = {
+      dataset = "backups/storage";
+      autosnap = false;
+    };
   };
 
   boot.loader.systemd-boot.enable = true;

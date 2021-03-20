@@ -21,11 +21,15 @@ in
   ];
 
   homelab-config.zfs = {
-    doAutoSnapshotDataset = "storage";
     hostId = "c083c64b";
     zfsARCSizeMaxGB = 8;
 
-    doSnapshotReplication = {
+    sanoidOpts = {
+      dataset = "storage";
+      autosnap = true;
+    };
+
+    syncoidOpts = {
       source = "storage";
       target = "pi@192.168.0.102:backups/storage";
       sshKey = "/home/pi/.ssh/id_rsa_nixops";

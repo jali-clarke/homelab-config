@@ -9,12 +9,35 @@
         default = true;
       };
 
-      doAutoSnapshotDataset = mkOption {
-        type = types.nullOr types.str;
+      sanoidOpts = mkOption {
+        type = types.nullOr (
+          types.submodule {
+            options = {
+              dataset = mkOption {
+                type = types.str;
+              };
+
+              autosnap = mkOption {
+                type = types.bool;
+              };
+
+              autoprune = mkOption {
+                type = types.bool;
+                default = true;
+              };
+
+              processChildrenOnly = mkOption {
+                type = types.bool;
+                default = true;
+              };
+            };
+          }
+        );
+
         default = null;
       };
 
-      doSnapshotReplication = mkOption {
+      syncoidOpts = mkOption {
         type = types.nullOr (
           types.submodule {
             options = {
@@ -84,14 +107,17 @@
       )
 
       (
-        lib.mkIf (cfg.doAutoSnapshotDataset != null) {
+        let
+          sanoidOpts = cfg.sanoidOpts;
+        in
+        lib.mkIf (sanoidOpts != null) {
           services.sanoid = {
             enable = true;
-            datasets.${cfg.doAutoSnapshotDataset} = {
-              autosnap = true;
-              autoprune = true;
+            datasets.${sanoidOpts.dataset} = {
+              autosnap = sanoidOpts.autosnap;
+              autoprune = sanoidOpts.autoprune;
               recursive = true;
-              processChildrenOnly = true;
+              processChildrenOnly = sanoidOpts.processChildrenOnly;
 
               hourly = 24;
               daily = 30;
@@ -104,9 +130,9 @@
 
       (
         let
-          cfgReplication = cfg.doSnapshotReplication;
+          syncoidOpts = cfg.syncoidOpts;
         in
-        lib.mkIf (cfgReplication != null) {
+        lib.mkIf (syncoidOpts != null) {
           services.syncoid = {
             enable = true;
 
@@ -116,9 +142,9 @@
             user = "pi";
             group = "users";
 
-            commands.${cfgReplication.source} = {
-              target = cfgReplication.target;
-              sshKey = cfgReplication.sshKey;
+            commands.${syncoidOpts.source} = {
+              target = syncoidOpts.target;
+              sshKey = syncoidOpts.sshKey;
 
               recursive = true;
               extraArgs = [
@@ -126,7 +152,7 @@
                 "--compress" "lz4"
                 "--no-sync-snap"
                 "--skip-parent"
-              ] ++ lib.optionals cfgReplication.sshNoVerify [
+              ] ++ lib.optionals syncoidOpts.sshNoVerify [
                 "--sshoption" "StrictHostKeyChecking=no"
                 "--sshoption" "UserKnownHostsFile=/dev/null"
               ];
