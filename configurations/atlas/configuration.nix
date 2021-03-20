@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   nexusPort = 8080;
   piholePort = 8081;
@@ -66,37 +66,34 @@ in
 
     extraDnsmasqConfig =
       let
-        mkHostRecord = hostName:
-          let
-            hostMeta = meta.${hostName};
-          in
-          "host-record=${hostMeta.hostNameWithDomain},${hostMeta.hostName},${hostMeta.networkIP}";
+        mkHostRecord = hostMeta: "host-record=${hostMeta.hostNameWithDomain},${hostMeta.hostName},${hostMeta.networkIP}";
+        mkCnameRecord = hostMeta: cnameHost: "cname=${cnameHost}.lan,${cnameHost},${hostMeta.hostNameWithDomain}";
       in
       ''
-        # bare-metal infra
+        # host records
 
-        ${mkHostRecord "speet"}
-        ${mkHostRecord "weedle"}
-        ${mkHostRecord "atlas"}
-        ${mkHostRecord "osmc"}
-        ${mkHostRecord "scribe"}
+        ${lib.concatMapStringsSep "\n" mkHostRecord (builtins.attrValues meta)}
 
-        # bare-metal services
+        # cname records
 
-        cname=pihole.lan,pihole,${meta.atlas.hostNameWithDomain}
-        cname=nexus.lan,nexus,${meta.atlas.hostNameWithDomain}
+        ${
+          lib.concatMapStringsSep "\n" (mkCnameRecord meta.atlas) [
+            "pihole"
+            "nexus"
+          ]
+        }
 
-        # k8s ingress
-
-        ${mkHostRecord "ingress"}
-
-        cname=emby.lan,emby,ingress.lan
-        cname=web.dev.lan,files.dev.lan,dev.lan,dev,ingress.lan
-        cname=web.dev-staging.lan,files.dev-staging.lan,dev-staging.lan,dev-staging,ingress.lan
-        cname=grafana.lan,grafana,ingress.lan
-        cname=markov.lan,markov,ingress.lan
-        cname=markov-app.lan,markov-app,ingress.lan
-        cname=torrents.lan,torrents,ingress.lan
+        ${
+          lib.concatMapStringsSep "\n" (mkCnameRecord meta.ingress) [
+            "emby"
+            "web.dev" "files.dev" "dev"
+            "web.dev-staging" "files.dev-staging" "dev-staging"
+            "grafana"
+            "markov"
+            "markov-app"
+            "torrents"
+          ]
+        }
       '';
   };
 
