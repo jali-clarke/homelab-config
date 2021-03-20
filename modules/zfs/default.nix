@@ -146,6 +146,13 @@
           syncoidOpts = cfg.syncoidOpts;
         in
         lib.mkIf (syncoidOpts != null) {
+          assertions = [
+            {
+              assertion = cfg.sanoidOpts != null;
+              message = "if syncoidOpts is set, sanoidOpts must be set as well";
+            }
+          ];
+
           services.syncoid = {
             enable = true;
 
