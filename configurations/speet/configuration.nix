@@ -7,7 +7,7 @@
   ];
 
   environment.systemPackages = [
-    (import ../../lib/load-ssh-key.nix {inherit pkgs;})
+    (import ../../lib/load-ssh-key.nix { inherit pkgs; })
   ];
 
   # NixOS wants to enable GRUB by default

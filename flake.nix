@@ -93,5 +93,17 @@
             fetchKubeconfig
           ];
         };
+
+      devShell.x86_64-darwin =
+        let
+          pkgs = mkPkgs "x86_64-darwin";
+        in
+        pkgs.mkShell {
+          name = "bare-metal-shell";
+          buildInputs = [
+            pkgs.ccrypt
+            pkgs.nixpkgs-fmt
+          ];
+        };
     };
 }

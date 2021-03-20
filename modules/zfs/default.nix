@@ -166,12 +166,15 @@
               recursive = true;
               extraArgs = [
                 "--create-bookmark"
-                "--compress" "lz4"
+                "--compress"
+                "lz4"
                 "--no-sync-snap"
                 "--skip-parent"
               ] ++ lib.optionals syncoidOpts.sshNoVerify [
-                "--sshoption" "StrictHostKeyChecking=no"
-                "--sshoption" "UserKnownHostsFile=/dev/null"
+                "--sshoption"
+                "StrictHostKeyChecking=no"
+                "--sshoption"
+                "UserKnownHostsFile=/dev/null"
               ];
             };
           };

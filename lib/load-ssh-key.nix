@@ -1,4 +1,4 @@
-{pkgs}:
+{ pkgs }:
 pkgs.writeScriptBin "load_ssh_key" ''
   #!${pkgs.runtimeShell} -xe
 
