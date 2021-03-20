@@ -1,9 +1,14 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+let
+  meta = config.homelab-config.meta;
+in
+{
   imports = [
     ./hardware-configuration.nix
 
     ../../modules/common-config
     ../../modules/kubernetes
+    ../../modules/meta
     ../../modules/users
     ../../modules/zfs
   ];
@@ -25,10 +30,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "weedle"; # Define your hostname.
+  networking.hostName = meta.weedle.hostName; # Define your hostname.
   homelab-config.k8s = {
     isMaster = true;
-    masterIP = "192.168.0.102";
+    masterIP = meta.weedle.networkIP;
   };
 
   # This value determines the NixOS release from which the default
