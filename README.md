@@ -117,3 +117,4 @@ all to be performed on `speet` unless specified otherwise
 all to be performed on `weedle` unless specified otherwise
 
 1. as `pi`, run `load_ssh_key` with `SECRETS_PASSPHRASE` set to the appropriate value
+2. as `pi`, `ln -s /etc/kubernetes/cluster-admin.kubeconfig ~/.kube/config` (may need to fiddle with permissions somewhere)
