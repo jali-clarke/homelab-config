@@ -43,7 +43,7 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "atlas"; # Define your hostname.
+  networking.hostName = meta.atlas.hostName; # Define your hostname.
 
   homelab-config.nginx-proxy.serviceMap = {
     "nexus.lan" = nexusPort;
@@ -70,9 +70,7 @@ in
           let
             hostMeta = meta.${hostName};
           in
-          ''
-            host-record=${hostMeta.hostNameWithDomain},${hostMeta.hostName},${hostMeta.networkIP}
-          '';
+          "host-record=${hostMeta.hostNameWithDomain},${hostMeta.hostName},${hostMeta.networkIP}";
       in
       ''
         # bare-metal infra
@@ -90,7 +88,7 @@ in
 
         # k8s ingress
 
-        host-record=ingress.lan,ingress,192.168.0.200
+        ${mkHostRecord "ingress"}
 
         cname=emby.lan,emby,ingress.lan
         cname=web.dev.lan,files.dev.lan,dev.lan,dev,ingress.lan

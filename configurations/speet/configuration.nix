@@ -1,8 +1,11 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
+let
+  meta = config.homelab-config.meta;
 {
   imports = [
     ../../modules/common-config
     ../../modules/kubernetes
+    ../../modules/meta
     ../../modules/users
   ];
 
@@ -33,10 +36,10 @@
   # !!! Adding a swap file is optional, but strongly recommended!
   # swapDevices = [ { device = "/swapfile"; size = 3072; } ]; # does not play nice with k8s
 
-  networking.hostName = "speet"; # Define your hostname.
+  networking.hostName = meta.speet.hostName; # Define your hostname.
   homelab-config.k8s = {
-    masterIP = "192.168.0.102";
-    masterHostname = "weedle";
+    masterIP = meta.weedle.networkIP;
+    masterHostname = meta.weedle.hostName;
   };
 
   # systemd.services.etcd.environment.ETCD_UNSUPPORTED_ARCH = "arm64"; # only if the pi is the k8s master
