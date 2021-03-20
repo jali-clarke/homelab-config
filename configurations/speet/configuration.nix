@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 let
   meta = config.homelab-config.meta;
-  {
+in
+{
   imports = [
     ../../modules/common-config
     ../../modules/kubernetes
