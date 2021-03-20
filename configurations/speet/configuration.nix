@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   meta = config.homelab-config.meta;
-{
+  {
   imports = [
     ../../modules/common-config
     ../../modules/kubernetes
@@ -43,4 +43,4 @@ let
   };
 
   # systemd.services.etcd.environment.ETCD_UNSUPPORTED_ARCH = "arm64"; # only if the pi is the k8s master
-}
+  }

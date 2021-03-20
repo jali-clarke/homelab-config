@@ -46,7 +46,7 @@
       devShell.x86_64-linux =
         let
           pkgs = mkPkgs "x86_64-linux";
-          meta = import ./lib/get-meta.nix {inherit pkgs;};
+          meta = import ./lib/get-meta.nix { inherit pkgs; };
 
           nixos-generate = "${pkgs.nixos-generators}/bin/nixos-generate";
           ssh = "${pkgs.openssh}/bin/ssh";
