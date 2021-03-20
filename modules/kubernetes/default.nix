@@ -59,13 +59,10 @@
 
         [plugins."io.containerd.grpc.v1.cri".registry]
           [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
-            [plugins."io.containerd.grpc.v1.cri".registry.mirrors."http.nexus.lan"]
-              endpoint = ["http://nexus.lan:5000"]
             [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
               endpoint = ["https://registry-1.docker.io"]
-          [plugins."io.containerd.grpc.v1.cri".registry.configs]
-            [plugins."io.containerd.grpc.v1.cri".registry.configs."http.nexus.lan".tls]
-              insecure_skip_verify = true
+            [plugins."io.containerd.grpc.v1.cri".registry.mirrors."nexus.lan:5000"]
+              endpoint = ["http://nexus.lan:5000"]
       '';
     in
     lib.mkMerge [
