@@ -86,12 +86,18 @@ in
         ${
           lib.concatMapStringsSep "\n" (mkCnameRecord meta.ingress) [
             "emby"
-            "web.dev" "files.dev" "dev"
-            "web.dev-staging" "files.dev-staging" "dev-staging"
             "grafana"
             "markov"
             "markov-app"
             "torrents"
+
+            "web.dev"
+            "files.dev"
+            "dev"
+
+            "web.dev-staging"
+            "files.dev-staging"
+            "dev-staging"
           ]
         }
       '';
