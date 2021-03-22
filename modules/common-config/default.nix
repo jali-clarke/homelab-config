@@ -15,6 +15,8 @@
   networking.interfaces.eth0.useDHCP = true;
 
   environment.systemPackages = [
+    pkgs.dnsutils
+    pkgs.htop
     pkgs.git
     pkgs.nmon
     pkgs.pv
