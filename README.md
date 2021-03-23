@@ -44,6 +44,7 @@ for raspberry pis specifically
 3. slot that into the pi and power it on
 4. on the pi (either via ssh or locally) `sudo nixos-rebuild switch --flake github:jali-clarke/homelab-config#${configuration_name}`
     * if the pi runs out of memory and the process is killed, simply rerun the command and it will continue from where it left off (continue to rerun until done)
+    * can also run from a host that knows how to build `aarch64-linux` and use `--build-host` + `--target-host`
 5. logout and then log back in, or reboot
 6. see relevant `manual steps` for the chosen configuration
 
