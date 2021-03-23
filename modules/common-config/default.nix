@@ -30,6 +30,8 @@
     };
 
     package = pkgs.nixFlakes;
+
+    trustedUsers = ["root" "pi"];
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
