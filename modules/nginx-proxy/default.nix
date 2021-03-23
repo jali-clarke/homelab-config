@@ -29,6 +29,14 @@
       services.nginx = {
         enable = true;
         virtualHosts = lib.attrsets.mapAttrs mkVirtualHost cfg.serviceMap;
+
+        appendHttpConfig = ''
+          server {
+            server_name = _;
+            listen 80 default_server;
+            return 404;
+          }
+        '';
       };
     };
 }
