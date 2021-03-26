@@ -21,5 +21,8 @@
     pkgs.nfs-utils
   ];
 
-  homelab-config.zfs.doAutoScrub = false;
+  homelab-config.zfs = {
+    doAutoScrub = false;
+    doAutoSMART = false;
+  };
 }

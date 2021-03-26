@@ -9,6 +9,11 @@
         default = true;
       };
 
+      doAutoSMART = mkOption {
+        type = types.bool;
+        default = true;
+      };
+
       sanoidOpts = mkOption {
         type = types.nullOr (
           types.submodule {
@@ -177,6 +182,19 @@
                 "UserKnownHostsFile=/dev/null"
               ];
             };
+          };
+        }
+      )
+
+      (
+        {
+          services.smartd = {
+            enable = cfg.doAutoSMART;
+
+            autodetect = true;
+            extraOptions = [
+              "--interval=${toString (24 * 3600)}" # every day
+            ];
           };
         }
       )
