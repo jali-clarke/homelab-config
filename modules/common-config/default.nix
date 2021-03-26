@@ -1,4 +1,7 @@
 { pkgs, ... }:
+let
+  maxOpenFiles = toString (1024 * 1024);
+in
 {
   networking.wireless.enable = false; # Enables wireless support via wpa_supplicant.
   networking.firewall.enable = false;
@@ -36,4 +39,22 @@
       experimental-features = nix-command flakes
     '';
   };
+
+  systemd.extraConfig = "LimitNOFILE=${maxOpenFiles}";
+
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      type = "soft";
+      item = "nofile";
+      value = maxOpenFiles;
+    }
+
+    {
+      domain = "*";
+      type = "hard";
+      item = "nofile";
+      value = maxOpenFiles;
+    }
+  ];
 }
