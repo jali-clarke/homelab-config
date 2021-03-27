@@ -39,7 +39,7 @@
     in
     {
       virtualisation.oci-containers.containers.nexus = {
-        image = "sonatype/nexus3:3.23.0";
+        image = "sonatype/nexus3:3.30.0";
 
         environment = {
           INSTALL4J_ADD_VM_PARAMS = "-Xms1024m -Xmx1024m -XX:MaxDirectMemorySize=1536m -Djava.util.prefs.userRoot=$NEXUS_DATA/javaprefs";
