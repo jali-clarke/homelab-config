@@ -4,6 +4,10 @@
       inherit (lib) mkOption types;
     in
     {
+      nexusDataPath = mkOption {
+        type = types.path;
+      };
+
       dockerInterface = {
         ip = mkOption {
           type = types.str;
@@ -47,12 +51,11 @@
         ];
 
         volumes = [
-          "/mnt/storage/recordsize-1M/atlas_services/nexus_data:/nexus-data"
+          "${cfg.nexusDataPath}:/nexus-data"
         ];
 
         extraOptions = [
           "--hostname=nexus"
-          "--dns=127.0.0.1"
 
           "--cpus=1"
           "--memory=1792m"

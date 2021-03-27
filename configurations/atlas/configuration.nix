@@ -51,6 +51,8 @@ in
   };
 
   homelab-config.nexus = {
+    nexusDataPath = "/mnt/storage/recordsize-1M/atlas_services/nexus_data";
+
     dockerInterface.port = 5000;
     webInterface = {
       ip = "127.0.0.1";
