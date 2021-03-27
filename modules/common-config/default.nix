@@ -34,7 +34,7 @@ in
 
     package = pkgs.nixFlakes;
 
-    trustedUsers = ["root" "pi"];
+    trustedUsers = [ "root" "pi" ];
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
