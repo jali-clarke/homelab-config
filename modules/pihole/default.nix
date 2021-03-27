@@ -14,6 +14,10 @@
         default = false;
       };
 
+      piholeDataPath = mkOption {
+        type = types.path;
+      };
+
       webInterface = {
         ip = mkOption {
           type = types.str;
@@ -47,8 +51,8 @@
         ];
 
         volumes = [
-          "/mnt/storage/recordsize-128K/atlas_services/pihole/config:/etc/pihole"
-          "/mnt/storage/recordsize-128K/atlas_services/pihole/dnsmasq:/etc/dnsmasq.d"
+          "${cfg.piholeDataPath}/config:/etc/pihole"
+          "${cfg.piholeDataPath}/dnsmasq:/etc/dnsmasq.d"
           "${piholeLanConf}:/etc/dnsmasq.d/02-lan.conf:ro"
         ];
 
