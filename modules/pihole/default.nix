@@ -38,7 +38,7 @@
     in
     {
       virtualisation.oci-containers.containers.pihole = {
-        image = "pihole/pihole:4.2.2-1";
+        image = "pihole/pihole:v5.7";
 
         environment = {
           IPv6 = if cfg.ipv6Enabled then "True" else "False";
