@@ -8,7 +8,7 @@ in
   ];
 
   services.nfs.server = {
-    enable = true;
+    enable = false; # to revert
     nproc = 4; # 4 threads
     hostName = meta.atlas.networkIP;
 
@@ -20,7 +20,7 @@ in
 
   # still need to do `sudo smbpasswd -a pi`
   services.samba = {
-    enable = true;
+    enable = false; # to revert
 
     shares = {
       backup_drive = {

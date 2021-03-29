@@ -23,7 +23,7 @@ in
     sanoidOpts = {
       enable = true;
       dataset = "storage";
-      autosnap = true;
+      autosnap = false; # to revert
     };
 
     syncoidOpts = {
@@ -49,7 +49,7 @@ in
   };
 
   homelab-config.nexus = {
-    enable = true;
+    enable = false; # to revert
     nexusDataPath = "/mnt/storage/recordsize-1M/atlas_services/nexus_data";
     dockerInterface.port = 5000;
     webInterface = {
@@ -59,7 +59,7 @@ in
   };
 
   homelab-config.pihole = {
-    enable = true;
+    enable = false; # to revert
     piholeDataPath = "/mnt/storage/recordsize-128K/atlas_services/pihole";
     webInterface = {
       ip = "127.0.0.1";
