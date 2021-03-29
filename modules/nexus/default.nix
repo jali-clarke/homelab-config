@@ -4,6 +4,11 @@
       inherit (lib) mkOption types;
     in
     {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+      };
+
       nexusDataPath = mkOption {
         type = types.path;
       };
@@ -37,7 +42,7 @@
     let
       cfg = config.homelab-config.nexus;
     in
-    {
+    lib.mkIf cfg.enable {
       virtualisation.oci-containers.containers.nexus = {
         image = "sonatype/nexus3:3.30.0";
 
