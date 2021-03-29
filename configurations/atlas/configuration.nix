@@ -9,14 +9,6 @@ in
   imports = [
     ./filesystem-exports.nix # still need to do `sudo smbpasswd -a pi`
     ./hardware-configuration.nix
-
-    ../../modules/common-config
-    ../../modules/meta
-    ../../modules/nexus
-    ../../modules/nginx-proxy
-    ../../modules/pihole
-    ../../modules/users
-    ../../modules/zfs
   ];
 
   environment.systemPackages = [

@@ -23,6 +23,7 @@
               pkgs = mkPkgs system;
               modules = [
                 (./configurations + "/${subdirName}/${configurationFile}")
+                ./modules
               ];
             };
         in

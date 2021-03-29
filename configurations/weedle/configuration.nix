@@ -5,12 +5,6 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-
-    ../../modules/common-config
-    ../../modules/kubernetes
-    ../../modules/meta
-    ../../modules/users
-    ../../modules/zfs
   ];
 
   environment.systemPackages = [

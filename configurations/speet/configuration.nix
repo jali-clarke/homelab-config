@@ -3,13 +3,6 @@ let
   meta = config.homelab-config.meta;
 in
 {
-  imports = [
-    ../../modules/common-config
-    ../../modules/kubernetes
-    ../../modules/meta
-    ../../modules/users
-  ];
-
   environment.systemPackages = [
     (import ../../lib/load-ssh-key.nix { inherit pkgs; })
   ];
