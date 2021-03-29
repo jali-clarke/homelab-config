@@ -1,9 +1,4 @@
 { config, pkgs, lib, ... }: {
-  imports = [
-    ./packages.nix
-    ./services.nix
-  ];
-
   options.homelab-config.k8s =
     let
       inherit (lib) types mkOption;
@@ -84,6 +79,21 @@
               easyCerts = true;
               addons.dns.enable = true;
               kubelet.extraOpts = "--fail-swap-on=false";
+            };
+
+            environment.systemPackages = [
+              pkgs.kubectl
+              pkgs.kubernetes
+            ];
+
+            # stupid proxy since ad-hoc nfs mounts are really fiddly for some reason
+            fileSystems."/.DUMMY_NFS_MOUNT" = {
+              device = "FAKE_HOST:FAKE_PATH";
+              fsType = "nfs";
+              options = [
+                "x-systemd.automount"
+                "noauto"
+              ];
             };
           }
         )
