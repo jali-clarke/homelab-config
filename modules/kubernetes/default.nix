@@ -9,6 +9,11 @@
       inherit (lib) types mkOption;
     in
     {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+      };
+
       isMaster = mkOption {
         type = types.bool;
         default = false;
@@ -65,45 +70,47 @@
               endpoint = ["http://nexus.lan:5000"]
       '';
     in
-    lib.mkMerge [
-      (
-        {
-          networking.extraHosts = "${cfg.masterIP} ${masterHostname}";
+    lib.mkIf cfg.enable (
+      lib.mkMerge [
+        (
+          {
+            networking.extraHosts = "${cfg.masterIP} ${masterHostname}";
 
-          virtualisation.containerd.configFile = lib.mkForce containerdConfigFile;
+            virtualisation.containerd.configFile = lib.mkForce containerdConfigFile;
 
-          services.kubernetes = {
-            roles = lib.optionals cfg.isMaster [ "master" ] ++ lib.optionals cfg.schedulable [ "node" ];
-            masterAddress = masterHostname;
-            easyCerts = true;
-            addons.dns.enable = true;
-            kubelet.extraOpts = "--fail-swap-on=false";
-          };
-        }
-      )
-
-      (
-        lib.mkIf cfg.isMaster {
-          services.kubernetes = {
-            apiserver = {
-              securePort = 443;
-              advertiseAddress = cfg.masterIP;
+            services.kubernetes = {
+              roles = lib.optionals cfg.isMaster [ "master" ] ++ lib.optionals cfg.schedulable [ "node" ];
+              masterAddress = masterHostname;
+              easyCerts = true;
+              addons.dns.enable = true;
+              kubelet.extraOpts = "--fail-swap-on=false";
             };
-          };
-        }
-      )
+          }
+        )
 
-      (
-        lib.mkIf (!cfg.isMaster) {
-          environment.systemPackages = [
-            joinCluster
-          ];
+        (
+          lib.mkIf cfg.isMaster {
+            services.kubernetes = {
+              apiserver = {
+                securePort = 443;
+                advertiseAddress = cfg.masterIP;
+              };
+            };
+          }
+        )
 
-          services.kubernetes = {
-            kubelet.kubeconfig.server = "https://${masterHostname}:443";
-            apiserverAddress = "https://${masterHostname}:443";
-          };
-        }
-      )
-    ];
+        (
+          lib.mkIf (!cfg.isMaster) {
+            environment.systemPackages = [
+              joinCluster
+            ];
+
+            services.kubernetes = {
+              kubelet.kubeconfig.server = "https://${masterHostname}:443";
+              apiserverAddress = "https://${masterHostname}:443";
+            };
+          }
+        )
+      ]
+    );
 }

@@ -32,6 +32,7 @@ in
 
   networking.hostName = meta.weedle.hostName; # Define your hostname.
   homelab-config.k8s = {
+    enable = true;
     isMaster = true;
     masterIP = meta.weedle.networkIP;
   };
