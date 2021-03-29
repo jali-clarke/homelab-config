@@ -21,8 +21,10 @@ in
     pkgs.dnsutils
     pkgs.htop
     pkgs.git
+    pkgs.lsof
     pkgs.nmon
     pkgs.pv
+    pkgs.rsync
     pkgs.vim
   ];
 
