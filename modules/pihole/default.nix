@@ -4,6 +4,11 @@
       inherit (lib) mkOption types;
     in
     {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+      };
+
       extraDnsmasqConfig = mkOption {
         type = types.lines;
         default = "";

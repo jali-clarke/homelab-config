@@ -64,8 +64,8 @@ in
   };
 
   homelab-config.pihole = {
+    enable = true;
     piholeDataPath = "/mnt/storage/recordsize-128K/atlas_services/pihole";
-
     webInterface = {
       ip = "127.0.0.1";
       port = piholePort;
