@@ -26,15 +26,63 @@
       fsType = "vfat";
     };
 
-  fileSystems."/mnt/storage/recordsize-128K" =
+  fileSystems."/mnt/storage/atlas_services/pihole" =
     {
-      device = "storage/recordsize-128K";
+      device = "storage/pihole";
       fsType = "zfs";
     };
 
-  fileSystems."/mnt/storage/recordsize-1M" =
+  fileSystems."/mnt/storage/atlas_services/nexus_data" =
     {
-      device = "storage/recordsize-1M";
+      device = "storage/nexus_data";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/storage/k8s_drive/cassandra" =
+    {
+      device = "storage/cassandra";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/storage/k8s_drive/dev" =
+    {
+      device = "storage/dev";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/storage/k8s_drive/emby_config" =
+    {
+      device = "storage/emby_config";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/storage/k8s_drive/qbittorrent" =
+    {
+      device = "storage/qbittorrent";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/storage/k8s_drive/tf2_data" =
+    {
+      device = "storage/tf2_data";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/storage/data_drive" =
+    {
+      device = "storage/data_drive";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/storage/data_drive/Torrents" =
+    {
+      device = "storage/torrents_download";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/storage/backup_drive" =
+    {
+      device = "storage/backup_drive";
       fsType = "zfs";
     };
 
