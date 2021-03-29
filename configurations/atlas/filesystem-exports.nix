@@ -13,7 +13,7 @@ in
     hostName = meta.atlas.networkIP;
 
     exports = ''
-      /mnt/storage 192.168.0.0/24(rw,no_subtree_check,no_root_squash)
+      /mnt/storage 192.168.0.0/24(rw,crossmnt,no_subtree_check,no_root_squash)
     '';
   };
 
