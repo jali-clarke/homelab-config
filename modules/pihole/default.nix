@@ -41,7 +41,7 @@
       cfg = config.homelab-config.pihole;
       piholeLanConf = pkgs.writeText "02-lan.conf" cfg.extraDnsmasqConfig;
     in
-    {
+    lib.mkIf cfg.enable {
       virtualisation.oci-containers.containers.pihole = {
         image = "pihole/pihole:v5.7";
 

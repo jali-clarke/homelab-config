@@ -28,11 +28,13 @@ in
     zfsARCSizeMaxGB = 8;
 
     sanoidOpts = {
+      enable = true;
       dataset = "storage";
       autosnap = true;
     };
 
     syncoidOpts = {
+      enable = true;
       source = "storage";
       target = "pi@${meta.weedle.networkIP}:backups/storage";
       sshKey = "/home/pi/.ssh/id_rsa_nixops";

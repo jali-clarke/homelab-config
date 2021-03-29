@@ -18,6 +18,11 @@
         type = types.nullOr (
           types.submodule {
             options = {
+              enable = mkOption {
+                type = types.bool;
+                default = false;
+              };
+
               dataset = mkOption {
                 type = types.str;
               };
@@ -46,6 +51,11 @@
         type = types.nullOr (
           types.submodule {
             options = {
+              enable = mkOption {
+                type = types.bool;
+                default = false;
+              };
+
               source = mkOption {
                 type = types.str;
               };

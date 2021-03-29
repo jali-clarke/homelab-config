@@ -22,6 +22,7 @@ in
     hostId = "74004318";
 
     sanoidOpts = {
+      enable = true;
       dataset = "backups/storage";
       autosnap = false;
     };
