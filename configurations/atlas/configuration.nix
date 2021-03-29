@@ -23,11 +23,11 @@ in
     sanoidOpts = {
       enable = true;
       dataset = "storage";
-      autosnap = false; # to revert
+      autosnap = true;
     };
 
     syncoidOpts = {
-      enable = true;
+      enable = false; # to revert
       source = "storage";
       target = "pi@${meta.weedle.networkIP}:backups/storage";
       sshKey = "/home/pi/.ssh/id_rsa_nixops";
@@ -49,8 +49,8 @@ in
   };
 
   homelab-config.nexus = {
-    enable = false; # to revert
-    nexusDataPath = "/mnt/storage/recordsize-1M/atlas_services/nexus_data";
+    enable = true;
+    nexusDataPath = "/mnt/storage/atlas_services/nexus_data";
     dockerInterface.port = 5000;
     webInterface = {
       ip = "127.0.0.1";
@@ -59,8 +59,8 @@ in
   };
 
   homelab-config.pihole = {
-    enable = false; # to revert
-    piholeDataPath = "/mnt/storage/recordsize-128K/atlas_services/pihole";
+    enable = true;
+    piholeDataPath = "/mnt/storage/atlas_services/pihole";
     webInterface = {
       ip = "127.0.0.1";
       port = piholePort;

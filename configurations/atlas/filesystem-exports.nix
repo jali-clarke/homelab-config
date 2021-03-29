@@ -8,30 +8,29 @@ in
   ];
 
   services.nfs.server = {
-    enable = false; # to revert
+    enable = true;
     nproc = 4; # 4 threads
     hostName = meta.atlas.networkIP;
 
     exports = ''
-      /mnt/storage/recordsize-128K 192.168.0.0/24(rw,no_subtree_check,no_root_squash)
-      /mnt/storage/recordsize-1M 192.168.0.0/24(rw,no_subtree_check,no_root_squash)
+      /mnt/storage 192.168.0.0/24(rw,no_subtree_check,no_root_squash)
     '';
   };
 
   # still need to do `sudo smbpasswd -a pi`
   services.samba = {
-    enable = false; # to revert
+    enable = true;
 
     shares = {
       backup_drive = {
-        path = "/mnt/storage/recordsize-1M/backup_drive";
+        path = "/mnt/storage/backup_drive";
         browseable = "no";
         "guest ok" = "no";
         "read only" = "no";
       };
 
       media_and_such = {
-        path = "/mnt/storage/recordsize-1M/data_drive";
+        path = "/mnt/storage/data_drive";
         browseable = "no";
         "guest ok" = "no";
         "read only" = "no";
