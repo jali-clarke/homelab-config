@@ -27,7 +27,7 @@ in
     };
 
     syncoidOpts = {
-      enable = false; # to revert
+      enable = true;
       source = "storage";
       target = "pi@${meta.weedle.networkIP}:backups/storage";
       sshKey = "/home/pi/.ssh/id_rsa_nixops";
