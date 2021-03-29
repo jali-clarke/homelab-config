@@ -45,9 +45,12 @@ in
 
   networking.hostName = meta.atlas.hostName; # Define your hostname.
 
-  homelab-config.nginx-proxy.serviceMap = {
-    "nexus.lan" = nexusPort;
-    "pihole.lan" = piholePort;
+  homelab-config.nginx-proxy = {
+    enable = true;
+    serviceMap = {
+      "nexus.lan" = nexusPort;
+      "pihole.lan" = piholePort;
+    };
   };
 
   homelab-config.nexus = {

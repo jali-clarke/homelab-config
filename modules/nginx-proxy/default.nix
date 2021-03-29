@@ -4,6 +4,11 @@
       inherit (lib) mkOption types;
     in
     {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+      };
+
       serviceMap = mkOption {
         type = types.attrsOf types.port;
         default = { };
@@ -25,7 +30,7 @@
         };
       };
     in
-    {
+    lib.mkIf cfg.enable {
       services.nginx = {
         enable = true;
         virtualHosts = lib.attrsets.mapAttrs mkVirtualHost cfg.serviceMap;
