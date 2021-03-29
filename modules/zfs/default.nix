@@ -4,6 +4,11 @@
       inherit (lib) types mkOption;
     in
     {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+      };
+
       doAutoScrub = mkOption {
         type = types.bool;
         default = true;
@@ -94,119 +99,121 @@
     let
       cfg = config.homelab-config.zfs;
     in
-    lib.mkMerge [
-      (
-        {
-          boot.loader.grub.copyKernels = true;
-          boot.supportedFilesystems = [ "zfs" ];
-          services.zfs.autoScrub.enable = cfg.doAutoScrub;
+    lib.mkIf cfg.enable (
+      lib.mkMerge [
+        (
+          {
+            boot.loader.grub.copyKernels = true;
+            boot.supportedFilesystems = [ "zfs" ];
+            services.zfs.autoScrub.enable = cfg.doAutoScrub;
 
-          environment.systemPackages = [
-            pkgs.lz4
-            pkgs.mbuffer
-            pkgs.pv
-          ];
-        }
-      )
+            environment.systemPackages = [
+              pkgs.lz4
+              pkgs.mbuffer
+              pkgs.pv
+            ];
+          }
+        )
 
-      (
-        lib.mkIf (cfg.zfsARCSizeMaxGB != null) {
-          boot.kernelParams = [ "zfs.zfs_arc_max=${toString (cfg.zfsARCSizeMaxGB * 1024 * 1024 * 1024)}" ];
-        }
-      )
+        (
+          lib.mkIf (cfg.zfsARCSizeMaxGB != null) {
+            boot.kernelParams = [ "zfs.zfs_arc_max=${toString (cfg.zfsARCSizeMaxGB * 1024 * 1024 * 1024)}" ];
+          }
+        )
 
-      (
-        lib.mkIf (cfg.hostId != null) {
-          networking.hostId = cfg.hostId;
-        }
-      )
+        (
+          lib.mkIf (cfg.hostId != null) {
+            networking.hostId = cfg.hostId;
+          }
+        )
 
-      (
-        let
-          sanoidOpts = cfg.sanoidOpts;
-          userPerms = "bookmark,create,hold,mount,receive,rollback,send";
-        in
-        lib.mkIf (sanoidOpts != null) {
-          services.sanoid = {
-            enable = true;
-            datasets.${sanoidOpts.dataset} = {
-              autosnap = sanoidOpts.autosnap;
-              autoprune = sanoidOpts.autoprune;
-              recursive = true;
-              processChildrenOnly = sanoidOpts.processChildrenOnly;
+        (
+          let
+            sanoidOpts = cfg.sanoidOpts;
+            userPerms = "bookmark,create,hold,mount,receive,rollback,send";
+          in
+          lib.mkIf (sanoidOpts != null && sanoidOpts.enable) {
+            services.sanoid = {
+              enable = true;
+              datasets.${sanoidOpts.dataset} = {
+                autosnap = sanoidOpts.autosnap;
+                autoprune = sanoidOpts.autoprune;
+                recursive = true;
+                processChildrenOnly = sanoidOpts.processChildrenOnly;
 
-              hourly = 24;
-              daily = 30;
-              monthly = 6;
-              yearly = 0;
-            };
-          };
-
-          systemd.services.zfs-pi-delegation = {
-            description = "Gives the pi user zfs permissions";
-            serviceConfig = {
-              RemainAfterExit = "yes";
-              Type = "oneshot";
+                hourly = 24;
+                daily = 30;
+                monthly = 6;
+                yearly = 0;
+              };
             };
 
-            script = "/run/booted-system/sw/bin/zfs allow pi ${userPerms} ${sanoidOpts.dataset}";
-            after = [ "zfs.target" ];
-            wantedBy = [ "multi-user.target" ];
-          };
-        }
-      )
+            systemd.services.zfs-pi-delegation = {
+              description = "Gives the pi user zfs permissions";
+              serviceConfig = {
+                RemainAfterExit = "yes";
+                Type = "oneshot";
+              };
 
-      (
-        let
-          syncoidOpts = cfg.syncoidOpts;
-        in
-        lib.mkIf (syncoidOpts != null) {
-          assertions = [
-            {
-              assertion = cfg.sanoidOpts != null;
-              message = "if syncoidOpts is set, sanoidOpts must be set as well";
-            }
-          ];
+              script = "/run/booted-system/sw/bin/zfs allow pi ${userPerms} ${sanoidOpts.dataset}";
+              after = [ "zfs.target" ];
+              wantedBy = [ "multi-user.target" ];
+            };
+          }
+        )
 
-          services.syncoid = {
-            enable = true;
+        (
+          let
+            syncoidOpts = cfg.syncoidOpts;
+          in
+          lib.mkIf (syncoidOpts != null && syncoidOpts.enable) {
+            assertions = [
+              {
+                assertion = cfg.sanoidOpts != null;
+                message = "if syncoidOpts is set, sanoidOpts must be set as well";
+              }
+            ];
 
-            user = "pi";
-            group = "users";
+            services.syncoid = {
+              enable = true;
 
-            commands.${syncoidOpts.source} = {
-              target = syncoidOpts.target;
-              sshKey = syncoidOpts.sshKey;
+              user = "pi";
+              group = "users";
 
-              recursive = true;
-              extraArgs = [
-                "--create-bookmark"
-                "--compress"
-                "lz4"
-                "--no-sync-snap"
-                "--skip-parent"
-              ] ++ lib.optionals syncoidOpts.sshNoVerify [
-                "--sshoption"
-                "StrictHostKeyChecking=no"
-                "--sshoption"
-                "UserKnownHostsFile=/dev/null"
+              commands.${syncoidOpts.source} = {
+                target = syncoidOpts.target;
+                sshKey = syncoidOpts.sshKey;
+
+                recursive = true;
+                extraArgs = [
+                  "--create-bookmark"
+                  "--compress"
+                  "lz4"
+                  "--no-sync-snap"
+                  "--skip-parent"
+                ] ++ lib.optionals syncoidOpts.sshNoVerify [
+                  "--sshoption"
+                  "StrictHostKeyChecking=no"
+                  "--sshoption"
+                  "UserKnownHostsFile=/dev/null"
+                ];
+              };
+            };
+          }
+        )
+
+        (
+          {
+            services.smartd = {
+              enable = cfg.doAutoSMART;
+
+              autodetect = true;
+              extraOptions = [
+                "--interval=${toString (24 * 3600)}" # every day
               ];
             };
-          };
-        }
-      )
-
-      (
-        {
-          services.smartd = {
-            enable = cfg.doAutoSMART;
-
-            autodetect = true;
-            extraOptions = [
-              "--interval=${toString (24 * 3600)}" # every day
-            ];
-          };
-        }
-      )
-    ];
+          }
+        )
+      ]
+    );
 }

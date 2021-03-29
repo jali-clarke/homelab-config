@@ -24,6 +24,7 @@ in
   ];
 
   homelab-config.zfs = {
+    enable = true;
     hostId = "c083c64b";
     zfsARCSizeMaxGB = 8;
 

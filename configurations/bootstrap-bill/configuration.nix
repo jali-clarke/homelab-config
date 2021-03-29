@@ -22,6 +22,7 @@
   ];
 
   homelab-config.zfs = {
+    enable = true;
     doAutoScrub = false;
     doAutoSMART = false;
   };
