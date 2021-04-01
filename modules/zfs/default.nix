@@ -106,12 +106,6 @@
             boot.loader.grub.copyKernels = true;
             boot.supportedFilesystems = [ "zfs" ];
             services.zfs.autoScrub.enable = cfg.doAutoScrub;
-
-            environment.systemPackages = [
-              pkgs.lz4
-              pkgs.mbuffer
-              pkgs.pv
-            ];
           }
         )
 
