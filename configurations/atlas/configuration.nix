@@ -13,6 +13,7 @@ in
 
   environment.systemPackages = [
     (import ../../lib/load-ssh-key.nix { inherit pkgs; })
+    pkgs.rename
   ];
 
   homelab-config.zfs = {
