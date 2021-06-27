@@ -6,11 +6,7 @@
 
   outputs = { self, nixpkgs, nixos-generators }:
     let
-      overlay = system:
-        final: prev: {
-          nixos-generators = nixos-generators.defaultPackage.${system};
-        };
-
+      overlay = system: import ./overlay { nixos-generators = nixos-generators.defaultPackage.${system}; };
       mkPkgs = system: import nixpkgs { inherit system; overlays = [ (overlay system) ]; };
     in
     {
