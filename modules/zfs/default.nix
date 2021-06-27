@@ -188,6 +188,7 @@
                   "lz4"
                   "--no-sync-snap"
                   "--skip-parent"
+                  "--preserve-recordsize"
                 ] ++ lib.optionals syncoidOpts.sshNoVerify [
                   "--sshoption"
                   "StrictHostKeyChecking=no"
