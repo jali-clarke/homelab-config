@@ -25,6 +25,7 @@ in
     pkgs.nmon
     pkgs.pv
     pkgs.rsync
+    pkgs.system-flake-info
     pkgs.vim
   ];
 

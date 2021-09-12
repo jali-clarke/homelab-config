@@ -8,7 +8,7 @@ in
   ];
 
   environment.systemPackages = [
-    (import ../../lib/load-ssh-key.nix { inherit pkgs; })
+    pkgs.load-ssh-key
   ];
 
   homelab-config.zfs = {

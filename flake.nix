@@ -6,8 +6,14 @@
 
   outputs = { self, nixpkgs, nixos-generators }:
     let
-      overlay = system: import ./overlay { nixos-generators = nixos-generators.defaultPackage.${system}; };
-      mkPkgs = system: import nixpkgs { inherit system; overlays = [ (overlay system) ]; };
+      overlay = { system, hostname }:
+        import ./overlay {
+          inherit hostname;
+          nixos-generators = nixos-generators.defaultPackage.${system};
+          selfSourceInfo = self.sourceInfo;
+        };
+
+      mkPkgs = { system, hostname }: import nixpkgs { inherit system; overlays = [ (overlay { inherit system hostname; }) ]; };
     in
     {
       nixosConfigurations =
@@ -16,7 +22,7 @@
             { system, subdirName, configurationFile ? "configuration.nix" }:
             nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem {
               inherit system;
-              pkgs = mkPkgs system;
+              pkgs = mkPkgs { inherit system; hostname = subdirName; };
               modules = [
                 (./configurations + "/${subdirName}/${configurationFile}")
                 ./modules
