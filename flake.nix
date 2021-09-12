@@ -40,7 +40,7 @@
 
       overlays.x86_64-linux = final: prev:
         let
-          pkgs = mkPkgs "x86_64-linux";
+          pkgs = mkPkgs { system = "x86_64-linux"; hostname = "<overlay>"; };
         in
         {
           inherit (pkgs) kubectl nixos-generators;
@@ -48,7 +48,7 @@
 
       devShell.x86_64-linux =
         let
-          pkgs = mkPkgs "x86_64-linux";
+          pkgs = mkPkgs { system = "x86_64-linux"; hostname = "<devShell>"; };
           meta = import ./lib/get-meta.nix { inherit pkgs; };
 
           nixos-generate = "${pkgs.nixos-generators}/bin/nixos-generate";
@@ -100,7 +100,7 @@
 
       devShell.x86_64-darwin =
         let
-          pkgs = mkPkgs "x86_64-darwin";
+          pkgs = mkPkgs { system = "x86_64-darwin"; hostname = "<devShell>"; };
         in
         pkgs.mkShell {
           name = "bare-metal-shell";
