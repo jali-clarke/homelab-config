@@ -14,6 +14,6 @@ let
   lastModifiedSecond = builtins.substring 12 2 lastModifiedDate;
 in
 {
-  versionedFlakeURI = "${thisRepoURI}/${shortRev}#${hostname}";
+  versionedFlakeURI = "${thisRepoURI}/${shortRev}#nixosConfigurations.${hostname}";
   lastModifiedFormatted = "${lastModifiedYear}-${lastModifiedMonth}-${lastModifiedDay} ${lastModifiedHour}:${lastModifiedMinute}:${lastModifiedSecond} UTC";
 }
