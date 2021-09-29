@@ -51,8 +51,10 @@ in
 
   homelab-config.nexus = {
     enable = true;
-    nexusHome = "/mnt/storage/atlas_services/nexus_data";
-    dockerInterface.port = 5000;
+    nexusHome = {
+      create = false;
+      path = "/mnt/storage/atlas_services/nexus_data";
+    };
     webInterface = {
       ip = "127.0.0.1";
       port = nexusPort;
