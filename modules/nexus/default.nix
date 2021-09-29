@@ -36,6 +36,7 @@
     let
       cfg = config.homelab-config.nexus;
       implNexusCfg = config.services.nexus;
+      implNexusOpts = options.services.nexus;
     in
     lib.mkIf cfg.enable {
       services.nexus = rec {
@@ -44,8 +45,8 @@
         listenPort = cfg.webInterface.port;
         home = cfg.nexusHome.path;
 
-        # jvmOpts merges with defaults via concat
         jvmOpts = ''
+          ${implNexusOpts.jvmOpts.default}
           -Djava.util.prefs.userRoot=${home}/nexus3/javaprefs
         '';
       };
