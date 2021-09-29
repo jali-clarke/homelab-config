@@ -9,7 +9,7 @@
         default = false;
       };
 
-      nexusDataPath = mkOption {
+      nexusHome = mkOption {
         type = types.path;
       };
 
@@ -56,7 +56,7 @@
         ];
 
         volumes = [
-          "${cfg.nexusDataPath}:/nexus-data"
+          "${cfg.nexusHome}/nexus3:/nexus-data"
         ];
 
         extraOptions = [
