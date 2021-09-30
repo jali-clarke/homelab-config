@@ -100,6 +100,9 @@
       cfg = config.homelab-config.zfs;
       notifsSender = "pi@jali-clarke.ca";
       notifsRecipient = "jinnah.ali-clarke@outlook.com";
+      escapeUnitName = name:
+        lib.concatMapStrings (s: if lib.isList s then "-" else s)
+          (builtins.split "[^a-zA-Z0-9_.\\-]+" name);
     in
     lib.mkIf cfg.enable (
       lib.mkMerge [
@@ -215,6 +218,14 @@
                   "--sshoption"
                   "UserKnownHostsFile=/dev/null"
                 ];
+              };
+            };
+
+            # in addition to the service definition provided by the above module
+            systemd.services."syncoid-${escapeUnitName syncoidOpts.source}" = {
+              serviceConfig = {
+                BindReadOnlyPaths = [ syncoidOpts.sshKey ];
+                ProtectHome = lib.mkForce false;
               };
             };
           }
