@@ -72,15 +72,16 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1632918561,
-        "narHash": "sha256-2zhdhp0/Ad4xAWT8yweoPhjnN47PhY4Zu6damgHKFU4=",
-        "owner": "nixos",
+        "lastModified": 1633105444,
+        "narHash": "sha256-hJ1V4gjGMCHISOu8dBiMCWiYki5ifZQDJoZmOcJEc5E=",
+        "owner": "jali-clarke",
         "repo": "nixpkgs",
-        "rev": "46b3df372e38794bdf0892b425854986b01dfa74",
+        "rev": "cdfbd9ecdc2fb31eced9cc424562a9b0d2f8545b",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "jali-clarke",
+        "ref": "jali-clarke/nexus-3.32.0-03",
         "repo": "nixpkgs",
         "type": "github"
       }

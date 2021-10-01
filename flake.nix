@@ -1,7 +1,9 @@
 {
   description = "env for managing bare metal infra";
 
-  inputs.nixpkgs.url = "github:nixos/nixpkgs";
+  # testing PR https://github.com/NixOS/nixpkgs/pull/140165
+  # revert back to updated github:NixOS/nixpkgs once ^ is merged
+  inputs.nixpkgs.url = "github:jali-clarke/nixpkgs/jali-clarke/nexus-3.32.0-03";
   inputs.nixos-generators.url = "github:nix-community/nixos-generators";
 
   inputs.agenix.url = "github:ryantm/agenix";

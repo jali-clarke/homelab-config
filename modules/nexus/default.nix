@@ -45,18 +45,6 @@
         listenPort = cfg.webInterface.port;
         home = cfg.nexusHome.path;
 
-        # see if there's an update in nixpkgs before bumping this manually
-        package = pkgs.nexus.overrideAttrs (
-          old: rec {
-            version = "3.32.0-03";
-            sourceRoot = "${old.pname}-${version}";
-            src = pkgs.fetchurl {
-              url = "https://sonatype-download.global.ssl.fastly.net/nexus/3/nexus-${version}-unix.tar.gz";
-              sha256 = "17cgbpv1id4gbp3c42pqc3dxnh36cm1c77y7dysskyml4qfh5f7m";
-            };
-          }
-        );
-
         jvmOpts = ''
           ${implNexusOpts.jvmOpts.default}
           -Djava.util.prefs.userRoot=${home}/nexus3/javaprefs
