@@ -55,7 +55,8 @@ in
       path = "/mnt/storage/atlas_services/nexus_data";
     };
     webInterface = {
-      ip = "127.0.0.1";
+      # 0.0.0.0 required for docker access (which is not proxied)
+      ip = "0.0.0.0";
       port = nexusPort;
     };
   };
