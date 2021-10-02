@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let
   maxOpenFiles = toString (1024 * 1024);
+  maxInotifyInstances = toString (128 * 8);
 in
 {
   networking.wireless.enable = false; # Enables wireless support via wpa_supplicant.
@@ -60,4 +61,8 @@ in
       value = maxOpenFiles;
     }
   ];
+
+  boot.kernel.sysctl = {
+    "fs.inotify.max_user_instances" = maxInotifyInstances;
+  };
 }
