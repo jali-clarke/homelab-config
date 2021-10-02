@@ -21,6 +21,7 @@ in
   environment.systemPackages = [
     pkgs.dnsutils
     pkgs.htop
+    pkgs.iotop
     pkgs.git
     pkgs.lsof
     pkgs.nmon
