@@ -43,7 +43,7 @@
           pkgs = mkPkgs { system = "x86_64-linux"; hostname = "<overlay>"; };
         in
         {
-          inherit (pkgs) kubectl nixos-generators;
+          inherit (pkgs) k9s kubectl nixos-generators;
         };
 
       devShell.x86_64-linux =

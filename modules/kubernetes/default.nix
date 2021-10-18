@@ -82,6 +82,7 @@
             };
 
             environment.systemPackages = [
+              pkgs.k9s
               pkgs.kubectl
               pkgs.kubernetes
             ];
