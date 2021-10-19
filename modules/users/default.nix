@@ -18,8 +18,15 @@ in
   config =
     let
       cfg = config.homelab-config.users;
+      secretFile = secretFilePath: {
+        file = secretFilePath;
+        owner = "pi";
+      };
     in
     {
+      age.secrets.id_rsa_nixops = secretFile ../../secrets/id_rsa_nixops.age;
+      age.secrets."id_rsa_nixops.pub" = secretFile ../../secrets/id_rsa_nixops.pub.age;
+
       users.mutableUsers = false;
       users.users.pi = {
         hashedPassword = passwordHashes.pi;

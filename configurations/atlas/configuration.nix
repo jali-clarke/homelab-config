@@ -12,7 +12,6 @@ in
   ];
 
   environment.systemPackages = [
-    pkgs.load-ssh-key
     pkgs.rename
   ];
 
@@ -31,7 +30,7 @@ in
       enable = true;
       source = "storage";
       target = "pi@${meta.weedle.networkIP}:backups/storage";
-      sshKey = "/home/pi/.ssh/id_rsa_nixops";
+      sshKey = config.age.secrets.id_rsa_nixops.path;
       sshNoVerify = true; # should be ok i promise
     };
   };

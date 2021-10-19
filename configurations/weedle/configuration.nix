@@ -7,10 +7,6 @@ in
     ./hardware-configuration.nix
   ];
 
-  environment.systemPackages = [
-    pkgs.load-ssh-key
-  ];
-
   homelab-config.zfs = {
     enable = true;
     zfsARCSizeMaxGB = 2;

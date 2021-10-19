@@ -4,7 +4,10 @@
   inputs.nixpkgs.url = "github:nixos/nixpkgs";
   inputs.nixos-generators.url = "github:nix-community/nixos-generators";
 
-  outputs = { self, nixpkgs, nixos-generators }:
+  inputs.agenix.url = "github:ryantm/agenix";
+  inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
+
+  outputs = { self, nixpkgs, nixos-generators, agenix }:
     let
       overlay = { system, hostname }:
         import ./overlay {
@@ -13,7 +16,14 @@
           selfSourceInfo = self.sourceInfo;
         };
 
-      mkPkgs = { system, hostname }: import nixpkgs { inherit system; overlays = [ (overlay { inherit system hostname; }) ]; };
+      mkPkgs = { system, hostname }:
+        import nixpkgs {
+          inherit system;
+          overlays = [
+            agenix.overlay
+            (overlay { inherit system hostname; })
+          ];
+        };
     in
     {
       nixosConfigurations =
@@ -24,6 +34,7 @@
               inherit system;
               pkgs = mkPkgs { inherit system; hostname = subdirName; };
               modules = [
+                agenix.nixosModules.age
                 (./configurations + "/${subdirName}/${configurationFile}")
                 ./modules
               ];
@@ -76,16 +87,16 @@
               fi
             done
 
-            ${ssh} -i ~/.ssh/id_rsa_nixops pi@${meta.weedle.networkIP} -- sudo cat /etc/kubernetes/cluster-admin.kubeconfig > ~/.kube/config
-            ${ssh} -i ~/.ssh/id_rsa_nixops pi@${meta.weedle.networkIP} -- sudo cat /var/lib/kubernetes/secrets/ca.pem > /var/lib/kubernetes/secrets/ca.pem
-            ${ssh} -i ~/.ssh/id_rsa_nixops pi@${meta.weedle.networkIP} -- sudo cat /var/lib/kubernetes/secrets/cluster-admin.pem > /var/lib/kubernetes/secrets/cluster-admin.pem
-            ${ssh} -i ~/.ssh/id_rsa_nixops pi@${meta.weedle.networkIP} -- sudo cat /var/lib/kubernetes/secrets/cluster-admin-key.pem > /var/lib/kubernetes/secrets/cluster-admin-key.pem
+            ${ssh} -i /run/secrets/id_rsa_nixops pi@${meta.weedle.networkIP} -- sudo cat /etc/kubernetes/cluster-admin.kubeconfig > ~/.kube/config
+            ${ssh} -i /run/secrets/id_rsa_nixops pi@${meta.weedle.networkIP} -- sudo cat /var/lib/kubernetes/secrets/ca.pem > /var/lib/kubernetes/secrets/ca.pem
+            ${ssh} -i /run/secrets/id_rsa_nixops pi@${meta.weedle.networkIP} -- sudo cat /var/lib/kubernetes/secrets/cluster-admin.pem > /var/lib/kubernetes/secrets/cluster-admin.pem
+            ${ssh} -i /run/secrets/id_rsa_nixops pi@${meta.weedle.networkIP} -- sudo cat /var/lib/kubernetes/secrets/cluster-admin-key.pem > /var/lib/kubernetes/secrets/cluster-admin-key.pem
           '';
         in
         pkgs.mkShell {
           name = "bare-metal-shell";
           buildInputs = [
-            pkgs.ccrypt
+            pkgs.agenix
             pkgs.git
             pkgs.kubectl
             pkgs.nixos-generators
@@ -105,7 +116,7 @@
         pkgs.mkShell {
           name = "bare-metal-shell";
           buildInputs = [
-            pkgs.ccrypt
+            pkgs.agenix
             pkgs.nixpkgs-fmt
           ];
         };

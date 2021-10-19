@@ -27,6 +27,11 @@
         type = types.bool;
         default = true;
       };
+
+      sshKeyPath = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
     };
 
   config =
@@ -37,7 +42,7 @@
       ssh = "${pkgs.openssh}/bin/ssh";
       joinCluster = pkgs.writeScriptBin "join_cluster" ''
         #!${pkgs.runtimeShell} -xe
-        ${ssh} -i ~/.ssh/id_rsa_nixops pi@${cfg.masterIP} -- "sudo cat /var/lib/kubernetes/secrets/apitoken.secret" | sudo nixos-kubernetes-node-join
+        ${ssh} -i ${cfg.sshKeyPath} pi@${cfg.masterIP} -- "sudo cat /var/lib/kubernetes/secrets/apitoken.secret" | sudo nixos-kubernetes-node-join
       '';
 
       containerdConfigFile = pkgs.writeText "containerd.toml" ''
@@ -112,6 +117,13 @@
 
         (
           lib.mkIf (!cfg.isMaster) {
+            assertions = [
+              {
+                assertion = cfg.sshKeyPath != null;
+                message = "worker nodes must have homelab-config.k8s.sshKeyPath set";
+              }
+            ];
+
             environment.systemPackages = [
               joinCluster
             ];

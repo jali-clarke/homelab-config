@@ -3,10 +3,6 @@ let
   meta = config.homelab-config.meta;
 in
 {
-  environment.systemPackages = [
-    pkgs.load-ssh-key
-  ];
-
   # NixOS wants to enable GRUB by default
   boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf

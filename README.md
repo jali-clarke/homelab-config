@@ -15,6 +15,7 @@ enter the almighty [NixOS](https://nixos.org/) - an OS whose package manager and
 * `nix` with [flakes](https://nixos.wiki/wiki/Flakes) support
 * an `x86_64-linux` system in order to build the [bootstrap images](#bootstrap-images)
 * an internet connection on each machine that you plan to set up
+* appropriate SSH keys if you want to configure secrets (via [agenix](https://github.com/ryantm/agenix))
 
 ### bootstrap images
 
@@ -30,10 +31,11 @@ in order to actually use these configs on a fresh system, we need to create some
 2. flash the resulting image to a usb drive
 3. boot from that usb drive
 4. mount hard disks as necessary (including creation of `zfs` pools / datasets) and then [nixos-generate-config](https://nixos.wiki/wiki/Nixos-generate-config)
-5. copy the `hardware-configuration.nix` back to this repo into the configuration dir of your choice, reference it correctly in the corresponding `configuration.nix` and commit + push it.  delete both `hardware-configuration.nix` and `configuration.nix` from the machine but not this repo
-6. on the machine (either via ssh or locally) `sudo nixos-install --no-root-passwd --flake github:jali-clarke/homelab-config#${configuration_name}`
-7. reboot
-8. see relevant `manual steps` for the chosen configuration
+5. generate ssh host keys for the machine in the appropriate (mounted) dir, rekeying secrets in this repo as necessary
+6. copy the `hardware-configuration.nix` back to this repo into the configuration dir of your choice, reference it correctly in the corresponding `configuration.nix` and commit + push it.  delete both `hardware-configuration.nix` and `configuration.nix` from the machine but not this repo
+7. on the machine (either via ssh or locally) `sudo nixos-install --no-root-passwd --flake github:jali-clarke/homelab-config#${configuration_name}`
+8. reboot
+9. see relevant `manual steps` (if any) for the chosen configuration
 
 #### for `aarch64-linux` systems
 
@@ -42,11 +44,12 @@ for raspberry pis specifically
 1. create the [pi-baker](#pi-baker) image by doing `build_pi_baker`
 2. flash the resulting image to a micro sd card
 3. slot that into the pi and power it on
-4. on the pi (either via ssh or locally) `sudo nixos-rebuild switch --flake github:jali-clarke/homelab-config#${configuration_name}`
+4. generate ssh host keys for the pi in the appropriate dir, rekeying secrets in this repo as necessary
+5. on the pi (either via ssh or locally) `sudo nixos-rebuild switch --flake github:jali-clarke/homelab-config#${configuration_name}`
     * if the pi runs out of memory and the process is killed, simply rerun the command and it will continue from where it left off (continue to rerun until done)
     * can also run from a host that knows how to build `aarch64-linux` and use `--build-host` + `--target-host`
-5. logout and then log back in, or reboot
-6. see relevant `manual steps` for the chosen configuration
+6. logout and then log back in, or reboot
+7. see relevant `manual steps` (if any) for the chosen configuration
 
 ### upgrading
 
@@ -71,8 +74,7 @@ all ips below are made static in our router instead of in code for my own conven
 
 all to be performed on `atlas` unless specified otherwise
 
-1. do `sudo smbpasswd -a pi` and set a password in order to setup the `pi` `samba` user
-2. as `pi`, run `load_ssh_key` with `SECRETS_PASSPHRASE` set to the appropriate value
+1. do `sudo smbpasswd -a pi` and set a password in order to setup the `pi` `samba` use
 
 ### [bootstrap-bill](./configurations/bootstrap-bill)
 
@@ -84,12 +86,6 @@ all to be performed on `atlas` unless specified otherwise
 * `x86_64-linux` vm hosted on windows desktop
 * no fixed address
 * useful when there are no other `x86_64-linux` environments available, e.g. rebuilding everything from scratch and i need to produce [bootstrap images](#bootstrap-images)
-
-#### manual steps
-
-all to be performed on `nixos-oblivion` unless specified otherwise
-
-1. as `pi`, run `load_ssh_key` with `SECRETS_PASSPHRASE` set to the appropriate value
 
 ### [pi-baker](./configurations/pi-baker)
 
@@ -106,8 +102,7 @@ all to be performed on `nixos-oblivion` unless specified otherwise
 
 all to be performed on `speet` unless specified otherwise
 
-1. as `pi`, run `load_ssh_key` with `SECRETS_PASSPHRASE` set to the appropriate value
-2. join the cluster with `join_cluster`
+1. join the cluster with `join_cluster`
 
 ### [weedle](./configurations/weedle)
 
@@ -121,5 +116,4 @@ all to be performed on `speet` unless specified otherwise
 
 all to be performed on `weedle` unless specified otherwise
 
-1. as `pi`, run `load_ssh_key` with `SECRETS_PASSPHRASE` set to the appropriate value
-2. as `pi`, `ln -s /etc/kubernetes/cluster-admin.kubeconfig ~/.kube/config` (may need to fiddle with permissions somewhere)
+1. as `pi`, `ln -s /etc/kubernetes/cluster-admin.kubeconfig ~/.kube/config` (may need to fiddle with permissions somewhere)
