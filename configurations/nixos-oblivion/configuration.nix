@@ -11,7 +11,6 @@
     ];
 
   environment.systemPackages = [
-    pkgs.load-ssh-key
     pkgs.nixos-generators
   ];
 
