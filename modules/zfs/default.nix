@@ -98,6 +98,8 @@
   config =
     let
       cfg = config.homelab-config.zfs;
+      notifsSender = "pi@jali-clarke.ca";
+      notifsRecipient = "jinnah.ali-clarke@outlook.com";
     in
     lib.mkIf cfg.enable (
       lib.mkMerge [
@@ -120,9 +122,9 @@
 
             services.zfs.zed.settings = {
               ZED_DEBUG_LOG = "/tmp/zed.debug.log";
-              ZED_EMAIL_ADDR = [ "jinnah.ali-clarke@outlook.com" ];
+              ZED_EMAIL_ADDR = [ notifsRecipient ];
               ZED_EMAIL_PROG = "${pkgs.mailutils}/bin/mail";
-              ZED_EMAIL_OPTS = "-s '@SUBJECT@' -a 'From: zed on ${config.networking.hostName} <pi@jali-clarke.ca>' @ADDRESS@";
+              ZED_EMAIL_OPTS = "-s '@SUBJECT@' -a 'From: zed on ${config.networking.hostName} <${notifsSender}>' @ADDRESS@";
               ZED_SCRUB_AFTER_RESILVER = true;
               ZED_NOTIFY_INTERVAL_SECS = 3600;
               ZED_NOTIFY_VERBOSE = true;
@@ -222,11 +224,16 @@
           {
             services.smartd = {
               enable = cfg.doAutoSMART;
-
               autodetect = true;
               extraOptions = [
                 "--interval=${toString (24 * 3600)}" # every day
               ];
+
+              notifications.mail = {
+                enable = true;
+                sender = notifsSender;
+                recipient = notifsRecipient;
+              };
             };
           }
         )
