@@ -109,6 +109,14 @@
             environment.systemPackages = [
               pkgs.smartmontools
             ];
+
+            # for email notifs
+            services.postfix = rec {
+              enable = true;
+              domain = "jali-clarke.ca";
+              origin = domain;
+              relayHost = "smtp.teksavvy.com";
+            };
           }
         )
 
