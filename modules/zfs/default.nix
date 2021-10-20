@@ -125,7 +125,7 @@
               ZED_EMAIL_OPTS = "-s '@SUBJECT@' -a 'From: zed on ${config.networking.hostName} <pi@jali-clarke.ca>' @ADDRESS@";
               ZED_SCRUB_AFTER_RESILVER = true;
               ZED_NOTIFY_INTERVAL_SECS = 3600;
-              ZED_NOTIFY_VERBOSE = false;
+              ZED_NOTIFY_VERBOSE = true;
             };
           }
         )
