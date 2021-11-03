@@ -90,6 +90,7 @@ in
 
         ${
           lib.concatMapStringsSep "\n" (mkCnameRecord meta.ingress) [
+            "argocd"
             "emby"
             "grafana"
             "markov"
