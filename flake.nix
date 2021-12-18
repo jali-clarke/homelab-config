@@ -1,7 +1,7 @@
 {
   description = "env for managing bare metal infra";
 
-  inputs.nixpkgs.url = "github:nixos/nixpkgs";
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/535c1e5a72e1bf15b71ed1a59de84a9ae7a0eb91";
   inputs.nixos-generators.url = "github:nix-community/nixos-generators";
 
   inputs.agenix.url = "github:ryantm/agenix";
