@@ -7,6 +7,7 @@
     ./nginx-proxy
     ./pihole
     ./users
+    ./vault
     ./zfs
   ];
 }

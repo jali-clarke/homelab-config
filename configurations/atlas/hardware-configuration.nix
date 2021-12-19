@@ -38,6 +38,12 @@
       fsType = "zfs";
     };
 
+  fileSystems."/mnt/storage/atlas_services/vault_data" =
+    {
+      device = "storage/vault_data";
+      fsType = "zfs";
+    };
+
   fileSystems."/mnt/storage/k8s_drive/cassandra" =
     {
       device = "storage/cassandra";

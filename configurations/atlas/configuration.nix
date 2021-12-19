@@ -2,6 +2,7 @@
 let
   nexusPort = 8080;
   piholePort = 8081;
+  vaultPort = 8082;
 
   meta = config.homelab-config.meta;
 in
@@ -45,6 +46,7 @@ in
     serviceMap = {
       "nexus.lan" = nexusPort;
       "pihole.lan" = piholePort;
+      "vault.lan" = vaultPort;
     };
   };
 
@@ -58,6 +60,15 @@ in
       # 0.0.0.0 required for docker access (which is not proxied)
       ip = "0.0.0.0";
       port = nexusPort;
+    };
+  };
+
+  homelab-config.vault = {
+    enable = true;
+    storagePath = "/mnt/storage/atlas_services/vault_data";
+    webInterface = {
+      ip = "127.0.0.1";
+      port = vaultPort;
     };
   };
 
@@ -85,6 +96,7 @@ in
           lib.concatMapStringsSep "\n" (mkCnameRecord meta.atlas) [
             "pihole"
             "nexus"
+            "vault"
           ]
         }
 
