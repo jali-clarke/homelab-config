@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cassandra-data-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: cassandra-data
+  nfs:
+    path: /mnt/storage/k8s_drive/cassandra
+    server: atlas.lan

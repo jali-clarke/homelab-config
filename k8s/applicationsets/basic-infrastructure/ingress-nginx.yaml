@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ingress-nginx
+spec:
+  generators:
+  - list:
+      elements:
+      - ingressType: internal
+        ingressResourceName: ingress-nginx-internal
+        loadBalancerIP: "192.168.0.200"
+      - ingressType: external
+        ingressResourceName: ingress-nginx-external
+        loadBalancerIP: "192.168.0.202"
+  template:
+    metadata:
+      name: "{{ingressResourceName}}"
+    spec:
+      project: basic-infrastructure
+      source:
+        helm:
+          parameters:
+          - name: controller.ingressClassResource.name
+            value: "{{ingressType}}"
+          - name: controller.ingressClassResource.controllerValue
+            value: "k8s.io/{{ingressResourceName}}"
+          - name: controller.ingressClassResource.enabled
+            value: "true"
+          - name: controller.IngressClassByName
+            value: "true"
+          - name: controller.service.loadBalancerIP
+            value: "{{loadBalancerIP}}"
+        chart: ingress-nginx
+        repoURL: https://kubernetes.github.io/ingress-nginx
+        targetRevision: "4.0.3"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{ingressResourceName}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+  syncPolicy:
+    preserveResourcesOnDeletion: false

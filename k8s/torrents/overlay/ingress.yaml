@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: qbittorrent
+spec:
+  ingressClassName: internal
+  rules:
+  - host: torrents.lan
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: qbittorrent
+            port:
+              number: 8080

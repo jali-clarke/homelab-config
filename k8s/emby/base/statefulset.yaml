@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: emby
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emby
+  serviceName: emby-service
+  template:
+    metadata:
+      labels:
+        app: emby
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+      containers:
+      - name: emby
+        image: emby/embyserver:4.7.0.13
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 3072Mi
+          limits:
+            cpu: 2000m
+            memory: 7680Mi
+        ports:
+        - name: emby-web-port
+          containerPort: 8096

@@ -97,10 +97,15 @@
           name = "bare-metal-shell";
           buildInputs = [
             pkgs.agenix
+            pkgs.diffutils
+            pkgs.dnsutils
             pkgs.git
             pkgs.kubectl
+            pkgs.kubernetes-helm
             pkgs.nixos-generators
             pkgs.nixpkgs-fmt
+            pkgs.openssl
+            pkgs.telnet
             pkgs.vim
 
             buildBootstrapBill

@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: other-basic-infrastructure
+spec:
+  generators:
+  - list:
+      elements:
+      - serviceName: argocd
+      - serviceName: cloudflare
+      - serviceName: metallb-system
+  template:
+    metadata:
+      name: "{{serviceName}}"
+    spec:
+      project: basic-infrastructure
+      source:
+        repoURL: https://github.com/jali-clarke/homelab-config.git
+        targetRevision: master
+        plugin:
+          name: argocd-vault-plugin-kustomize
+        path: "k8s/{{serviceName}}/overlay"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{serviceName}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+  syncPolicy:
+    preserveResourcesOnDeletion: false

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflare-ddns
+  namespace: cloudflare
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudflare-ddns
+  template:
+    metadata:
+      labels:
+        app: cloudflare-ddns
+    spec:
+      containers:
+      - name: ddns-updater
+        image: oznu/cloudflare-ddns
+        env:
+        - name: ZONE
+          value: jali-clarke.ca
+        - name: EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: CF_EMAIL
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: CF_API_KEY
+        - name: PROXIED
+          value: "false"
+        - name: RRTYPE
+          value: A
+        - name: SUBDOMAIN
+          value: ingress-root
+        

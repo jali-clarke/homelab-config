@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cert-replicator
+  namespace: cloudflare
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cert-replicator-role
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - get
+  - patch
+  - watch
+- apiGroups:
+  - "extensions"
+  - "networking.k8s.io"
+  resources:
+  - ingresses
+  verbs:
+  - get
+  - list
+  - patch
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cert-replicator-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cert-replicator-role
+subjects:
+  - kind: ServiceAccount
+    name: cert-replicator
+    namespace: cloudflare
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cert-replicator
+  namespace: cloudflare
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cert-replicator
+  template:
+    metadata:
+      labels:
+        app: cert-replicator
+    spec:
+      serviceAccountName: cert-replicator
+      containers:
+      - name: secret-watcher
+        image: nexus.lan:5000/cert-replicator-secret-watcher
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: SECRET_NAME
+          value: jali-clarke-ca
+        - name: INGRESS_CLASS
+          value: external
+      - name: ingress-watcher
+        image: nexus.lan:5000/cert-replicator-ingress-watcher
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: SECRET_NAME
+          value: jali-clarke-ca
+        - name: INGRESS_CLASS
+          value: external

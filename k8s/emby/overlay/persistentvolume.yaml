@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: media-pv
+spec:
+  capacity:
+    storage: 1Ti
+  accessModes:
+  - ReadOnlyMany
+  storageClassName: media-pv
+  nfs:
+    path: /mnt/storage/data_drive/iPod
+    server: atlas.lan
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: emby-config-pv
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: emby-config-pv
+  nfs:
+    path: /mnt/storage/k8s_drive/emby_config
+    server: atlas.lan

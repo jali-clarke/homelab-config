@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argo-rollouts
+spec:
+  template:
+    spec:
+      containers:
+      - name: argo-rollouts
+        image: quay.io/argoproj/argo-rollouts@sha256:b92b74f270f76a8cb878666a890952ba703166c28c66ace9b570f022e9ea76f9
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argo-rollouts-dashboard
+spec:
+  template:
+    spec:
+      containers:
+      - name: argo-rollouts-dashboard
+        image: quay.io/argoproj/kubectl-argo-rollouts@sha256:36bba519b4eec4bafca72e38b2d27284fa90d5e282998ad986e0d17259ffcfce

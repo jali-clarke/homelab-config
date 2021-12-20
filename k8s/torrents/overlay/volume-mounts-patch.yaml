@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent
+spec:
+  template:
+    spec:
+      containers:
+      - name: qbittorrent
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config
+        - name: downloads-volume
+          mountPath: /downloads
+      volumes:
+      - name: config-volume
+        persistentVolumeClaim:
+          claimName: qbittorrent-config-pvc
+      - name: downloads-volume
+        persistentVolumeClaim:
+          claimName: torrents-downloads-pvc
