@@ -21,6 +21,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-webhook
+  namespace: argocd
 spec:
   ingressClassName: external
   tls:
