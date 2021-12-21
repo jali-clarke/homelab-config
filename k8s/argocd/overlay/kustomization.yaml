@@ -6,3 +6,4 @@ resources:
 - ingress.yaml
 patches:
 - add-avp-env-vars.yaml
+- add-secret-data.yaml

@@ -16,3 +16,25 @@ spec:
             name: argocd-server
             port:
               number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-webhook
+spec:
+  ingressClassName: external
+  tls:
+  - hosts:
+    - argocd.jali-clarke.ca
+    secretName: jali-clarke-ca
+  rules:
+  - host: argocd.jali-clarke.ca
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/api/webhook"
+        backend:
+          service:
+            name: argocd-server
+            port:
+              number: 80
