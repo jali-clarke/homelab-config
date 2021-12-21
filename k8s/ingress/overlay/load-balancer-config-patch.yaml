@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ingress-nginx
+spec:
+  generators:
+  - list:
+      elements:
+      - ingressType: internal
+        ingressResourceName: ingress-nginx-internal
+        loadBalancerIP: "192.168.0.200"
+      - ingressType: external
+        ingressResourceName: ingress-nginx-external
+        loadBalancerIP: "192.168.0.202"
