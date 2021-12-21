@@ -1,33 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
+kind: Application
 metadata:
   name: basic-infrastructure
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
-  generators:
-  - list:
-      elements:
-      - serviceName: argocd
-      - serviceName: cloudflare
-      - serviceName: metallb-system
-  template:
-    metadata:
-      name: "{{serviceName}}"
-    spec:
-      project: basic-infrastructure
-      source:
-        repoURL: https://github.com/jali-clarke/homelab-config.git
-        targetRevision: master
-        plugin:
-          name: argocd-vault-plugin-kustomize
-        path: "k8s/{{serviceName}}/overlay"
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: "{{serviceName}}"
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-        - CreateNamespace=true
+  project: apps-of-apps
+  source:
+    repoURL: https://github.com/jali-clarke/homelab-config.git
+    targetRevision: master
+    path: k8s/applicationsets/basic-infrastructure/components
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
   syncPolicy:
-    preserveResourcesOnDeletion: false
+    automated:
+      prune: true
+      selfHeal: true
