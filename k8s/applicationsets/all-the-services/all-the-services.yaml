@@ -20,6 +20,8 @@ spec:
         repoURL: https://github.com/jali-clarke/homelab-config.git
         targetRevision: master
         path: "k8s/{{serviceName}}/overlay"
+        plugin:
+          name: argocd-vault-plugin-kustomize
       destination:
         server: https://kubernetes.default.svc
         namespace: "{{serviceName}}"

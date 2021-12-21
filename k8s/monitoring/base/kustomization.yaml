@@ -1,6 +1,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: argocd
 resources:
-- all-the-services.yaml
-- monitoring.yaml
+- prometheus-stack.yaml

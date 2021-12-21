@@ -8,6 +8,7 @@ spec:
     helm:
       values: |
         grafana:
+          adminPassword: <path:kv/data/monitoring#grafana-password>
           ingress:
             enabled: true
             ingressClassName: internal
