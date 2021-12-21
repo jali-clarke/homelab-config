@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: ddns-updater
-        image: oznu/cloudflare-ddns
+        image: oznu/cloudflare-ddns@sha256:f552b1053ca4bad934eb3ca16e2d22decefe4423e2bf3e0a354fa1ab03b46390
         env:
         - name: ZONE
           value: jali-clarke.ca
