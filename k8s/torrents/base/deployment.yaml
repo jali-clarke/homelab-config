@@ -27,15 +27,3 @@ spec:
         ports:
         - name: webui
           containerPort: 8080
-        volumeMounts:
-        - name: config-volume
-          mountPath: /config
-        - name: downloads-volume
-          mountPath: /downloads
-      volumes:
-      - name: config-volume
-        persistentVolumeClaim:
-          claimName: qbittorrent-config-pvc
-      - name: downloads-volume
-        persistentVolumeClaim:
-          claimName: torrents-downloads-pvc
