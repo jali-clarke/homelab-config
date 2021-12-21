@@ -79,5 +79,3 @@ spec:
               fieldPath: metadata.namespace
         - name: SECRET_NAME
           value: jali-clarke-ca
-        - name: INGRESS_CLASS
-          value: external
