@@ -17,7 +17,7 @@ spec:
         beta.kubernetes.io/arch: amd64
       containers:
       - name: emby
-        image: emby/embyserver:4.7.0.13
+        image: emby/embyserver:4.7.0.19
         resources:
           requests:
             cpu: 1000m
