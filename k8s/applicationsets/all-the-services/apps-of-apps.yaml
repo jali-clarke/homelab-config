@@ -12,7 +12,7 @@ spec:
     metadata:
       name: "{{serviceName}}"
     spec:
-      project: default
+      project: apps-of-apps
       source:
         repoURL: https://github.com/jali-clarke/homelab-config.git
         targetRevision: master
