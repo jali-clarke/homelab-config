@@ -7,9 +7,8 @@ resources:
 - clusterrolebinding.yaml
 - namespace.yaml
 - serviceaccount.yaml
-patches:
-- disable-tls-patch.yaml
 patchesStrategicMerge:
 - https://raw.githubusercontent.com/argoproj-labs/argocd-vault-plugin/v1.6.0/manifests/argocd-cm.yaml
 - https://raw.githubusercontent.com/argoproj-labs/argocd-vault-plugin/v1.6.0/manifests/argocd-repo-server-deploy.yaml
+- disable-tls-patch.yaml
 - use-repo-server-sa-patch.yaml
