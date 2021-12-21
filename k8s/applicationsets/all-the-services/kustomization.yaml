@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: argocd
 resources:
 - all-the-services.yaml
+- prometheus-stack.yaml
