@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps-of-apps
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - serviceName: monitoring
+  template:
+    metadata:
+      name: "{{serviceName}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/jali-clarke/homelab-config.git
+        targetRevision: master
+        path: "k8s/{{serviceName}}/overlay"
+        plugin:
+          name: argocd-vault-plugin-kustomize
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: argocd
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+  syncPolicy:
+    preserveResourcesOnDeletion: false

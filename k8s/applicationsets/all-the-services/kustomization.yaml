@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: argocd
 resources:
 - all-the-services.yaml
-- monitoring.yaml
+- apps-of-apps.yaml
