@@ -19,17 +19,15 @@ spec:
       project: basic-infrastructure
       source:
         helm:
-          parameters:
-          - name: controller.ingressClassResource.name
-            value: "{{ingressType}}"
-          - name: controller.ingressClassResource.controllerValue
-            value: "k8s.io/{{ingressResourceName}}"
-          - name: controller.ingressClassResource.enabled
-            value: "true"
-          - name: controller.IngressClassByName
-            value: "true"
-          - name: controller.service.loadBalancerIP
-            value: "{{loadBalancerIP}}"
+          values: |
+            controller:
+              service:
+                loadBalancerIP: "{{loadBalancerIP}}"
+              ingressClassByName: true
+              ingressClassResource:
+                enabled: true
+                name: "{{ingressType}}"
+                controllerValue: "k8s.io/{{ingressResourceName}}"
         chart: ingress-nginx
         repoURL: https://kubernetes.github.io/ingress-nginx
         targetRevision: "4.0.3"
