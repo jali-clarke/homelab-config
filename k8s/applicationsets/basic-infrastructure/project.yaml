@@ -11,3 +11,18 @@ spec:
     server: '*'
   sourceRepos:
   - '*'
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: apps-of-apps
+spec:
+  clusterResourceWhitelist:
+  - group: 'argoproj.io/*'
+    kind: 'Application'
+  destinations:
+  - namespace: 'argocd'
+    server: '*'
+  sourceRepos:
+  - '*'
+
