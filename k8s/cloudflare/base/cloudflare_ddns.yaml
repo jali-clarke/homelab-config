@@ -35,4 +35,3 @@ spec:
           value: A
         - name: SUBDOMAIN
           value: ingress-root
-        
