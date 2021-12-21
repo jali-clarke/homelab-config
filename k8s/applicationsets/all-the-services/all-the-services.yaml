@@ -1,35 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
+kind: Application
 metadata:
   name: all-the-services
-  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
-  generators:
-  - list:
-      elements:
-      - serviceName: argo-rollouts
-      - serviceName: cassandra
-      - serviceName: emby
-      - serviceName: torrents
-  template:
-    metadata:
-      name: "{{serviceName}}"
-    spec:
-      project: default
-      source:
-        repoURL: https://github.com/jali-clarke/homelab-config.git
-        targetRevision: master
-        path: "k8s/{{serviceName}}/overlay"
-        plugin:
-          name: argocd-vault-plugin-kustomize
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: "{{serviceName}}"
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-        - CreateNamespace=true
+  project: apps-of-apps
+  source:
+    repoURL: https://github.com/jali-clarke/homelab-config.git
+    targetRevision: master
+    path: k8s/applicationsets/all-the-services/components
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
   syncPolicy:
-    preserveResourcesOnDeletion: false
+    automated:
+      prune: true
+      selfHeal: true
