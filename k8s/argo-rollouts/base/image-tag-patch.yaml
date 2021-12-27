@@ -1,3 +1,5 @@
+# below pins are due to https://github.com/argoproj/argo-rollouts/issues/1507 - change when v1.2 is released
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
