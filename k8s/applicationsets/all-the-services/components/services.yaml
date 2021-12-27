@@ -11,6 +11,7 @@ spec:
       - serviceName: cassandra
       - serviceName: dev
       - serviceName: emby
+      - serviceName: nix-cache
       - serviceName: torrents
   template:
     metadata:
