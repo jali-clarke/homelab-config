@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: cache
+spec:
+  strategy:
+    blueGreen: 
+      activeService: cache
+      previewService: cache-staging
+      autoPromotionEnabled: false
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cache
+  template:
+    metadata:
+      labels:
+        app: cache
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+      - name: sshd
+        image: nixos/nix:2.3.12
+        imagePullPolicy: IfNotPresent
+        command:
+        - nix-shell
+        - -p
+        - openssh
+        - --run
+        args:
+        - "bash /sshd_config_mnt/startup.sh"
+        env: [] # patch to add a name-value(From) pair with name PASSWORD
+        ports:
+        - name: ssh
+          containerPort: 22
+        volumeMounts:
+        - name: sshd-config
+          mountPath: /sshd_config_mnt
+        - name: ssh-key
+          mountPath: /ssh_key_mnt
+        - name: ssh-host-key
+          mountPath: /ssh_host_key_mnt
+      volumes:
+      - name: sshd-config
+        configMap:
+          name: cache-sshd-config
+      # also patch to add volumes with names ssh-key and ssh-host-key

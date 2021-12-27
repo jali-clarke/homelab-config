@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cache
+spec:
+  type: ClusterIP
+  selector:
+    app: cache
+  clusterIP: None
+  ports:
+  - name: ssh
+    port: 22
+    targetPort: ssh
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cache-staging
+spec:
+  type: ClusterIP
+  selector:
+    app: cache
+  clusterIP: None
+  ports:
+  - name: ssh
+    port: 22
+    targetPort: ssh
