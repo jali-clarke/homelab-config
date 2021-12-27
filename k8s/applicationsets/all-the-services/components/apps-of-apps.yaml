@@ -6,7 +6,6 @@ spec:
   generators:
   - list:
       elements:
-      - serviceName: dev-env
       - serviceName: monitoring
   template:
     metadata:

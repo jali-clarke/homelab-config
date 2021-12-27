@@ -8,6 +8,7 @@ spec:
       elements:
       - serviceName: argo-rollouts
       - serviceName: cassandra
+      - serviceName: dev
       - serviceName: emby
       - serviceName: torrents
   template:
