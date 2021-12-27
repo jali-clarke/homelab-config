@@ -102,6 +102,7 @@ in
 
         ${
           lib.concatMapStringsSep "\n" (mkCnameRecord meta.ingress) [
+            "argo"
             "argocd"
             "argo-rollouts"
             "emby"
