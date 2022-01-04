@@ -62,6 +62,12 @@
       fsType = "zfs";
     };
 
+  fileSystems."/mnt/storage/k8s_drive/mysql_data" =
+    {
+      device = "storage/mysql_data";
+      fsType = "zfs";
+    };
+
   fileSystems."/mnt/storage/k8s_drive/qbittorrent" =
     {
       device = "storage/qbittorrent";
