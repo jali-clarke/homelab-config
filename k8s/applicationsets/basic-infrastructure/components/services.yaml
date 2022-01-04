@@ -7,6 +7,7 @@ spec:
   - list:
       elements:
       - serviceName: argocd
+      - serviceName: argo-rollouts
       - serviceName: cloudflare
       - serviceName: metallb-system
   template:
