@@ -107,6 +107,7 @@ in
             "argo-rollouts"
             "emby"
             "grafana"
+            "keycloak"
             "markov"
             "markov-app"
             "torrents"
