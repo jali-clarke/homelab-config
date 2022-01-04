@@ -7,7 +7,6 @@ spec:
   - list:
       elements:
       - serviceName: argo
-      - serviceName: argo-rollouts
       - serviceName: cassandra
       - serviceName: dev
       - serviceName: emby
