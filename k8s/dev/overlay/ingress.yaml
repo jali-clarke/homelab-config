@@ -50,6 +50,8 @@ spec:
   tls:
   - hosts:
     - dev.jali-clarke.ca
+    - files-dev.jali-clarke.ca
+    - web-dev.jali-clarke.ca
     secretName: jali-clarke-ca
   rules:
   - host: dev.jali-clarke.ca
@@ -62,6 +64,26 @@ spec:
             name: coder-service
             port:
               number: 8080
+  - host: files-dev.jali-clarke.ca
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: coder-service
+            port:
+              number: 80
+  - host: web-dev.jali-clarke.ca
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: coder-service
+            port:
+              number: 8888
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
