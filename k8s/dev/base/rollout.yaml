@@ -32,7 +32,7 @@ spec:
           limits:
             cpu: "10"
             memory: 20Gi
-        env: [] # patch to add a name-value(From) pair with name PASSWORD
+        env: [] # patch env vars into here, including EXTRA_ARGS if necessary
         volumeMounts:
         - name: dev-data
           mountPath: /root/project

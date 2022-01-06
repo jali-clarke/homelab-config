@@ -14,6 +14,13 @@ patchesJson6902:
     kind: Rollout
     name: coder
     namespace: dev
+  path: args-patch.json6902.yaml
+- target:
+    group: argoproj.io
+    version: v1alpha1
+    kind: Rollout
+    name: coder
+    namespace: dev
   path: image-patch.json6902.yaml
 - target:
     group: argoproj.io
