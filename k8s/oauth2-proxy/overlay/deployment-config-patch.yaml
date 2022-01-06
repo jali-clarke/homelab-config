@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth2-proxy
+spec:
+  template:
+    spec:
+      containers:
+      - name: oauth2-proxy
+        args:
+        - --provider=keycloak-oidc
+        - --email-domain=*
+        - --insecure-oidc-allow-unverified-email=true
+        - --upstream=file:///dev/null
+        - --http-address=0.0.0.0:4180
+        - --cookie-domain=.jali-clarke.ca
+        - --whitelist-domain=.jali-clarke.ca
+        - --oidc-issuer-url=https://keycloak.jali-clarke.ca/auth/realms/homelab
+        - --redirect-url=https://auth.jali-clarke.ca/oauth2/callback
+        - --allowed-role=homelab-admin
+        envFrom:
+        - secretRef:
+            name: oauth2-proxy-client-creds
+        ports:
+        - containerPort: 4180
+          protocol: TCP

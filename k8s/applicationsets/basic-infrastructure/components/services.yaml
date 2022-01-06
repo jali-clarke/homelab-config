@@ -10,6 +10,7 @@ spec:
       - serviceName: argo-rollouts
       - serviceName: cloudflare
       - serviceName: metallb-system
+      - serviceName: oauth2-proxy
   template:
     metadata:
       name: "{{serviceName}}"
