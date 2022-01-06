@@ -7,4 +7,6 @@ resources:
 - ingress.yaml
 patches:
 - add-avp-env-vars.yaml
+- add-configmap-data.yaml
+- add-rbac-configmap-data.yaml
 - add-secret-data.yaml

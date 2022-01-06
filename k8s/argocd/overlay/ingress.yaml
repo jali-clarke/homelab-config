@@ -33,7 +33,7 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: "/api/webhook"
+        path: "/"
         backend:
           service:
             name: argocd-server

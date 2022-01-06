@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+data:
+  url: https://argocd.jali-clarke.ca
+  oidc.config: |
+    name: Keycloak
+    issuer: https://keycloak.jali-clarke.ca/auth/realms/homelab
+    clientID: $oidc.keycloak.clientID
+    clientSecret: $oidc.keycloak.clientSecret
+    requestedScopes: ["openid", "profile", "email", "groups"]
