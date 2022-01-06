@@ -115,6 +115,8 @@ spec:
   tls:
   - hosts:
     - dev-staging.jali-clarke.ca
+    - files-dev-staging.jali-clarke.ca
+    - web-dev-staging.jali-clarke.ca
     secretName: jali-clarke-ca
   rules:
   - host: dev-staging.jali-clarke.ca
@@ -127,3 +129,23 @@ spec:
             name: coder-staging-service
             port:
               number: 8080
+  - host: files-dev-staging.jali-clarke.ca
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: coder-staging-service
+            port:
+              number: 80
+  - host: web-dev-staging.jali-clarke.ca
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: coder-staging-service
+            port:
+              number: 8888
