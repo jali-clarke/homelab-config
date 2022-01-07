@@ -1,25 +1,6 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress
-  namespace: argo-rollouts
-spec:
-  ingressClassName: internal
-  rules:
-  - host: argo-rollouts.lan
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: argo-rollouts-dashboard
-            port:
-              number: 3100
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
   name: ingress-external
   namespace: argo-rollouts
   annotations:
