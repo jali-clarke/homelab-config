@@ -60,7 +60,7 @@ spec:
       serviceAccountName: cert-replicator
       containers:
       - name: secret-watcher
-        image: nexus.lan:5000/cert-replicator-secret-watcher
+        image: nexus.jali-clarke.ca:5000/cert-replicator-secret-watcher
         env:
         - name: POD_NAMESPACE
           valueFrom:
@@ -71,7 +71,7 @@ spec:
         - name: INGRESS_CLASS
           value: external
       - name: ingress-watcher
-        image: nexus.lan:5000/cert-replicator-ingress-watcher
+        image: nexus.jali-clarke.ca:5000/cert-replicator-ingress-watcher
         env:
         - name: POD_NAMESPACE
           valueFrom:

@@ -49,7 +49,7 @@ spec:
           restartPolicy: Never
           containers:
           - name: cert-fetcher
-            image: nexus.lan:5000/cert-fetcher
+            image: nexus.jali-clarke.ca:5000/cert-fetcher
             env:
             - name: CERT_NAME
               value: jali-clarke-ca

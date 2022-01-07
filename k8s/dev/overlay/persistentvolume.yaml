@@ -10,4 +10,4 @@ spec:
   storageClassName: dev-data
   nfs:
     path: /mnt/storage/k8s_drive/dev
-    server: atlas.lan
+    server: atlas.jali-clarke.ca

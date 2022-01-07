@@ -10,7 +10,7 @@ spec:
   storageClassName: qbittorrent-config
   nfs:
     path: /mnt/storage/k8s_drive/qbittorrent
-    server: atlas.lan
+    server: atlas.jali-clarke.ca
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -24,4 +24,4 @@ spec:
   storageClassName: torrents-downloads
   nfs:
     path: /mnt/storage/data_drive/Torrents
-    server: atlas.lan
+    server: atlas.jali-clarke.ca

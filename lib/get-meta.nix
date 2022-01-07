@@ -16,7 +16,7 @@ let
 
   mkEntry = hostName: networkIP: {
     inherit hostName networkIP;
-    hostNameWithDomain = "${hostName}.lan";
+    hostNameWithDomain = "${hostName}.jali-clarke.ca";
   };
 in
 lib.attrsets.mapAttrs mkEntry ipMap

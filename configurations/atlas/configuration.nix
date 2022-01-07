@@ -44,9 +44,9 @@ in
   homelab-config.nginx-proxy = {
     enable = true;
     serviceMap = {
-      "nexus.lan" = nexusPort;
-      "pihole.lan" = piholePort;
-      "vault.lan" = vaultPort;
+      "nexus.jali-clarke.ca" = nexusPort;
+      "pihole.jali-clarke.ca" = piholePort;
+      "vault.jali-clarke.ca" = vaultPort;
     };
   };
 
@@ -83,8 +83,7 @@ in
     extraDnsmasqConfig =
       let
         mkHostRecord = hostMeta: "host-record=${hostMeta.hostNameWithDomain},${hostMeta.hostName},${hostMeta.networkIP}";
-        mkCnameRecord = hostMeta: cnameHost: "cname=${cnameHost}.lan,${cnameHost},${hostMeta.hostNameWithDomain}";
-        mkExternalCnameRecord = hostMeta: cnameHost: "cname=${cnameHost}.jali-clarke.ca,${hostMeta.hostNameWithDomain}";
+        mkCnameRecord = hostMeta: cnameHost: "cname=${cnameHost}.jali-clarke.ca,${hostMeta.hostNameWithDomain}";
       in
       ''
         # host records
@@ -112,7 +111,7 @@ in
         }
 
         ${
-          lib.concatMapStringsSep "\n" (mkExternalCnameRecord meta.ingress-external) [
+          lib.concatMapStringsSep "\n" (mkCnameRecord meta.ingress-external) [
             "argo"
             "argocd"
             "argo-rollouts"

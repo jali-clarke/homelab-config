@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-  - host: keycloak.lan
+  - host: keycloak.jali-clarke.ca
     http:
       paths:
       - pathType: Prefix

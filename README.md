@@ -125,7 +125,7 @@ this repo also contains [infrastructure-as-code](./k8s) for all the k8s services
 1. make sure secrets are configured accordingly in vault
 2. `nix develop` in the root of this repo
 3. `kubectl apply -k k8s/argocd/overlay`
-4. go to the `argocd` dashboard (probably `http://argocd.lan`) and make sure it's alive and well
+4. go to the `argocd` dashboard (probably `https://argocd.jali-clarke.ca`) and make sure it's alive and well
 5. `kubectl apply -k k8s/applicationsets/basic-infrastructure`
 6. back to the `argocd` dashboard to make sure everything's coming up
 7. deploy everything else: `kubectl apply -k k8s/applicationsets/all-the-services`

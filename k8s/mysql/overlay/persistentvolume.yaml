@@ -10,4 +10,4 @@ spec:
   storageClassName: mysql-data
   nfs: # should be nfsv4 - see https://dev.mysql.com/doc/refman/8.0/en/disk-issues.html
     path: /mnt/storage/k8s_drive/mysql_data
-    server: atlas.lan
+    server: atlas.jali-clarke.ca

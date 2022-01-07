@@ -23,7 +23,7 @@ spec:
         kubernetes.io/arch: amd64
       containers:
       - name: coder
-        image: nexus.lan:5000/dev-env # patch me, ideally
+        image: nexus.jali-clarke.ca:5000/dev-env # patch me, ideally
         imagePullPolicy: Always
         resources:
           requests:

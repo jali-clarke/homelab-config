@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-  - host: argo.lan
+  - host: argo.jali-clarke.ca
     http:
       paths:
       - pathType: Prefix

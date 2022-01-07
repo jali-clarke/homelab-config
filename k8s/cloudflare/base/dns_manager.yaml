@@ -51,7 +51,7 @@ spec:
       serviceAccountName: dns-manager
       containers:
       - name: dns-manager
-        image: nexus.lan:5000/dns-manager
+        image: nexus.jali-clarke.ca:5000/dns-manager
         env:
         - name: CF_API_EMAIL
           valueFrom:

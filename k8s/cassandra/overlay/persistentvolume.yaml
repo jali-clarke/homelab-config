@@ -10,4 +10,4 @@ spec:
   storageClassName: cassandra-data
   nfs:
     path: /mnt/storage/k8s_drive/cassandra
-    server: atlas.lan
+    server: atlas.jali-clarke.ca

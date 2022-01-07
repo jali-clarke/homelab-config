@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-  - host: torrents.lan
+  - host: torrents.jali-clarke.ca
     http:
       paths:
       - pathType: Prefix
