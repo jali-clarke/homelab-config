@@ -15,6 +15,7 @@ spec:
             controller:
               service:
                 loadBalancerIP: "{{loadBalancerIP}}"
+                externalTrafficPolicy: Local
               ingressClassByName: true
               ingressClassResource:
                 enabled: true
