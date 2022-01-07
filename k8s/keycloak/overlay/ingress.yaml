@@ -1,24 +1,6 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: keycloak
-spec:
-  ingressClassName: internal
-  rules:
-  - host: keycloak.jali-clarke.ca
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: keycloak
-            port:
-              number: 8080
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
   name: keycloak-external
 spec:
   ingressClassName: external
@@ -31,14 +13,7 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: "/auth/realms/homelab"
-        backend:
-          service:
-            name: keycloak
-            port:
-              number: 8080
-      - pathType: Prefix
-        path: "/auth/resources"
+        path: "/"
         backend:
           service:
             name: keycloak
