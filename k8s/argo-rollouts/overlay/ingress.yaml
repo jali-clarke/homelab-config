@@ -16,3 +16,29 @@ spec:
             name: argo-rollouts-dashboard
             port:
               number: 3100
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-external
+  namespace: argo-rollouts
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://auth.jali-clarke.ca/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://auth.jali-clarke.ca/oauth2/start?rd=https%3A%2F%2F$host$escaped_request_uri"
+spec:
+  ingressClassName: external
+  tls:
+  - hosts:
+    - argo-rollouts.jali-clarke.ca
+    secretName: jali-clarke-ca
+  rules:
+  - host: argo-rollouts.jali-clarke.ca
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: argo-rollouts-dashboard
+            port:
+              number: 3100
