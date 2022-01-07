@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-stack
+spec:
+  source:
+    helm:
+      values: |
+        grafana:
+          adminPassword: <path:kv/data/monitoring#grafana-password>
+          ingress:
+            enabled: true
+            ingressClassName: internal
+            hosts:
+            - grafana.lan
