@@ -11,6 +11,7 @@ let
 
     # virtual host on k8s
     ingress = "192.168.0.200";
+    ingress-external = "192.168.0.202";
   };
 
   mkEntry = hostName: networkIP: {

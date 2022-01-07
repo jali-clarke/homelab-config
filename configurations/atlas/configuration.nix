@@ -84,6 +84,7 @@ in
       let
         mkHostRecord = hostMeta: "host-record=${hostMeta.hostNameWithDomain},${hostMeta.hostName},${hostMeta.networkIP}";
         mkCnameRecord = hostMeta: cnameHost: "cname=${cnameHost}.lan,${cnameHost},${hostMeta.hostNameWithDomain}";
+        mkExternalCnameRecord = hostMeta: cnameHost: "cname=${cnameHost}.jali-clarke.ca,${hostMeta.hostNameWithDomain}";
       in
       ''
         # host records
@@ -103,21 +104,26 @@ in
         ${
           lib.concatMapStringsSep "\n" (mkCnameRecord meta.ingress) [
             "argo"
-            "argocd"
-            "argo-rollouts"
             "emby"
             "grafana"
             "keycloak"
             "markov"
             "markov-app"
             "torrents"
+          ]
+        }
 
-            "web.dev"
-            "files.dev"
+        ${
+          lib.concatMapStringsSep "\n" (mkExternalCnameRecord meta.ingress-external) [
+            "argocd"
+            "argo-rollouts"
+
+            "web-dev"
+            "files-dev"
             "dev"
 
-            "web.dev-staging"
-            "files.dev-staging"
+            "web-dev-staging"
+            "files-dev-staging"
             "dev-staging"
           ]
         }
