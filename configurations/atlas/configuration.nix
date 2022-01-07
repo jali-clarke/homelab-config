@@ -103,8 +103,6 @@ in
 
         ${
           lib.concatMapStringsSep "\n" (mkCnameRecord meta.ingress) [
-            "argo"
-            "emby"
             "grafana"
             "keycloak"
             "markov"
@@ -115,8 +113,10 @@ in
 
         ${
           lib.concatMapStringsSep "\n" (mkExternalCnameRecord meta.ingress-external) [
+            "argo"
             "argocd"
             "argo-rollouts"
+            "emby"
 
             "web-dev"
             "files-dev"
