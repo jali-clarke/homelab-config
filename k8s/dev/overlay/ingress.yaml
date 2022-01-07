@@ -13,6 +13,9 @@ spec:
     - dev.jali-clarke.ca
     - files-dev.jali-clarke.ca
     - web-dev.jali-clarke.ca
+    - dev-staging.jali-clarke.ca
+    - files-dev-staging.jali-clarke.ca
+    - web-dev-staging.jali-clarke.ca
     secretName: jali-clarke-ca
   rules:
   - host: dev.jali-clarke.ca
@@ -45,24 +48,6 @@ spec:
             name: coder-service
             port:
               number: 8888
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: ingress-staging-external
-  namespace: dev
-  annotations:
-    nginx.ingress.kubernetes.io/auth-url: "https://auth.jali-clarke.ca/oauth2/auth"
-    nginx.ingress.kubernetes.io/auth-signin: "https://auth.jali-clarke.ca/oauth2/start?rd=https%3A%2F%2F$host$escaped_request_uri"
-spec:
-  ingressClassName: external
-  tls:
-  - hosts:
-    - dev-staging.jali-clarke.ca
-    - files-dev-staging.jali-clarke.ca
-    - web-dev-staging.jali-clarke.ca
-    secretName: jali-clarke-ca
-  rules:
   - host: dev-staging.jali-clarke.ca
     http:
       paths:
