@@ -4,18 +4,14 @@ metadata:
   name: ingress-external
   namespace: dev
   annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
     nginx.ingress.kubernetes.io/auth-url: "https://auth.jali-clarke.ca/oauth2/auth"
     nginx.ingress.kubernetes.io/auth-signin: "https://auth.jali-clarke.ca/oauth2/start?rd=https%3A%2F%2F$host$escaped_request_uri"
 spec:
   ingressClassName: external
   tls:
   - hosts:
-    - dev.jali-clarke.ca
-    - files-dev.jali-clarke.ca
-    - web-dev.jali-clarke.ca
-    - dev-staging.jali-clarke.ca
-    - files-dev-staging.jali-clarke.ca
-    - web-dev-staging.jali-clarke.ca
+    - "*.jali-clarke.ca"
     secretName: jali-clarke-ca
   rules:
   - host: dev.jali-clarke.ca
