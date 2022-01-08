@@ -10,6 +10,12 @@ spec:
           adminPassword: <path:kv/data/monitoring#grafana-password>
           ingress:
             enabled: true
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt
             ingressClassName: internal
             hosts:
             - grafana.jali-clarke.ca
+            tls:
+            - hosts:
+              - grafana.jali-clarke.ca
+              secretName: jali-clarke-ca
