@@ -13,6 +13,8 @@ spec:
         - --txt-prefix=external-dns-txt.
         - --domain-filter=jali-clarke.ca
         - --provider=cloudflare
+        # see https://github.com/kubernetes-sigs/external-dns/issues/1975
+        - --annotation-filter=jali-clarke.external-dns.alpha.kubernetes.io/is-external in (true)
         envFrom:
         - secretRef:
             name: cloudflare-credentials
