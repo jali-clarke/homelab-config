@@ -8,7 +8,9 @@ spec:
       elements:
       - ingressType: internal
         ingressResourceName: ingress-nginx-internal
+        ingressPublishService: external-dns/ingress-cname-target
         loadBalancerIP: "192.168.0.200"
       - ingressType: external
         ingressResourceName: ingress-nginx-external
+        ingressPublishService: external-dns/ingress-external-cname-target
         loadBalancerIP: "192.168.0.202"

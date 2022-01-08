@@ -3,7 +3,12 @@ kind: ApplicationSet
 metadata:
   name: ingress-nginx
 spec:
-  generators: [] # override this with a generator providing "ingressType", "ingressResourceName", and "loadBalancerIP" params
+  # override this with a generator providing the following params:
+  #   ingressType
+  #   ingressResourceName
+  #   ingressPublishService
+  #   loadBalancerIP
+  generators: []
   template:
     metadata:
       name: "{{ingressResourceName}}"
@@ -21,6 +26,9 @@ spec:
                 enabled: true
                 name: "{{ingressType}}"
                 controllerValue: "k8s.io/{{ingressResourceName}}"
+              publishService:
+                enabled: true
+                pathOverride: "{{ingressPublishService}}"
         chart: ingress-nginx
         repoURL: https://kubernetes.github.io/ingress-nginx
         targetRevision: "4.0.3"
