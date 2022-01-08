@@ -15,3 +15,6 @@ spec:
           apiKeySecretRef:
             name: cloudflare-credentials
             key: api-key
+      selector:
+        dnsZones:
+        - 'jali-clarke.ca'
