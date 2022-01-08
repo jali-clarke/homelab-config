@@ -9,7 +9,7 @@ spec:
       - serviceName: argocd
       - serviceName: argo-rollouts
       - serviceName: cert-manager
-      - serviceName: cloudflare
+      - serviceName: ddns
       - serviceName: metallb-system
       - serviceName: oauth2-proxy
   template:

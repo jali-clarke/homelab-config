@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ddns
+spec:
+  template:
+    spec:
+      containers:
+      - name: ddns-updater
+        envFrom:
+        - secretRef:
+            name: cloudflare-credentials
+        env:
+        - name: ZONE
+          value: jali-clarke.ca
+        - name: PROXIED
+          value: "false"
+        - name: RRTYPE
+          value: A
+        - name: SUBDOMAIN
+          value: ingress-root

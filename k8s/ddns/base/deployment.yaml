@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ddns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ddns
+  template:
+    metadata:
+      labels:
+        app: ddns
+    spec:
+      containers:
+      - name: ddns-updater
+        image: oznu/cloudflare-ddns@sha256:f552b1053ca4bad934eb3ca16e2d22decefe4423e2bf3e0a354fa1ab03b46390
+        # need to set the following env vars: ZONE, EMAIL (cloudflare), API_KEY (cloudflare), PROXIED, RRTYPE, SUBDOMAIN
