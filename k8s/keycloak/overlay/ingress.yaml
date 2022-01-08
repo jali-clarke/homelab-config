@@ -32,12 +32,11 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: keycloak-admin-external
+  name: keycloak-admin
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
-    nginx.ingress.kubernetes.io/whitelist-source-range: 192.168.0.0/24
 spec:
-  ingressClassName: external
+  ingressClassName: internal
   tls:
   - hosts:
     - keycloak.jali-clarke.ca
