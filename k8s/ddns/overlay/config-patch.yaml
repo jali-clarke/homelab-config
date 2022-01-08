@@ -18,4 +18,4 @@ spec:
         - name: RRTYPE
           value: A
         - name: SUBDOMAIN
-          value: ingress-root
+          value: ingress-external
