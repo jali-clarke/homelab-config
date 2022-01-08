@@ -7,7 +7,7 @@ metadata:
 spec:
   tls:
   - hosts:
-    - "*.jali-clarke.ca"
+    - argo.jali-clarke.ca
     secretName: jali-clarke-ca
   ingressClassName: internal
   rules:

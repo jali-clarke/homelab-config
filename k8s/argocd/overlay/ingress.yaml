@@ -9,7 +9,7 @@ spec:
   ingressClassName: external
   tls:
   - hosts:
-    - "*.jali-clarke.ca"
+    - argocd.jali-clarke.ca
     secretName: jali-clarke-ca
   rules:
   - host: argocd.jali-clarke.ca

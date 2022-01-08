@@ -8,7 +8,7 @@ spec:
   ingressClassName: external
   tls:
   - hosts:
-    - "*.jali-clarke.ca"
+    - auth.jali-clarke.ca
     secretName: jali-clarke-ca
   rules:
   - host: auth.jali-clarke.ca

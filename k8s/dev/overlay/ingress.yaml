@@ -11,7 +11,12 @@ spec:
   ingressClassName: external
   tls:
   - hosts:
-    - "*.jali-clarke.ca"
+    - dev.jali-clarke.ca
+    - files-dev.jali-clarke.ca
+    - web-dev.jali-clarke.ca
+    - dev-staging.jali-clarke.ca
+    - files-dev-staging.jali-clarke.ca
+    - web-dev-staging.jali-clarke.ca
     secretName: jali-clarke-ca
   rules:
   - host: dev.jali-clarke.ca

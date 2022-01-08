@@ -11,7 +11,7 @@ spec:
   ingressClassName: external
   tls:
   - hosts:
-    - "*.jali-clarke.ca"
+    - argo-rollouts.jali-clarke.ca
     secretName: jali-clarke-ca
   rules:
   - host: argo-rollouts.jali-clarke.ca
