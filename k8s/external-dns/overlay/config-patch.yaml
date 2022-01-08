@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+spec:
+  template:
+    spec:
+      containers:
+      - name: external-dns
+        args:
+        - --source=ingress
+        - --registry=txt
+        - --txt-prefix=external-dns-txt.
+        - --domain-filter=jali-clarke.ca
+        - --provider=cloudflare
+        envFrom:
+        - secretRef:
+            name: cloudflare-credentials
