@@ -2,7 +2,13 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
 spec:
+  tls:
+  - hosts:
+    - "*.jali-clarke.ca"
+    secretName: jali-clarke-ca
   ingressClassName: internal
   rules:
   - host: argo.jali-clarke.ca
