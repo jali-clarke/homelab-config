@@ -3,11 +3,13 @@ kind: Ingress
 metadata:
   name: ingress-external
   namespace: argocd
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
 spec:
   ingressClassName: external
   tls:
   - hosts:
-    - argocd.jali-clarke.ca
+    - "*.jali-clarke.ca"
     secretName: jali-clarke-ca
   rules:
   - host: argocd.jali-clarke.ca
