@@ -116,13 +116,13 @@ in
             "argo-rollouts"
             "emby"
 
-            "web-dev"
-            "files-dev"
             "dev"
+            "files.dev"
+            "web.dev"
 
-            "web-dev-staging"
-            "files-dev-staging"
-            "dev-staging"
+            "staging.dev"
+            "files.staging.dev"
+            "web.staging.dev"
 
             "torrents"
           ]
