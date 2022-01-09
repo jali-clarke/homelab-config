@@ -17,7 +17,6 @@ spec:
         - --whitelist-domain=.jali-clarke.ca
         - --oidc-issuer-url=https://keycloak.jali-clarke.ca/auth/realms/homelab
         - --redirect-url=https://auth.jali-clarke.ca/oauth2/callback
-        - --allowed-group=/homelab-admin
         envFrom:
         - secretRef:
             name: oauth2-proxy-client-creds
