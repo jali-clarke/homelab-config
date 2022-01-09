@@ -5,4 +5,4 @@ metadata:
   namespace: argocd
 data:
   policy.csv: |
-    g, homelab-admins, role:admin
+    g, homelab-admin, role:admin
