@@ -107,7 +107,6 @@ in
             "keycloak"
             "markov"
             "markov-app"
-            "torrents"
           ]
         }
 
@@ -124,6 +123,8 @@ in
             "web-dev-staging"
             "files-dev-staging"
             "dev-staging"
+
+            "torrents"
           ]
         }
       '';
