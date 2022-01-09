@@ -13,11 +13,11 @@ spec:
   tls:
   - hosts:
     - dev.jali-clarke.ca
-    - files-dev.jali-clarke.ca
-    - web-dev.jali-clarke.ca
-    - dev-staging.jali-clarke.ca
-    - files-dev-staging.jali-clarke.ca
-    - web-dev-staging.jali-clarke.ca
+    - files.dev.jali-clarke.ca
+    - web.dev.jali-clarke.ca
+    - staging.dev.jali-clarke.ca
+    - files.staging.dev.jali-clarke.ca
+    - web.staging.dev.jali-clarke.ca
     secretName: jali-clarke-ca
   rules:
   - host: dev.jali-clarke.ca
@@ -30,7 +30,7 @@ spec:
             name: coder-service
             port:
               number: 8080
-  - host: files-dev.jali-clarke.ca
+  - host: files.dev.jali-clarke.ca
     http:
       paths:
       - pathType: Prefix
@@ -40,7 +40,7 @@ spec:
             name: coder-service
             port:
               number: 80
-  - host: web-dev.jali-clarke.ca
+  - host: web.dev.jali-clarke.ca
     http:
       paths:
       - pathType: Prefix
@@ -50,7 +50,7 @@ spec:
             name: coder-service
             port:
               number: 8888
-  - host: dev-staging.jali-clarke.ca
+  - host: staging.dev.jali-clarke.ca
     http:
       paths:
       - pathType: Prefix
@@ -60,7 +60,7 @@ spec:
             name: coder-staging-service
             port:
               number: 8080
-  - host: files-dev-staging.jali-clarke.ca
+  - host: files.staging.dev.jali-clarke.ca
     http:
       paths:
       - pathType: Prefix
@@ -70,7 +70,7 @@ spec:
             name: coder-staging-service
             port:
               number: 80
-  - host: web-dev-staging.jali-clarke.ca
+  - host: web.staging.dev.jali-clarke.ca
     http:
       paths:
       - pathType: Prefix
