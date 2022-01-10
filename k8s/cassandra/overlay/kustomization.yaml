@@ -6,4 +6,5 @@ resources:
 - persistentvolume.yaml
 - persistentvolumeclaim.yaml
 patches:
+- disable-patch.yaml
 - volume-mounts-patch.yaml
