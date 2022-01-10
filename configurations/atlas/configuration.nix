@@ -43,7 +43,7 @@ in
 
   homelab-config.nginx-proxy = {
     enable = true;
-    serviceMap = {
+    httpServiceMap = {
       "nexus.jali-clarke.ca" = nexusPort;
       "pihole.jali-clarke.ca" = piholePort;
       "vault.jali-clarke.ca" = vaultPort;

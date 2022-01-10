@@ -9,7 +9,7 @@
         default = false;
       };
 
-      serviceMap = mkOption {
+      httpServiceMap = mkOption {
         type = types.attrsOf types.port;
         default = { };
       };
@@ -33,7 +33,7 @@
     lib.mkIf cfg.enable {
       services.nginx = {
         enable = true;
-        virtualHosts = lib.attrsets.mapAttrs mkVirtualHost cfg.serviceMap;
+        virtualHosts = lib.attrsets.mapAttrs mkVirtualHost cfg.httpServiceMap;
 
         appendHttpConfig = ''
           server {
