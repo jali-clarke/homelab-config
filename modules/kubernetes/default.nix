@@ -66,8 +66,6 @@
           [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
             [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
               endpoint = ["https://registry-1.docker.io"]
-            [plugins."io.containerd.grpc.v1.cri".registry.mirrors."nexus.jali-clarke.ca:5000"]
-              endpoint = ["http://nexus.jali-clarke.ca:5000"]
       '';
     in
     lib.mkIf cfg.enable (
