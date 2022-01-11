@@ -1,3 +1,3 @@
 - op: replace
   path: /spec/template/spec/containers/0/image
-  value: "docker.jali-clarke.ca/dev-env:badd6d352e06195b27f6b136fabff03f99d39788"
+  value: "docker.jali-clarke.ca/dev-env:75ae6aa6e4489738b29d690c563300f02aba756a"
