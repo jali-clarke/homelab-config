@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }:
 let
+  dockerPort = 5000;
   nexusPort = 8080;
   piholePort = 8081;
   vaultPort = 8082;
@@ -49,6 +50,7 @@ in
     reloadServices = [ "nginx.service" ];
     credentialsFile = config.age.secrets."cloudflare_creds.env".path;
     domains = [
+      "docker.jali-clarke.ca"
       "nexus.jali-clarke.ca"
       "pihole.jali-clarke.ca"
       "vault.jali-clarke.ca"
@@ -65,6 +67,10 @@ in
           privateKeyPath = "/var/lib/acme/${host}/key.pem";
         } // info;
       in builtins.mapAttrs withCertPaths {
+        "docker.jali-clarke.ca" = {
+          port = dockerPort;
+        };
+
         "nexus.jali-clarke.ca" = {
           forwardProto = true;
           port = nexusPort;
@@ -87,8 +93,7 @@ in
       path = "/mnt/storage/atlas_services/nexus_data";
     };
     webInterface = {
-      # 0.0.0.0 required for docker access (which is not proxied)
-      ip = "0.0.0.0";
+      ip = "127.0.0.1";
       port = nexusPort;
     };
   };
@@ -124,8 +129,9 @@ in
 
         ${
           lib.concatMapStringsSep "\n" (mkCnameRecord meta.atlas) [
-            "pihole"
+            "docker"
             "nexus"
+            "pihole"
             "vault"
           ]
         }
