@@ -10,4 +10,5 @@ in
 {
   "id_rsa_nixops.age".publicKeys = [ devEnv ] ++ systems;
   "id_rsa_nixops.pub.age".publicKeys = [ devEnv ] ++ systems;
+  "cloudflare_creds.env.age".publicKeys = [ devEnv atlas ];
 }

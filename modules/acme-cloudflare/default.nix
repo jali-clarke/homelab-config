@@ -20,6 +20,7 @@
 
       reloadServices = mkOption {
         type = types.listOf types.nonEmptyStr;
+        default = [];
       };
     };
 

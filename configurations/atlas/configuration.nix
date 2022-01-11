@@ -41,6 +41,18 @@ in
 
   networking.hostName = meta.atlas.hostName; # Define your hostname.
 
+  age.secrets."cloudflare_creds.env".file = ../../secrets/cloudflare_creds.env.age;
+
+  homelab-config.acme-cloudflare = {
+    enable = true;
+    credentialsFile = config.age.secrets."cloudflare_creds.env".path;
+    domains = [
+      "nexus.jali-clarke.ca"
+      "pihole.jali-clarke.ca"
+      "vault.jali-clarke.ca"
+    ];
+  };
+
   homelab-config.nginx-proxy = {
     enable = true;
     httpServiceMap = {
