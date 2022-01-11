@@ -15,4 +15,4 @@ spec:
         - name: AVP_TYPE
           value: vault
         - name: VAULT_ADDR
-          value: http://vault.jali-clarke.ca
+          value: https://vault.jali-clarke.ca
