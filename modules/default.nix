@@ -1,5 +1,6 @@
 { ... }: {
   imports = [
+    ./acme-cloudflare
     ./common-config
     ./kubernetes
     ./meta
