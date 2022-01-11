@@ -60,15 +60,23 @@ in
 
     httpsServiceMap =
       let
-        fromPortMap = host: port: {
-          inherit port;
+        withCertPaths = host: info: {
           certPath = "/var/lib/acme/${host}/cert.pem";
           privateKeyPath = "/var/lib/acme/${host}/key.pem";
+        } // info;
+      in builtins.mapAttrs withCertPaths {
+        "nexus.jali-clarke.ca" = {
+          forwardProto = true;
+          port = nexusPort;
         };
-      in builtins.mapAttrs fromPortMap {
-        "nexus.jali-clarke.ca" = nexusPort;
-        "pihole.jali-clarke.ca" = piholePort;
-        "vault.jali-clarke.ca" = vaultPort;
+
+        "pihole.jali-clarke.ca" = {
+          port = piholePort;
+        };
+
+        "vault.jali-clarke.ca" = {
+          port = vaultPort;
+        };
       };
   };
 

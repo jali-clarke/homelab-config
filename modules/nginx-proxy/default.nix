@@ -29,6 +29,11 @@
               privateKeyPath = mkOption {
                 type = types.path;
               };
+
+              forwardProto = mkOption {
+                type = types.bool;
+                default = false;
+              };
             };
           }
         );
@@ -62,6 +67,7 @@
           extraConfig = ''
             proxy_pass_header Authorization;
             proxy_set_header Host ${hostname};
+            ${if portWithCertAndKey.forwardProto then "proxy_set_header X-Forwarded-Proto \"https\";" else ""}
           '';
         };
       };
