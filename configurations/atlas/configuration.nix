@@ -45,6 +45,7 @@ in
 
   homelab-config.acme-cloudflare = {
     enable = true;
+    readableByGroup = config.services.nginx.group;
     reloadServices = [ "nginx.service" ];
     credentialsFile = config.age.secrets."cloudflare_creds.env".path;
     domains = [

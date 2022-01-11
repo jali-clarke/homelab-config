@@ -18,6 +18,11 @@
         type = types.listOf types.nonEmptyStr;
       };
 
+      readableByGroup = mkOption {
+        type = types.nullOr types.nonEmptyStr;
+        default = null;
+      };
+
       reloadServices = mkOption {
         type = types.listOf types.nonEmptyStr;
         default = [];
@@ -34,6 +39,8 @@
           inherit domain;
           inherit (cfg) credentialsFile reloadServices;
           dnsProvider = "cloudflare";
+        }  // lib.optionalAttrs (cfg.readableByGroup != null) {
+          group = cfg.readableByGroup;
         };
       };
     in
