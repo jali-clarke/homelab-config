@@ -33,16 +33,14 @@
     let
       cfg = config.homelab-config.acme-cloudflare;
 
-      mkCertConfig = domain: {
-        name = domain;
-        value = {
-          inherit domain;
+      mkCertConfig = domain: lib.nameValuePair domain (
+        {
           inherit (cfg) credentialsFile reloadServices;
           dnsProvider = "cloudflare";
-        }  // lib.optionalAttrs (cfg.readableByGroup != null) {
+        } // lib.optionalAttrs (cfg.readableByGroup != null) {
           group = cfg.readableByGroup;
-        };
-      };
+        }
+      );
     in
     lib.mkIf cfg.enable {
       assertions = [
