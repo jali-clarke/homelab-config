@@ -60,16 +60,19 @@ in
 
     httpServiceMap = {
       "nexus.jali-clarke.ca" = nexusPort;
-      "pihole.jali-clarke.ca" = piholePort;
     };
 
-    httpsServiceMap = {
-      "vault.jali-clarke.ca" = {
-        port = vaultPort;
-        certPath = "/var/lib/acme/vault.jali-clarke.ca/cert.pem";
-        privateKeyPath = "/var/lib/acme/vault.jali-clarke.ca/key.pem";
+    httpsServiceMap =
+      let
+        fromPortMap = host: port: {
+          inherit port;
+          certPath = "/var/lib/acme/${host}/cert.pem";
+          privateKeyPath = "/var/lib/acme/${host}/key.pem";
+        };
+      in builtins.mapAttrs fromPortMap {
+        "pihole.jali-clarke.ca" = piholePort;
+        "vault.jali-clarke.ca" = vaultPort;
       };
-    };
   };
 
   homelab-config.nexus = {
