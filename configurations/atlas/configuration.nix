@@ -58,10 +58,6 @@ in
   homelab-config.nginx-proxy = {
     enable = true;
 
-    httpServiceMap = {
-      "nexus.jali-clarke.ca" = nexusPort;
-    };
-
     httpsServiceMap =
       let
         fromPortMap = host: port: {
@@ -70,6 +66,7 @@ in
           privateKeyPath = "/var/lib/acme/${host}/key.pem";
         };
       in builtins.mapAttrs fromPortMap {
+        "nexus.jali-clarke.ca" = nexusPort;
         "pihole.jali-clarke.ca" = piholePort;
         "vault.jali-clarke.ca" = vaultPort;
       };
