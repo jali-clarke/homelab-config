@@ -45,6 +45,7 @@ in
 
   homelab-config.acme-cloudflare = {
     enable = true;
+    reloadServices = [ "nginx.service" ];
     credentialsFile = config.age.secrets."cloudflare_creds.env".path;
     domains = [
       "nexus.jali-clarke.ca"
@@ -55,10 +56,18 @@ in
 
   homelab-config.nginx-proxy = {
     enable = true;
+
     httpServiceMap = {
       "nexus.jali-clarke.ca" = nexusPort;
       "pihole.jali-clarke.ca" = piholePort;
-      "vault.jali-clarke.ca" = vaultPort;
+    };
+
+    httpsServiceMap = {
+      "vault.jali-clarke.ca" = {
+        port = vaultPort;
+        certPath = "/var/lib/acme/vault.jali-clarke.ca/cert.pem";
+        privateKeyPath = "/var/lib/acme/vault.jali-clarke.ca/key.pem";
+      };
     };
   };
 
