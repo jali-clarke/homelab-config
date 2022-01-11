@@ -92,6 +92,16 @@
             ${ssh} -i /run/secrets/id_rsa_nixops pi@${meta.weedle.networkIP} -- sudo cat /var/lib/kubernetes/secrets/cluster-admin.pem > /var/lib/kubernetes/secrets/cluster-admin.pem
             ${ssh} -i /run/secrets/id_rsa_nixops pi@${meta.weedle.networkIP} -- sudo cat /var/lib/kubernetes/secrets/cluster-admin-key.pem > /var/lib/kubernetes/secrets/cluster-admin-key.pem
           '';
+
+          updateKnownGood = pkgs.writeScriptBin "update_known_good" ''
+            #!${pkgs.runtimeShell} -e
+
+            for tag in $(${pkgs.git}/bin/git tag | ${pkgs.gnugrep}/bin/grep known-good); do
+              ${pkgs.git}/bin/git tag -f $tag $1
+            done
+
+            ${pkgs.git}/bin/git push -f --tag
+          '';
         in
         pkgs.mkShell {
           name = "bare-metal-shell";
@@ -111,6 +121,7 @@
             buildBootstrapBill
             buildPiBaker
             fetchKubeconfig
+            updateKnownGood
           ];
         };
 
