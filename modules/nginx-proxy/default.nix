@@ -10,7 +10,21 @@
       };
 
       httpServiceMap = mkOption {
-        type = types.attrsOf types.port;
+        type = types.attrsOf (
+          types.submodule {
+            options = {
+              port = mkOption {
+                type = types.port;
+              };
+
+              extraConfig = mkOption {
+                type = types.nullOr types.lines;
+                default = null;
+              };
+            };
+          }
+        );
+
         default = { };
       };
 
@@ -30,9 +44,9 @@
                 type = types.path;
               };
 
-              forwardProto = mkOption {
-                type = types.bool;
-                default = false;
+              extraConfig = mkOption {
+                type = types.lines;
+                default = "";
               };
             };
           }
@@ -46,30 +60,22 @@
     let
       cfg = config.homelab-config.nginx-proxy;
 
-      mkHttpVirtualHost = hostname: port: {
+      mkHttpVirtualHost = hostname: portWithConfig: {
         locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString port}";
+          proxyPass = "http://127.0.0.1:${toString portWithConfig.port}";
           proxyWebsockets = true;
           extraConfig = ''
             proxy_pass_header Authorization;
             proxy_set_header Host ${hostname};
+            ${portWithConfig.extraConfig}
           '';
         };
       };
 
-      mkHttpsVirtualHost = hostname: portWithCertAndKey: {
+      mkHttpsVirtualHost = hostname: portWithConfig: mkHttpVirtualHost hostname portWithConfig // {
         forceSSL = true;
-        sslCertificate = portWithCertAndKey.certPath;
-        sslCertificateKey = portWithCertAndKey.privateKeyPath;
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString portWithCertAndKey.port}";
-          proxyWebsockets = true;
-          extraConfig = ''
-            proxy_pass_header Authorization;
-            proxy_set_header Host ${hostname};
-            ${if portWithCertAndKey.forwardProto then "proxy_set_header X-Forwarded-Proto \"https\";" else ""}
-          '';
-        };
+        sslCertificate = portWithConfig.certPath;
+        sslCertificateKey = portWithConfig.privateKeyPath;
       };
     in
     lib.mkIf cfg.enable {

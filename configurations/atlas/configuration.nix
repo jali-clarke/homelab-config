@@ -62,18 +62,24 @@ in
 
     httpsServiceMap =
       let
-        withCertPaths = host: info: {
+        withCertPaths = host: info: info // {
           certPath = "/var/lib/acme/${host}/cert.pem";
           privateKeyPath = "/var/lib/acme/${host}/key.pem";
-        } // info;
+        };
       in builtins.mapAttrs withCertPaths {
         "docker.jali-clarke.ca" = {
           port = dockerPort;
+          extraConfig = ''
+            client_max_body_size 0;
+            proxy_request_buffering off;
+          '';
         };
 
         "nexus.jali-clarke.ca" = {
-          forwardProto = true;
           port = nexusPort;
+          extraConfig = ''
+            proxy_set_header X-Forwarded-Proto "https";
+          '';
         };
 
         "pihole.jali-clarke.ca" = {

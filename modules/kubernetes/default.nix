@@ -29,7 +29,7 @@
       };
 
       sshKeyPath = mkOption {
-        type = types.nullOr types.str;
+        type = types.nullOr types.path;
         default = null;
       };
     };
