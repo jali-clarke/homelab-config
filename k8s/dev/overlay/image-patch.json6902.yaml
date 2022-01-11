@@ -1,3 +1,3 @@
 - op: replace
   path: /spec/template/spec/containers/0/image
-  value: "nexus.jali-clarke.ca:5000/dev-env:309f0b4b8484aa0df45a9fc5c81caecf4fb4bc00"
+  value: "nexus.jali-clarke.ca:5000/dev-env:ef2f64a3fb16c86caeaa9d41a521b88c54261b1d"
