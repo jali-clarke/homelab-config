@@ -145,6 +145,7 @@ in
         ${
           lib.concatMapStringsSep "\n" (mkCnameRecord meta.ingress) [
             "argo"
+            "auth"
             "grafana"
             "keycloak"
             "markov"
