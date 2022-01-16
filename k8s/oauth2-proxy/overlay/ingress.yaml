@@ -22,3 +22,29 @@ spec:
             name: oauth2-proxy
             port:
               number: 4180
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oauth-proxy2-hairpin
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: internal
+  tls:
+  - hosts:
+    - auth.jali-clarke.ca
+    secretName: jali-clarke-ca
+  rules:
+  - host: auth.jali-clarke.ca
+    http:
+      paths:
+      - pathType: Prefix
+        # should be /oauth2, but prefix rules must be distinct for the same host, even across different ingressClass
+        # see https://github.com/kubernetes/ingress-nginx/issues/7546
+        path: "/"
+        backend:
+          service:
+            name: oauth2-proxy
+            port:
+              number: 4180
