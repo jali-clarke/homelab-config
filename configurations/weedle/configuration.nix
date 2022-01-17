@@ -1,6 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, ciphertexts, ... }:
 let
   meta = config.homelab-config.meta;
+
+  secretFilePi = secretFilePath: {
+    file = secretFilePath;
+    owner = "pi";
+  };
 in
 {
   imports = [
@@ -23,6 +28,17 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = meta.weedle.hostName; # Define your hostname.
+
+  age.secrets = {
+    id_rsa_nixops = secretFilePi ciphertexts."id_rsa_nixops.age";
+    "id_rsa_nixops.pub" = secretFilePi ciphertexts."id_rsa_nixops.pub.age";
+  };
+
+  homelab-config.users = {
+    authorizedKeyPaths = [ config.age.secrets."id_rsa_nixops.pub".path ];
+    authorizedKeysExtraActivationDeps = [ "agenix" ];
+  };
+
   homelab-config.k8s = {
     enable = true;
     isMaster = true;

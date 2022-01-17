@@ -6,6 +6,11 @@ let
   vaultPort = 8082;
 
   meta = config.homelab-config.meta;
+
+  secretFilePi = secretFilePath: {
+    file = secretFilePath;
+    owner = "pi";
+  };
 in
 {
   imports = [
@@ -16,6 +21,12 @@ in
   environment.systemPackages = [
     pkgs.rename
   ];
+
+  age.secrets = {
+    id_rsa_nixops = secretFilePi ciphertexts."id_rsa_nixops.age";
+    "id_rsa_nixops.pub" = secretFilePi ciphertexts."id_rsa_nixops.pub.age";
+    "cloudflare_creds.env".file = ciphertexts."cloudflare_creds.env.age";
+  };
 
   homelab-config.zfs = {
     enable = true;
@@ -42,7 +53,10 @@ in
 
   networking.hostName = meta.atlas.hostName; # Define your hostname.
 
-  age.secrets."cloudflare_creds.env".file = ciphertexts."cloudflare_creds.env.age";
+  homelab-config.users = {
+    authorizedKeyPaths = [ config.age.secrets."id_rsa_nixops.pub".path ];
+    authorizedKeysExtraActivationDeps = [ "agenix" ];
+  };
 
   homelab-config.acme-cloudflare = {
     enable = true;
