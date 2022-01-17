@@ -37,8 +37,8 @@ spec:
         volumeMounts:
         - name: sshd-config
           mountPath: /sshd_config_mnt
-        - name: ssh-key
-          mountPath: /ssh_key_mnt
+        - name: dev-ssh-key
+          mountPath: /dev_ssh_key_mnt
         - name: ssh-host-key
           mountPath: /ssh_host_key_mnt
       volumes:
