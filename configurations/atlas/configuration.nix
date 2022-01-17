@@ -23,8 +23,8 @@ in
   ];
 
   age.secrets = {
-    id_rsa_nixops = secretFilePi ciphertexts."id_rsa_nixops.age";
-    "id_rsa_nixops.pub" = secretFilePi ciphertexts."id_rsa_nixops.pub.age";
+    id_atlas = secretFilePi ciphertexts."id_atlas.age";
+    "id_atlas.pub" = secretFilePi ciphertexts."id_atlas.pub.age";
     "cloudflare_creds.env".file = ciphertexts."cloudflare_creds.env.age";
   };
 
@@ -43,7 +43,7 @@ in
       enable = true;
       source = "storage";
       target = "pi@${meta.weedle.networkIP}:backups/storage";
-      sshKey = config.age.secrets.id_rsa_nixops.path;
+      sshKey = config.age.secrets.id_atlas.path;
       sshNoVerify = true; # should be ok i promise
     };
   };
@@ -52,11 +52,6 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = meta.atlas.hostName; # Define your hostname.
-
-  homelab-config.users = {
-    authorizedKeyPaths = [ config.age.secrets."id_rsa_nixops.pub".path ];
-    authorizedKeysExtraActivationDeps = [ "agenix" ];
-  };
 
   homelab-config.acme-cloudflare = {
     enable = true;

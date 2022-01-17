@@ -30,12 +30,13 @@ in
   networking.hostName = meta.weedle.hostName; # Define your hostname.
 
   age.secrets = {
-    id_rsa_nixops = secretFilePi ciphertexts."id_rsa_nixops.age";
-    "id_rsa_nixops.pub" = secretFilePi ciphertexts."id_rsa_nixops.pub.age";
+    "id_atlas.pub".file = ciphertexts."id_atlas.pub.age";
+    id_weedle = secretFilePi ciphertexts."id_weedle.age";
+    "id_weedle.pub" = secretFilePi ciphertexts."id_weedle.pub.age";
   };
 
   homelab-config.users = {
-    authorizedKeyPaths = [ config.age.secrets."id_rsa_nixops.pub".path ];
+    authorizedKeyPaths = [ config.age.secrets."id_atlas.pub".path ];
     authorizedKeysExtraActivationDeps = [ "agenix" ];
   };
 
