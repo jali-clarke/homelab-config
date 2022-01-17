@@ -25,7 +25,7 @@
 
       reloadServices = mkOption {
         type = types.listOf types.nonEmptyStr;
-        default = [];
+        default = [ ];
       };
     };
 
@@ -45,7 +45,7 @@
     lib.mkIf cfg.enable {
       assertions = [
         {
-          assertion = cfg.domains != [];
+          assertion = cfg.domains != [ ];
           message = "config.homelab-config.acme-cloudflare.domains cannot be empty";
         }
       ];
