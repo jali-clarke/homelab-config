@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, ciphertexts, ... }:
 let
   passwordHashes = import ./pw-hashes.nix;
   sshPubKeys = import ./ssh-pub-keys.nix;
@@ -24,8 +24,8 @@ in
       };
     in
     {
-      age.secrets.id_rsa_nixops = secretFile ../../secrets/id_rsa_nixops.age;
-      age.secrets."id_rsa_nixops.pub" = secretFile ../../secrets/id_rsa_nixops.pub.age;
+      age.secrets.id_rsa_nixops = secretFile ciphertexts."id_rsa_nixops.age";
+      age.secrets."id_rsa_nixops.pub" = secretFile ciphertexts."id_rsa_nixops.pub.age";
 
       users.mutableUsers = false;
       users.users.pi = {

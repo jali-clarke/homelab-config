@@ -3,21 +3,41 @@
     "agenix": {
       "inputs": {
         "nixpkgs": [
+          "homelab-secrets",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1634404028,
-        "narHash": "sha256-JyP2Y6JCCYvUcVz7CXX5pXUfTGTU4GX51Yza82BgMfk=",
+        "lastModified": 1641576265,
+        "narHash": "sha256-G4W39k5hdu2kS13pi/RhyTOySAo7rmrs7yMUZRH0OZI=",
         "owner": "ryantm",
         "repo": "agenix",
-        "rev": "53aa91b4170da35a96fab1577c9a34bc0da44e27",
+        "rev": "08b9c96878b2f9974fc8bde048273265ad632357",
         "type": "github"
       },
       "original": {
         "owner": "ryantm",
         "repo": "agenix",
         "type": "github"
+      }
+    },
+    "homelab-secrets": {
+      "inputs": {
+        "agenix": "agenix",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1642379762,
+        "narHash": "sha256-IAAX7u5MhsIAzmhVa5FIeC4FJvTSRfZP3ZNcBAYZzBo=",
+        "ref": "master",
+        "rev": "a61c1e422ead5fc1ac4b0718bf5794b9fac51252",
+        "revCount": 5,
+        "type": "git",
+        "url": "ssh://git@github.com/jali-clarke/homelab-secrets"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/jali-clarke/homelab-secrets"
       }
     },
     "nixlib": {
@@ -38,7 +58,7 @@
     "nixos-generators": {
       "inputs": {
         "nixlib": "nixlib",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1631540431,
@@ -56,6 +76,21 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1642373004,
+        "narHash": "sha256-AZ1fTklT9OkLFtmZ8qMbQ2Uf1dF0+np3WjnTIIquApA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b13052a35a63e1ea9eba916ffe48886ab7af58ce",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1619285658,
         "narHash": "sha256-GKbj/KKo8Z2WsEURFtWHbPI917NrUnD4H2J4lKUsSWI=",
         "owner": "NixOS",
@@ -70,7 +105,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1638868208,
         "narHash": "sha256-f56OeS3//YMT8MNnb9plQUYgQpSRR3e4pah//d60m4o=",
@@ -88,9 +123,9 @@
     },
     "root": {
       "inputs": {
-        "agenix": "agenix",
+        "homelab-secrets": "homelab-secrets",
         "nixos-generators": "nixos-generators",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_3"
       }
     }
   },

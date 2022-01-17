@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, ciphertexts, ... }:
 let
   dockerPort = 5000;
   nexusPort = 8080;
@@ -42,7 +42,7 @@ in
 
   networking.hostName = meta.atlas.hostName; # Define your hostname.
 
-  age.secrets."cloudflare_creds.env".file = ../../secrets/cloudflare_creds.env.age;
+  age.secrets."cloudflare_creds.env".file = ciphertexts."cloudflare_creds.env.age";
 
   homelab-config.acme-cloudflare = {
     enable = true;
@@ -66,7 +66,8 @@ in
           certPath = "/var/lib/acme/${host}/cert.pem";
           privateKeyPath = "/var/lib/acme/${host}/key.pem";
         };
-      in builtins.mapAttrs withCertPaths {
+      in
+      builtins.mapAttrs withCertPaths {
         "docker.jali-clarke.ca" = {
           port = dockerPort;
           extraConfig = ''
