@@ -4,3 +4,7 @@ bases:
 - ../base
 resources:
 - ingress.yaml
+- secret.yaml
+- serviceaccount.yaml
+patches:
+- worker-controller-configmap-patch.yaml

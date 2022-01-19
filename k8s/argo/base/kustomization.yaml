@@ -4,3 +4,10 @@ resources:
 - https://raw.githubusercontent.com/argoproj/argo-workflows/v3.2.6/manifests/namespace-install.yaml
 patches:
 - disable-tls-patch.yaml
+patchesJson6902:
+- target:
+    version: v1
+    group: apps
+    kind: Deployment
+    name: argo-server
+  path: argo-server-config-json6902-patch.yaml
