@@ -4,6 +4,8 @@ bases:
 - ../base
 resources:
 - ingress.yaml
+- role.yaml
+- rolebinding.yaml
 - secret.yaml
 - serviceaccount.yaml
 patches:
