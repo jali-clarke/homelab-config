@@ -8,6 +8,12 @@ i've been in a number of situations where i had to do a rebuild of our homelab m
 
 enter the almighty [NixOS](https://nixos.org/) - an OS whose package manager and configuration language is [Nix](https://nixos.org/explore.html).  this allows us to declaratively define configuration for entire systems and even share / modularize configuration across systems.  with [nix flakes](https://nixos.wiki/wiki/Flakes), this becomes almost 100% reproduceable across time and machines.
 
+### license
+
+[MIT](https://opensource.org/licenses/MIT) with the following subtitutions made appropriately:
+* my name (Jinnah Ali-Clarke)
+* the date associated with whatever revision you are currently looking at
+
 ## how to use
 
 ### prerequisites
