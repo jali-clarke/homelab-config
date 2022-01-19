@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
 - https://raw.githubusercontent.com/argoproj/argo-workflows/v3.2.6/manifests/namespace-install.yaml
 patches:
+- argo-server-role-fix-patch.yaml
 - disable-tls-patch.yaml
 patchesJson6902:
 - target:
