@@ -51,7 +51,7 @@ in
         ];
       }
       (
-        lib.mkIf (cfg.authorizedKeyPaths != []) {
+        lib.mkIf (cfg.authorizedKeyPaths != [ ]) {
           system.activationScripts.sshAuthorizedKeysPi = {
             deps = [ "users" "groups" ] ++ cfg.authorizedKeysExtraActivationDeps;
             text =
