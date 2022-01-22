@@ -1,6 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, ciphertexts, ... }:
 let
   meta = config.homelab-config.meta;
+
+  secretFilePi = secretFilePath: {
+    file = secretFilePath;
+    owner = "pi";
+  };
 in
 {
   # NixOS wants to enable GRUB by default
@@ -27,10 +32,16 @@ in
   # swapDevices = [ { device = "/swapfile"; size = 3072; } ]; # does not play nice with k8s
 
   networking.hostName = meta.speet.hostName; # Define your hostname.
+
   homelab-config.k8s = {
     enable = true;
     masterIP = meta.weedle.networkIP;
     masterHostname = meta.weedle.hostName;
+  };
+
+  age.secrets = {
+    id_speet = secretFilePi ciphertexts."id_speet.age";
+    "id_speet.pub" = secretFilePi ciphertexts."id_speet.pub.age";
   };
 
   # systemd.services.etcd.environment.ETCD_UNSUPPORTED_ARCH = "arm64"; # only if the pi is the k8s master
