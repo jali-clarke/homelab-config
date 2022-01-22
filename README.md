@@ -50,7 +50,7 @@ for raspberry pis specifically
 1. create the [pi-baker](#pi-baker) image by doing `build_pi_baker`
 2. flash the resulting image to a micro sd card
 3. slot that into the pi and power it on
-4. generate ssh host keys for the pi in the appropriate dir, rekeying secrets in this repo as necessary
+4. generate ssh host keys for the pi in the appropriate dir, rekeying secrets in the secrets repo as necessary
 5. on the pi (either via ssh or locally) `sudo nixos-rebuild switch --flake github:jali-clarke/homelab-config#${configuration_name}`
     * if the pi runs out of memory and the process is killed, simply rerun the command and it will continue from where it left off (continue to rerun until done)
     * can also run from a host that knows how to build `aarch64-linux` and use `--build-host` + `--target-host`
