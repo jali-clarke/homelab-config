@@ -21,17 +21,33 @@
         "type": "github"
       }
     },
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1642700792,
+        "narHash": "sha256-XqHrk7hFb+zBvRg6Ghl+AZDq03ov6OshJLiSWOoX5es=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "846b2ae0fc4cc943637d3d1def4454213e203cba",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "homelab-secrets": {
       "inputs": {
         "agenix": "agenix",
+        "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1642433563,
-        "narHash": "sha256-PoZQ62wKvH8DiqvNVYKAc0F00XYnoPRMyMUBbaXkX3A=",
+        "lastModified": 1642874232,
+        "narHash": "sha256-FmywbVug00ucsUyetDjeUDe7rh5y26PuQrnk6eQXmxw=",
         "ref": "master",
-        "rev": "ec54e4592a9906bda42f7d8ea91532e0bfd076ac",
-        "revCount": 8,
+        "rev": "ea2f47b0b1a58148ad6f9efd0ae6e6f44edac344",
+        "revCount": 10,
         "type": "git",
         "url": "ssh://git@github.com/jali-clarke/homelab-secrets"
       },
