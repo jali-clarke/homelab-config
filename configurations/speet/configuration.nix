@@ -37,6 +37,7 @@ in
     enable = true;
     masterIP = meta.weedle.networkIP;
     masterHostname = meta.weedle.hostName;
+    sshKeyPath = config.age.secrets."id_speet".path;
   };
 
   age.secrets = {
