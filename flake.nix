@@ -2,16 +2,13 @@
   description = "env for managing bare metal infra";
 
   inputs.nixpkgs.url = "github:nixos/nixpkgs/535c1e5a72e1bf15b71ed1a59de84a9ae7a0eb91";
-  inputs.nixos-generators.url = "github:nix-community/nixos-generators";
-
   inputs.homelab-secrets.url = "git+ssh://git@github.com/jali-clarke/homelab-secrets";
 
-  outputs = { self, nixpkgs, nixos-generators, homelab-secrets }:
+  outputs = { self, nixpkgs, homelab-secrets }:
     let
       overlay = { system, hostname }:
         import ./overlay {
           inherit hostname;
-          nixos-generators = nixos-generators.defaultPackage.${system};
           selfSourceInfo = self.sourceInfo;
         };
 
