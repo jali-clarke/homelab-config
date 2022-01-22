@@ -43,11 +43,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1642874232,
-        "narHash": "sha256-FmywbVug00ucsUyetDjeUDe7rh5y26PuQrnk6eQXmxw=",
+        "lastModified": 1642875878,
+        "narHash": "sha256-D+gJZ+I7hBTjtJzHyZxs2MBrBemkaieZQAF+9NHc6g4=",
         "ref": "master",
-        "rev": "ea2f47b0b1a58148ad6f9efd0ae6e6f44edac344",
-        "revCount": 10,
+        "rev": "78b3a5e8fc9108c01b56c1192445fe85be452cfc",
+        "revCount": 11,
         "type": "git",
         "url": "ssh://git@github.com/jali-clarke/homelab-secrets"
       },
