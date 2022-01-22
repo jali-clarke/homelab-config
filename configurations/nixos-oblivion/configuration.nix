@@ -2,7 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
+{ pkgs, ciphertexts, ... }:
+let
+  secretFilePi = secretFilePath: {
+    file = secretFilePath;
+    owner = "pi";
+  };
+in
 {
   imports =
     [
@@ -21,4 +27,9 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   networking.hostName = "nixos-oblivion"; # Define your hostname.
+
+  age.secrets = {
+    id_nixos_oblivion = secretFilePi ciphertexts."id_nixos_oblivion.age";
+    "id_nixos_oblivion.pub" = secretFilePi ciphertexts."id_nixos_oblivion.pub.age";
+  };
 }
