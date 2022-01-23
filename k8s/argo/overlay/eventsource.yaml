@@ -19,7 +19,7 @@ spec:
         endpoint: /github
         port: "12000"
         method: POST
-        url: https://argo-events.jali-clarke.ca
+        url: https://events.argo.jali-clarke.ca
       events:
       - "*"
       apiToken:

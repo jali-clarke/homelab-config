@@ -9,6 +9,7 @@ spec:
   tls:
   - hosts:
     - argo.jali-clarke.ca
+    - events.argo.jali-clarke.ca
     secretName: jali-clarke-ca
   ingressClassName: external
   rules:
@@ -22,3 +23,13 @@ spec:
             name: argo-server
             port:
               number: 2746
+  - host: events.argo.jali-clarke.ca
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/github"
+        backend:
+          service:
+            name: github-eventsource-svc
+            port:
+              number: 12000

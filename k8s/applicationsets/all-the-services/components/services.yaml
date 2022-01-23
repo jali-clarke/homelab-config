@@ -7,7 +7,6 @@ spec:
   - list:
       elements:
       - serviceName: argo
-      - serviceName: argo-events
       - serviceName: cassandra
       - serviceName: dev
       - serviceName: emby
