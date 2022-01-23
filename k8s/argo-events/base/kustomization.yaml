@@ -4,4 +4,3 @@ namespace: argo-events
 resources:
 - https://raw.githubusercontent.com/argoproj/argo-events/v1.5.6/manifests/namespace-install.yaml
 - https://raw.githubusercontent.com/argoproj/argo-events/v1.5.6/examples/eventbus/native.yaml
-- https://raw.githubusercontent.com/argoproj/argo-events/v1.5.6/manifests/install-validating-webhook.yaml
