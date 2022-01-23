@@ -3,3 +3,7 @@ kind: Kustomization
 namespace: argo-events
 bases:
 - ../base
+resources:
+- eventsource.yaml
+- ingress.yaml
+- secret.yaml
