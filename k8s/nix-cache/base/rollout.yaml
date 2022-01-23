@@ -37,12 +37,12 @@ spec:
         volumeMounts:
         - name: sshd-config
           mountPath: /sshd_config_mnt
-        - name: dev-ssh-key
-          mountPath: /dev_ssh_key_mnt
+        - name: authorized-keys
+          mountPath: /authorized_keys_mnt
         - name: ssh-host-key
           mountPath: /ssh_host_key_mnt
       volumes:
       - name: sshd-config
         configMap:
           name: cache-sshd-config
-      # also patch to add volumes with names ssh-key and ssh-host-key
+      # also patch to add volumes with names authorized-keys and ssh-host-key

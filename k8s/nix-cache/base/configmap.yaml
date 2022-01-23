@@ -12,7 +12,11 @@ data:
     echo -ne "$PASSWORD\n$PASSWORD" | passwd root
     
     mkdir -p /root/.ssh
-    cat /dev_ssh_key_mnt/id_dev_env.pub >> /root/.ssh/authorized_keys
+
+    for authorized_key in $(ls /authorized_keys_mnt/*); do
+      cat $authorized_key >> /root/.ssh/authorized_keys
+    done
+
     chmod 600 /root/.ssh/authorized_keys
     echo "PATH=$PATH" >> /root/.ssh/environment
     

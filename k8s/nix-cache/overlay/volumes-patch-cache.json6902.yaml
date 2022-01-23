@@ -9,9 +9,9 @@
 - op: add
   path: /spec/template/spec/volumes/-
   value:
-    name: dev-ssh-key
+    name: authorized-keys
     secret:
-      secretName: dev-ssh-key
+      secretName: authorized-keys
 - op: add
   path: /spec/template/spec/volumes/-
   value:
