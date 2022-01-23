@@ -23,10 +23,10 @@ spec:
       events:
       - "*"
       apiToken:
-        name: github-access
+        name: github-webhook
         key: token
       webhookSecret:
-        name: github-access
+        name: github-webhook
         key: secret
       insecure: true
       active: true
