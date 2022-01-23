@@ -24,3 +24,12 @@ rules:
   - list
   - watch
   - create
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  - pods/log
+  verbs:
+  - get
+  - list
+  - watch
