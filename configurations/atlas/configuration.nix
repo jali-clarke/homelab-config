@@ -154,7 +154,6 @@ in
 
         ${
           lib.concatMapStringsSep "\n" (mkCnameRecord meta.ingress) [
-            "argo"
             "auth"
             "grafana"
             "keycloak"
@@ -165,6 +164,7 @@ in
 
         ${
           lib.concatMapStringsSep "\n" (mkCnameRecord meta.ingress-external) [
+            "argo"
             "argocd"
             "argo-rollouts"
             "emby"

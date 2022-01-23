@@ -1,15 +1,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress
+  name: ingress-external
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+    jali-clarke.external-dns.alpha.kubernetes.io/is-external: "true"
 spec:
   tls:
   - hosts:
     - argo.jali-clarke.ca
     secretName: jali-clarke-ca
-  ingressClassName: internal
+  ingressClassName: external
   rules:
   - host: argo.jali-clarke.ca
     http:
