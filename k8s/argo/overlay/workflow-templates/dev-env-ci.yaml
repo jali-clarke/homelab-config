@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: dev-env-ci
+spec:
+  entrypoint: dev-env-ci
+  templates:
+  - name: dev-env-ci
+    inputs:
+      parameters:
+      - name: repoRef
+        default: HEAD
+    nodeSelector:
+      kubernetes.io/arch: amd64
+    script:
+      image: nixos/nix:2.3.12
+      command: [nix-shell]
+      source: |
+        #!/usr/bin/env nix-shell
+        #!nix-shell -p bash git nixFlakes openssh bash
+        #!nix-shell -i bash
+        set +xeo pipefail
+
+        # we need to set NIX_CONF_DIR *after* having done the initial "nix-shell -p ..."
+        export GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=accept-new'
+        export NIX_CONF_DIR=/nix-conf
+
+        eval `ssh-agent`
+        ssh-add /git-ssh-key/id_argo_workers 
+
+        git clone git@github.com:jali-clarke/dev-env
+        cd dev-env
+        git reset --hard {{inputs.parameters.repoRef}}
+        nix build --print-build-logs .
+      volumeMounts:
+      - name: git-ssh-key
+        mountPath: /git-ssh-key
+      - name: nix-conf
+        mountPath: /nix-conf
+    volumes:
+    - name: git-ssh-key
+      secret:
+        secretName: workers-ssh-key
+        defaultMode: 0400
+    - name: nix-conf
+      configMap:
+        name: nix-worker-nix-conf

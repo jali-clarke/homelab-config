@@ -3,7 +3,9 @@ kind: Kustomization
 namespace: argo
 bases:
 - ../base
+- workflow-templates
 resources:
+- configmap.yaml
 - eventsource.yaml
 - ingress.yaml
 - role.yaml
