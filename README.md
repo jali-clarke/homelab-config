@@ -108,7 +108,8 @@ all to be performed on `atlas` unless specified otherwise
 
 all to be performed on `speet` unless specified otherwise
 
-1. join the cluster with `join_cluster`
+1. join the cluster with `sudo join_cluster`
+    * if this fails, have a look at https://nixos.wiki/wiki/Kubernetes#Join_Cluster_not_working - you may need to restart `cfssl` on the cluster master
 
 ### [weedle](./configurations/weedle)
 
