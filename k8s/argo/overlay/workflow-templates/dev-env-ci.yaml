@@ -21,12 +21,11 @@ spec:
         #!nix-shell -i bash
         set +xeo pipefail
 
-        # we need to set NIX_CONF_DIR *after* having done the initial "nix-shell -p ..."
-        export GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=accept-new'
-        export NIX_CONF_DIR=/nix-conf
+        mkdir -p ~/.ssh
+        cp /ssh-config/config ~/.ssh/config
 
-        eval `ssh-agent`
-        ssh-add /git-ssh-key/id_argo_workers 
+        # we need to set NIX_CONF_DIR *after* having done the initial "nix-shell -p ..."
+        export NIX_CONF_DIR=/nix-conf
 
         git clone git@github.com:jali-clarke/dev-env
         cd dev-env
@@ -37,6 +36,8 @@ spec:
         mountPath: /git-ssh-key
       - name: nix-conf
         mountPath: /nix-conf
+      - name: ssh-config
+        mountPath: /ssh-config
     volumes:
     - name: git-ssh-key
       secret:
@@ -45,3 +46,6 @@ spec:
     - name: nix-conf
       configMap:
         name: nix-worker-nix-conf
+    - name: ssh-config
+      configMap:
+        name: nix-worker-ssh-config
