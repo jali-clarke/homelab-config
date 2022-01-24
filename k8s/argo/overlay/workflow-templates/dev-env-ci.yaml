@@ -10,6 +10,8 @@ spec:
       parameters:
       - name: repoRef
         default: HEAD
+      - name: extraBuildFlags
+        default: ""
     nodeSelector:
       kubernetes.io/arch: amd64
     script:
@@ -30,7 +32,10 @@ spec:
         git clone git@github.com:jali-clarke/dev-env
         cd dev-env
         git reset --hard {{inputs.parameters.repoRef}}
-        nix build --print-build-logs .
+
+        NIX_BUILD_FLAGS="--print-build-logs {{inputs.parameters.extraBuildFlags}}"
+
+        nix build $NIX_BUILD_FLAGS .
       volumeMounts:
       - name: git-ssh-key
         mountPath: /git-ssh-key
