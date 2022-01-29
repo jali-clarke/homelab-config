@@ -13,7 +13,7 @@ spec:
       - name: extraBuildFlags
         default: "-v"
       - name: bootstrapDerivations
-        default: "git nixFlakes openssh bash"
+        default: "nixFlakes openssh bash"
     nodeSelector:
       kubernetes.io/arch: amd64
     script:
@@ -31,13 +31,8 @@ spec:
         # we need to set NIX_CONF_DIR *after* having done the initial "nix-shell -p ..."
         export NIX_CONF_DIR=/nix-conf
 
-        git clone git@github.com:jali-clarke/dev-env
-        cd dev-env
-        git reset --hard {{inputs.parameters.repoRef}}
-
         NIX_BUILD_FLAGS="--print-build-logs {{inputs.parameters.extraBuildFlags}}"
-
-        nix build $NIX_BUILD_FLAGS .
+        nix build $NIX_BUILD_FLAGS github:jali-clarke/dev-env/{{inputs.parameters.repoRef}}
       resources:
         requests:
           cpu: 500m
