@@ -12,6 +12,8 @@ spec:
         default: HEAD
       - name: extraBuildFlags
         default: "-v"
+      - name: bootstrapDerivations
+        default: "git nixFlakes openssh bash"
     nodeSelector:
       kubernetes.io/arch: amd64
     script:
@@ -19,7 +21,7 @@ spec:
       command: [nix-shell]
       source: |
         #!/usr/bin/env nix-shell
-        #!nix-shell -p bash git nixFlakes openssh bash
+        #!nix-shell -p {{inputs.parameters.bootstrapDerivations}}
         #!nix-shell -i bash
         set +xeo pipefail
 
