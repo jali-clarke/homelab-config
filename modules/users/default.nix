@@ -1,8 +1,4 @@
-{ config, lib, ... }:
-let
-  passwordHashes = import ./pw-hashes.nix;
-  sshPubKeys = import ./ssh-pub-keys.nix;
-in
+{ config, lib, ciphertexts, ... }:
 {
   options.homelab-config.users =
     let
@@ -31,9 +27,12 @@ in
     in
     lib.mkMerge [
       {
+        age.secrets.pi_password_file.file = ciphertexts."pi_password_file.age";
+
         users.mutableUsers = false;
         users.users.pi = {
-          hashedPassword = passwordHashes.pi;
+          # note - if this is ever rotated, you MUST delete the /etc/shadow entry for the pi user before switching config
+          passwordFile = config.age.secrets.pi_password_file.path;
           isNormalUser = true;
           extraGroups = [ "wheel" ] ++ cfg.extraGroups; # Enable ‘sudo’ for the user.
         };
