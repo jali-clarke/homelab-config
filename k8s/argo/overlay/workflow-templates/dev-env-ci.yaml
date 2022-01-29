@@ -11,7 +11,7 @@ spec:
       - name: repoRef
         default: HEAD
       - name: extraBuildFlags
-        default: ""
+        default: "-v"
     nodeSelector:
       kubernetes.io/arch: amd64
     script:
