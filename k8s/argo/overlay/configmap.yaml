@@ -5,6 +5,7 @@ metadata:
 data:
   nix.conf: |
     experimental-features = nix-command flakes
+    max-jobs = 2
     sandbox = false
     substituters = ssh://root@cache.nix-cache?priority=10 https://cache.nixos.org?priority=100
 ---
