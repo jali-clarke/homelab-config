@@ -38,7 +38,7 @@ spec:
         # > semop(2): encountered an error: Invalid argument
         ulimit -n 20000
 
-        nix build $NIX_BUILD_FLAGS github:jali-clarke/dev-env/{{inputs.parameters.repoRef}}
+        nix run $NIX_BUILD_FLAGS github:jali-clarke/dev-env/{{inputs.parameters.repoRef}}
       resources:
         requests:
           cpu: 500m
