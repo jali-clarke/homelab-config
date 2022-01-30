@@ -37,11 +37,9 @@ spec:
         - name: dev-data
           mountPath: /root/project
         - name: ssh-key
-          mountPath: /tmp/secrets/ssh
-        - name: cache-ssh-host-key
-          mountPath: /tmp/secrets/cache_ssh_host_key
+          mountPath: /secrets/ssh
         - name: cache-signing-key
-          mountPath: /tmp/secrets/cache_signing_key
+          mountPath: /secrets/cache_signing_key
         ports:
         - name: http-port
           containerPort: 8080

@@ -10,15 +10,11 @@
     name: ssh-key
     secret:
       secretName: git-ssh-key
-- op: add
-  path: /spec/template/spec/volumes/-
-  value:
-    name: cache-ssh-host-key
-    secret:
-      secretName: cache-ssh-host-key
+      defaultMode: 0400
 - op: add
   path: /spec/template/spec/volumes/-
   value:
     name: cache-signing-key
     secret:
       secretName: cache-signing-key
+      defaultMode: 0400
