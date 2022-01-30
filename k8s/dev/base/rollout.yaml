@@ -24,7 +24,7 @@ spec:
       containers:
       - name: coder
         image: docker.jali-clarke.ca/dev-env # patch me, ideally
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         resources:
           requests:
             cpu: "2"
