@@ -6,7 +6,6 @@ spec:
   generators:
   - list:
       elements:
-      - serviceName: argo
       - serviceName: cassandra
       - serviceName: dev
       - serviceName: emby

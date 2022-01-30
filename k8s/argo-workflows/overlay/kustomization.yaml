@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+- ../base
+resources:
+- ingress.yaml
+- secret.yaml
+patches:
+- worker-controller-configmap-patch.yaml
+patchesJson6902:
+- target:
+    version: v1
+    group: apps
+    kind: Deployment
+    name: argo-server
+  path: managed-namespace-json6902-patch.yaml
+- target:
+    version: v1
+    group: apps
+    kind: Deployment
+    name: workflow-controller
+  path: managed-namespace-json6902-patch.yaml

@@ -6,8 +6,11 @@ spec:
   generators:
   - list:
       elements:
-      - serviceName: argocd
+      - serviceName: argo-events
       - serviceName: argo-rollouts
+      - serviceName: argo-workflows
+      - serviceName: argo-workflows-workspace
+      - serviceName: argocd
       - serviceName: cert-manager
       - serviceName: ddns
       - serviceName: external-dns
