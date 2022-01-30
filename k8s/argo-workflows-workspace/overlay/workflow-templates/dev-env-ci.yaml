@@ -32,6 +32,12 @@ spec:
         export NIX_CONF_DIR=/nix-conf
 
         NIX_BUILD_FLAGS="--print-build-logs {{inputs.parameters.extraBuildFlags}}"
+
+        # without the ulimit set below for open fds, we see the following error:
+        # > fakeroot internal error #43: Identifier removed
+        # > semop(2): encountered an error: Invalid argument
+        ulimit -n 20000
+
         nix build $NIX_BUILD_FLAGS github:jali-clarke/dev-env/{{inputs.parameters.repoRef}}
       resources:
         requests:
