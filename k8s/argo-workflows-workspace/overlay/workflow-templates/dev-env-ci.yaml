@@ -62,8 +62,9 @@ spec:
         secretName: workers-ssh-key
         defaultMode: 0400
     - name: nix-conf
-      configMap:
-        name: nix-worker-nix-conf
+      secret:
+        secretName: nix-worker-nix-conf
+        defaultMode: 0400
     - name: ssh-config
       configMap:
         name: nix-worker-ssh-config
