@@ -56,6 +56,8 @@ spec:
         mountPath: /git-ssh-key
       - name: nix-conf
         mountPath: /nix-conf
+      - name: nix-worker-scripts
+        mountPath: /nix-worker-scripts
       - name: ssh-config
         mountPath: /ssh-config
     volumes:
@@ -71,6 +73,10 @@ spec:
       secret:
         secretName: nix-worker-nix-conf
         defaultMode: 0400
+    - name: nix-worker-scripts
+      configMap:
+        name: nix-worker-scripts
+        defaultMode: 0555
     - name: ssh-config
       configMap:
         name: nix-worker-ssh-config

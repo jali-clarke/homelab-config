@@ -7,3 +7,19 @@ data:
     StrictHostKeyChecking accept-new
     Host *
       IdentityFile /git-ssh-key/id_argo_workers
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nix-worker-scripts
+data:
+  upload_to_cache: |
+    #!/usr/bin/env bash
+    set -eu
+    set -f # disable globbing
+    export IFS=' '
+
+    DESTINATION="ssh://root@cache.nix-cache"
+
+    echo "Uploading signed paths to $DESTINATION - " $OUT_PATHS
+    exec nix copy --to "$DESTINATION" $OUT_PATHS
