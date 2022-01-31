@@ -34,6 +34,8 @@ spec:
             memory: 20Gi
         env: [] # patch env vars into here, including EXTRA_ARGS if necessary
         volumeMounts:
+        - name: nix-conf
+          mountPath: /nix-conf
         - name: dev-data
           mountPath: /root/project
         - name: ssh-key
@@ -63,5 +65,5 @@ spec:
       - name: nginx-config
         configMap:
           name: file-browser-nginx-config
-      # also patch to add volumes with names ssh-key, cache-ssh-host-key, cache-signing-key, and dev-data
+      # also patch to add volumes with names nix-conf, ssh-key, cache-ssh-host-key, cache-signing-key, and dev-data
       # the volumes for cache-ssh-host-key and cache-signing-key should match the ones for ssh-key and ssh-host-key in the cache spec above

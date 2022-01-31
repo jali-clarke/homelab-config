@@ -18,3 +18,10 @@
     secret:
       secretName: cache-signing-key
       defaultMode: 0400
+- op: add
+  path: /spec/template/spec/volumes/-
+  value:
+    name: nix-conf
+    secret:
+      secretName: nix-conf
+      defaultMode: 0444
