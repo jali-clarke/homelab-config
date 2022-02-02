@@ -5,6 +5,7 @@ resources:
 patches:
 - argo-server-role-fix-patch.yaml
 - disable-tls-patch.yaml
+- workflow-controller-config-patch.yaml
 patchesJson6902:
 - target:
     version: v1

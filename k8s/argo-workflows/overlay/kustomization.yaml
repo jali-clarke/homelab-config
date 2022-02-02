@@ -7,7 +7,7 @@ resources:
 - secret.yaml
 - serviceaccount.yaml
 patches:
-- worker-controller-configmap-patch.yaml
+- sso-enable-patch.yaml
 patchesJson6902:
 - target:
     version: v1

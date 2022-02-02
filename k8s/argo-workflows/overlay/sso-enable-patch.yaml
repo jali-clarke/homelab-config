@@ -1,20 +1,9 @@
 # see https://argoproj.github.io/argo-workflows/workflow-controller-configmap.yaml for all options
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: workflow-controller-configmap
 data:
-  parallelism: "3"
-  namespaceParallelism: "3"
-
-  resourceRateLimit: |
-    limit: 5
-    burst: 2
-
-  nodeEvents: |
-    enabled: false
-
   sso: |
     # This is the root URL of the OIDC provider (required).
     issuer: https://keycloak.jali-clarke.ca/auth/realms/homelab
