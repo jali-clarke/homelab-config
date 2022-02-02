@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: github
+spec:
+  template:
+    serviceAccountName: sensor-sa
+  dependencies:
+  - name: dev-env-master-push
+    eventSourceName: github
+    eventName: homelab
+    filters:
+      data:
+      - path: body.X-GitHub-Event
+        type: string
+        value:
+        - push
+      - path: body.repository.full_name
+        type: string
+        value:
+        - jali-clarke/dev-env
+      - path: body.ref
+        type: string
+        value:
+        - refs/heads/master
+  triggers:
+  - template:
+      conditions: dev-env-master-push
+      name: dev-env-ci-trigger
+      k8s:
+        operation: create
+        source:
+          resource:
+            apiVersion: argoproj.io/v1alpha1
+            kind: Workflow
+            metadata:
+              generateName: dev-env-ci-run-
+            spec:
+              entrypoint: dev-env-ci
+              arguments:
+                parameters:
+                - name: repoRef
+              workflowTemplateRef:
+                name: dev-env-ci
+        parameters:
+        - src:
+            dependencyName: dev-env-master-push
+            dataKey: body.after
+          dest: spec.arguments.parameters.0.value

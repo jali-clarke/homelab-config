@@ -10,4 +10,5 @@ resources:
 - role.yaml
 - rolebinding.yaml
 - secret.yaml
+- sensor.yaml
 - serviceaccount.yaml
