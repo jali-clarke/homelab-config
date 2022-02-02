@@ -10,3 +10,4 @@ resources:
 - role.yaml
 - rolebinding.yaml
 - secret.yaml
+- serviceaccount.yaml
