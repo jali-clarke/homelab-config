@@ -1,15 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: dev-env-ci
+  name: nix-flakes
 spec:
-  entrypoint: dev-env-ci
+  entrypoint: nix-flakes-github
   templates:
-  - name: dev-env-ci
+  - name: nix-flakes-github
     inputs:
       parameters:
+      - name: repoFullName
       - name: repoRef
-        default: HEAD
+      - name: action
+        default: build
+        enum:
+        - build
+        - run
       - name: extraBuildFlags
         default: "-v"
       - name: bootstrapDerivations
@@ -41,7 +46,7 @@ spec:
         # > semop(2): encountered an error: Invalid argument
         ulimit -n 20000
 
-        nix run $NIX_BUILD_FLAGS github:jali-clarke/dev-env/{{inputs.parameters.repoRef}}
+        nix {{inputs.parameters.action}} $NIX_BUILD_FLAGS github:{{inputs.parameters.repoFullName}}/{{inputs.parameters.repoRef}}
       resources:
         requests:
           cpu: 500m

@@ -9,6 +9,7 @@ spec:
   - name: dev-env-master-push
     eventSourceName: github
     eventName: homelab
+    # transform not available till argo events v1.6.0
     filters:
       data:
       - path: body.X-GitHub-Event
@@ -36,14 +37,21 @@ spec:
             metadata:
               generateName: dev-env-ci-run-
             spec:
-              entrypoint: dev-env-ci
+              entrypoint: nix-flakes-github
               arguments:
                 parameters:
+                - name: repoFullName
                 - name: repoRef
+                - name: action
+                  value: run
               workflowTemplateRef:
-                name: dev-env-ci
+                name: nix-flakes
         parameters:
         - src:
             dependencyName: dev-env-master-push
-            dataKey: body.after
+            dataKey: body.repository.full_name
           dest: spec.arguments.parameters.0.value
+        - src:
+            dependencyName: dev-env-master-push
+            dataKey: body.after
+          dest: spec.arguments.parameters.1.value
