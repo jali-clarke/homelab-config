@@ -1,0 +1,59 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: github-commit-status
+spec:
+  entrypoint: github-commit-status
+  templates:
+  - name: github-commit-status
+    inputs:
+      parameters:
+      - name: repoFullName
+      - name: commitSha
+      - name: state
+        enum:
+        - scheduled
+        - running
+        - errored
+        - failed
+        - succeeded
+    script:
+      image: alpine/curl:3.14
+      command: [ash]
+      source: |
+        STATE="{{inputs.parameters.state}}"
+
+        if [ "$STATE" = "scheduled" ]; then
+          REPORTING_STATE="pending"
+          DESCRIPTION="a build for this commit has been scheduled"
+        elif [ "$STATE" = "running" ]; then
+          REPORTING_STATE="pending"
+          DESCRIPTION="a build for this commit is running"
+        elif [ "$STATE" = "errored" ]; then
+          REPORTING_STATE="error"
+          DESCRIPTION="there was a workflow error building this commit"
+        elif [ "$STATE" = "failed" ]; then
+          REPORTING_STATE="failure"
+          DESCRIPTION="one of the build steps has failed for this commit"
+        else
+          # $STATE is "suceeded" here
+          REPORTING_STATE="success"
+          DESCRIPTION="the most recent build for this commit succeeded"
+        fi
+
+        TARGET_URL="https://argo.jali-clarke.ca/workflows/{{workflow.namespace}}/{{workflow.name}}"
+
+        COMMIT_URL="https://api.github.com/repos/{{inputs.parameters.repoFullName}}/statuses/{{inputs.parameters.commitSha}}"
+        PAYLOAD="{\"state\":\"$REPORTING_STATE\",\"target_url\":\"$TARGET_URL\",\"description\":\"$DESCRIPTION\"}"
+
+        curl -u "$USERNAME:$API_TOKEN" -X POST -H "Accept: application/vnd.github.v3+json" "$COMMIT_URL" -d "$PAYLOAD"
+      resources:
+        requests:
+          cpu: 10m
+          memory: 25Mi
+        limits:
+          cpu: 50m
+          memory: 50Mi
+      envFrom:
+      - secretRef:
+          name: github-commit-status-api-token
