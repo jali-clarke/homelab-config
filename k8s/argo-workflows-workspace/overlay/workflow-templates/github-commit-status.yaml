@@ -41,10 +41,11 @@ spec:
           DESCRIPTION="the most recent build for this commit succeeded"
         fi
 
+        CONTEXT="argo workflows (homelab)"
         TARGET_URL="https://argo.jali-clarke.ca/workflows/{{workflow.namespace}}/{{workflow.name}}"
 
         COMMIT_URL="https://api.github.com/repos/{{inputs.parameters.repoFullName}}/statuses/{{inputs.parameters.commitSha}}"
-        PAYLOAD="{\"state\":\"$REPORTING_STATE\",\"target_url\":\"$TARGET_URL\",\"description\":\"$DESCRIPTION\"}"
+        PAYLOAD="{\"state\":\"$REPORTING_STATE\",\"target_url\":\"$TARGET_URL\",\"description\":\"$DESCRIPTION\",\"context\":\"$CONTEXT\"}"
 
         curl -u "$USERNAME:$API_TOKEN" -X POST -H "Accept: application/vnd.github.v3+json" "$COMMIT_URL" -d "$PAYLOAD"
       resources:
