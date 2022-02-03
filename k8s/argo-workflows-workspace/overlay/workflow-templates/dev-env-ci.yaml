@@ -25,20 +25,6 @@ spec:
           name: github-commit-status
           template: github-commit-status
 
-      - name: report-running
-        depends: report-scheduled
-        arguments:
-          parameters:
-          - name: repoFullName
-            value: "{{inputs.parameters.repoFullName}}"
-          - name: commitSha
-            value: "{{inputs.parameters.repoRef}}"
-          - name: state
-            value: running
-        templateRef:
-          name: github-commit-status
-          template: github-commit-status
-
       - name: build
         depends: report-scheduled
         arguments:
@@ -47,11 +33,7 @@ spec:
             value: "{{inputs.parameters.repoFullName}}"
           - name: repoRef
             value: "{{inputs.parameters.repoRef}}"
-          - name: action
-            value: run
-        templateRef:
-          name: nix-flakes
-          template: nix-flakes-github
+        template: build
 
       - name: report-suceeded
         depends: build.Succeeded
@@ -80,3 +62,39 @@ spec:
         templateRef:
           name: github-commit-status
           template: github-commit-status
+
+  - name: build
+    synchronization:
+      mutex:
+        name: dev-env-ci-build
+    inputs:
+      parameters:
+      - name: repoFullName
+      - name: repoRef
+    dag:
+      tasks:
+      - name: report-running
+        arguments:
+          parameters:
+          - name: repoFullName
+            value: "{{inputs.parameters.repoFullName}}"
+          - name: commitSha
+            value: "{{inputs.parameters.repoRef}}"
+          - name: state
+            value: running
+        templateRef:
+          name: github-commit-status
+          template: github-commit-status
+
+      - name: build-image
+        arguments:
+          parameters:
+          - name: repoFullName
+            value: "{{inputs.parameters.repoFullName}}"
+          - name: repoRef
+            value: "{{inputs.parameters.repoRef}}"
+          - name: action
+            value: run
+        templateRef:
+          name: nix-flakes
+          template: nix-flakes-github
