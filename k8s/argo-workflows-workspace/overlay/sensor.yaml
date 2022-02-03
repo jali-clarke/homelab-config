@@ -37,15 +37,12 @@ spec:
             metadata:
               generateName: dev-env-ci-run-
             spec:
-              entrypoint: nix-flakes-github
               arguments:
                 parameters:
                 - name: repoFullName
                 - name: repoRef
-                - name: action
-                  value: run
               workflowTemplateRef:
-                name: nix-flakes
+                name: dev-env-ci
         parameters:
         - src:
             dependencyName: dev-env-master-push
