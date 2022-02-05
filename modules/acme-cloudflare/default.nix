@@ -52,7 +52,7 @@
 
       security.acme = {
         acceptTerms = true;
-        email = "jinnah.ali-clarke@outlook.com";
+        defaults.email = "jinnah.ali-clarke@outlook.com";
         certs = builtins.listToAttrs (map mkCertConfig cfg.domains);
       };
     };
