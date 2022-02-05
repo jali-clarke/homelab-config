@@ -44,29 +44,6 @@
         #!${pkgs.runtimeShell} -xe
         ${ssh} -i ${cfg.sshKeyPath} pi@${cfg.masterIP} -- "sudo cat /var/lib/kubernetes/secrets/apitoken.secret" | sudo nixos-kubernetes-node-join
       '';
-
-      containerdConfigFile = pkgs.writeText "containerd.toml" ''
-        version = 2
-        root = "/var/lib/containerd/daemon"
-        state = "/var/run/containerd/daemon"
-        oom_score = 0
-        [grpc]
-          address = "/var/run/containerd/containerd.sock"
-        [plugins."io.containerd.grpc.v1.cri"]
-          sandbox_image = "pause:latest"
-        [plugins."io.containerd.grpc.v1.cri".cni]
-          bin_dir = "/opt/cni/bin"
-          max_conf_num = 0
-        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
-          runtime_type = "io.containerd.runc.v2"
-        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes."io.containerd.runc.v2".options]
-          SystemdCgroup = true
-
-        [plugins."io.containerd.grpc.v1.cri".registry]
-          [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
-            [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
-              endpoint = ["https://registry-1.docker.io"]
-      '';
     in
     lib.mkIf cfg.enable (
       lib.mkMerge [
@@ -74,7 +51,28 @@
           {
             networking.extraHosts = "${cfg.masterIP} ${masterHostname}";
 
-            virtualisation.containerd.configFile = lib.mkForce containerdConfigFile;
+            virtualisation.containerd = {
+              settings = {
+                plugins."io.containerd.grpc.v1.cri" = lib.mkForce {
+                  # keep this more-or-less in sync with <nixpkgs>/nixos/modules/services/cluster/kubernetes/default.nix
+                  # we do this for two reasons (ref <nixpkgs>/nixos/modules/virtualisation/containerd.nix):
+                  #   0. if we have zfs enabled, it will try (and fail!) to use it as a snapshotter
+                  #   1. the cni plugins provided at ${pkgs.cni-plugins}/bin are missing flannel
+
+                  sandbox_image = "pause:latest";
+
+                  cni = {
+                    bin_dir = "/opt/cni/bin";
+                    max_conf_num = 0;
+                  };
+
+                  containerd.runtimes.runc = {
+                    runtime_type = "io.containerd.runc.v2";
+                    options.SystemdCgroup = true;
+                  };
+                };
+              };
+            };
 
             services.kubernetes = {
               roles = lib.optionals cfg.isMaster [ "master" ] ++ lib.optionals cfg.schedulable [ "node" ];
