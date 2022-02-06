@@ -35,6 +35,12 @@ rules:
   - get
   - list
   - watch
+- apiGroups:
+  - ''
+  resources:
+  - events
+  verbs:
+  - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
