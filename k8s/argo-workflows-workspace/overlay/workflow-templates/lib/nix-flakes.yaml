@@ -18,11 +18,11 @@ spec:
       - name: extraBuildFlags
         default: "-v"
       - name: bootstrapDerivations
-        default: "bash git nixFlakes openssh"
+        default: "bash git openssh"
     nodeSelector:
       kubernetes.io/arch: amd64
     script:
-      image: nixos/nix:2.3.12
+      image: nixos/nix:2.5.1
       command: [nix-shell]
       source: |
         #!/usr/bin/env nix-shell
