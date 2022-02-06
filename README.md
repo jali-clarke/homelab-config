@@ -21,7 +21,7 @@ enter the almighty [NixOS](https://nixos.org/) - an OS whose package manager and
 * `nix` with [flakes](https://nixos.wiki/wiki/Flakes) support
 * an `x86_64-linux` system in order to build the [bootstrap images](#bootstrap-images)
 * an internet connection on each machine that you plan to set up
-* appropriate SSH keys if you want to configure secrets (via [agenix](https://github.com/ryantm/agenix))
+* appropriate SSH key(s) to pull down the secrets repo
 
 ### bootstrap images
 
@@ -37,7 +37,7 @@ in order to actually use these configs on a fresh system, we need to create some
 2. flash the resulting image to a usb drive
 3. boot from that usb drive
 4. mount hard disks as necessary (including creation of `zfs` pools / datasets) and then [nixos-generate-config](https://nixos.wiki/wiki/Nixos-generate-config)
-5. generate ssh host keys for the machine in the appropriate (mounted) dir, rekeying secrets in this repo as necessary
+5. generate ssh host keys for the machine in the appropriate (mounted) dir, rekeying secrets in the secrets repo as necessary
 6. copy the `hardware-configuration.nix` back to this repo into the configuration dir of your choice, reference it correctly in the corresponding `configuration.nix` and commit + push it.  delete both `hardware-configuration.nix` and `configuration.nix` from the machine but not this repo
 7. on the machine (either via ssh or locally) `sudo nixos-install --no-root-passwd --flake github:jali-clarke/homelab-config#${configuration_name}`
 8. reboot
