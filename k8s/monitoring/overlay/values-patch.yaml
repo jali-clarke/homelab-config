@@ -5,6 +5,8 @@ metadata:
 spec:
   source:
     helm:
+      # see the below on how to config this better
+      # https://argocd-vault-plugin.readthedocs.io/en/stable/usage/#with-helm
       values: |
         grafana:
           adminPassword: <path:kv/data/monitoring#grafana-password>
