@@ -1,4 +1,4 @@
-# below pins are due to https://github.com/argoproj/argo-rollouts/issues/1507 - change when v1.2 is released
+# see https://github.com/argoproj/argo-rollouts/issues/1507 - update pins below when v1.2 is released
 
 apiVersion: apps/v1
 kind: Deployment
@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
       - name: argo-rollouts
-        image: quay.io/argoproj/argo-rollouts@sha256:b92b74f270f76a8cb878666a890952ba703166c28c66ace9b570f022e9ea76f9
+        image: quay.io/argoproj/argo-rollouts:v1.2.0-rc1
         imagePullPolicy: IfNotPresent
 ---
 apiVersion: apps/v1
@@ -21,5 +21,5 @@ spec:
     spec:
       containers:
       - name: argo-rollouts-dashboard
-        image: quay.io/argoproj/kubectl-argo-rollouts@sha256:36bba519b4eec4bafca72e38b2d27284fa90d5e282998ad986e0d17259ffcfce
+        image: quay.io/argoproj/kubectl-argo-rollouts:v1.2.0-rc1
         imagePullPolicy: IfNotPresent
