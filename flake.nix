@@ -107,11 +107,13 @@
               pkgs.diffutils
               pkgs.dnsutils
               pkgs.git
+              pkgs.k9s
               pkgs.kubectl
               pkgs.kubernetes-helm
               pkgs.nixos-generators
               pkgs.nixpkgs-fmt
               pkgs.openssl
+              pkgs.qemu
               pkgs.telnet
               pkgs.vim
 
