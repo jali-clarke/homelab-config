@@ -74,6 +74,11 @@
               ${nixos-generate} -f sd-aarch64-installer --flake '.#pi-baker'
             '';
 
+            buildConfig = pkgs.writeScriptBin "build_config" ''
+              #!${pkgs.runtimeShell} -xe
+              ${pkgs.nixos-rebuild}/bin/nixos-rebuild build --flake ".#$1"
+            '';
+
             fetchKubeconfig = pkgs.writeScriptBin "fetch_kubeconfig" ''
               #!${pkgs.runtimeShell} -e
 
@@ -123,6 +128,7 @@
 
               buildBootstrapBill
               buildPiBaker
+              buildConfig
               fetchKubeconfig
               updateKnownGood
             ];
