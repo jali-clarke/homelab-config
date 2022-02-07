@@ -60,6 +60,7 @@
             pkgs = mkPkgs { inherit system; hostname = "<devShell>"; };
             meta = import ./lib/get-meta.nix { inherit pkgs; };
 
+            kubectl = "${pkgs.kubectl}/bin/kubectl";
             nixos-generate = "${pkgs.nixos-generators}/bin/nixos-generate";
             ssh = "${pkgs.openssh}/bin/ssh";
 
@@ -75,20 +76,23 @@
 
             fetchKubeconfig = pkgs.writeScriptBin "fetch_kubeconfig" ''
               #!${pkgs.runtimeShell} -e
-              mkdir -p ~/.kube /var/lib/kubernetes/secrets
-              mkdir -p /var/lib/kubernetes/secrets
 
-              for target_file in ~/.kube/config /var/lib/kubernetes/secrets/ca.pem /var/lib/kubernetes/secrets/cluster-admin.pem /var/lib/kubernetes/secrets/cluster-admin-key.pem; do
-                if [ -e $target_file ]; then
-                  echo warning! $target_file already exists, moving to $target_file.old
-                  mv $target_file $target_file.old
-                fi
-              done
+              cat_remote_file () {
+                ${ssh} pi@${meta.weedle.networkIP} -- sudo cat "$1"
+              }
 
-              ${ssh} pi@${meta.weedle.networkIP} -- sudo cat /etc/kubernetes/cluster-admin.kubeconfig > ~/.kube/config
-              ${ssh} pi@${meta.weedle.networkIP} -- sudo cat /var/lib/kubernetes/secrets/ca.pem > /var/lib/kubernetes/secrets/ca.pem
-              ${ssh} pi@${meta.weedle.networkIP} -- sudo cat /var/lib/kubernetes/secrets/cluster-admin.pem > /var/lib/kubernetes/secrets/cluster-admin.pem
-              ${ssh} pi@${meta.weedle.networkIP} -- sudo cat /var/lib/kubernetes/secrets/cluster-admin-key.pem > /var/lib/kubernetes/secrets/cluster-admin-key.pem
+              ${kubectl} config set-cluster homelab --server=https://weedle
+
+              ${kubectl} config set-cluster homelab --embed-certs \
+                --certificate-authority=<(cat_remote_file /var/lib/kubernetes/secrets/ca.pem)
+
+              ${kubectl} config set-credentials homelab-admin --embed-certs \
+                --client-certificate=<(cat_remote_file /var/lib/kubernetes/secrets/cluster-admin.pem)
+
+              ${kubectl} config set-credentials homelab-admin --embed-certs \
+                --client-key=<(cat_remote_file /var/lib/kubernetes/secrets/cluster-admin-key.pem)
+
+              ${kubectl} config set-context homelab --cluster=homelab --user=homelab-admin
             '';
 
             updateKnownGood = pkgs.writeScriptBin "update_known_good" ''
