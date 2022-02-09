@@ -18,7 +18,7 @@ spec:
         - failed
         - succeeded
     script:
-      image: alpine/curl:3.14
+      image: curlimages/curl:7.81.0
       command: [ash]
       source: |
         STATE="{{inputs.parameters.state}}"
