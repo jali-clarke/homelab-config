@@ -13,6 +13,7 @@ in
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
 
+  # linuxPackages_rpi3 doesn't work with ext4, seemingly
   boot.kernelPackages = pkgs.linuxPackages;
 
   # !!! Needed for the virtual console to work on the RPi 3, as the default of 16M doesn't seem to be enough.
