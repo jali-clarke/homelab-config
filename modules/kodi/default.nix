@@ -20,6 +20,12 @@
 
       services.xserver = {
         enable = true;
+
+        displayManager = {
+          lightdm.enable = true;
+          defaultSession = "kodi";
+        };
+
         desktopManager.kodi = {
           enable = true;
           package = pkgs.callPackage ./kodi.nix { };
