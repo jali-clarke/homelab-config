@@ -4,6 +4,7 @@ let
   otherAddons = [
     (callPackage ./addons/plugin.video.crunchyroll { })
     (callPackage ./addons/plugin.video.embycon { })
+    (callPackage ./addons/plugin.video.twitch { inherit callPackage; })
   ];
 
   fix-osmc-skin = osmc-skin:
