@@ -27,8 +27,6 @@
         enable = true;
 
         displayManager = {
-          lightdm.enable = true;
-          defaultSession = "kodi";
           autoLogin = {
             enable = true;
             user = "pi";
