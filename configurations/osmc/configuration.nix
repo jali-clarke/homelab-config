@@ -62,7 +62,10 @@ in
     "id_osmc.pub" = secretFilePi ciphertexts."id_osmc.pub.age";
   };
 
-  homelab-config.kodi.enable = true;
+  homelab-config.kodi = {
+    enable = true;
+    remoteControlPort = 8080;
+  };
 
   system.stateVersion = "21.05"; # Did you read the comment?
 }
