@@ -14,7 +14,7 @@
           selfSourceInfo = self.sourceInfo;
         };
 
-      mkPkgs = { system, hostname, extraPkgsConfig ? {} }:
+      mkPkgs = { system, hostname, extraPkgsConfig ? { } }:
         import nixpkgs {
           inherit system;
           config = extraPkgsConfig;
@@ -27,7 +27,7 @@
       nixosConfigurations =
         let
           nixosSystemFromDir =
-            { system, subdirName, configurationFile ? "configuration.nix", extraPkgsConfig ? {} }:
+            { system, subdirName, configurationFile ? "configuration.nix", extraPkgsConfig ? { } }:
             nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem {
               inherit system;
               pkgs = mkPkgs { inherit extraPkgsConfig system; hostname = subdirName; };

@@ -10,7 +10,7 @@ let
   fix-osmc-skin = osmc-skin:
     osmc-skin.overrideAttrs (
       old: rec {
-        name = builtins.replaceStrings [old.version] [version] old.name;
+        name = builtins.replaceStrings [ old.version ] [ version ] old.name;
         version = "19.1.2";
         src = fetchFromGitHub {
           owner = "osmc";
