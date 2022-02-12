@@ -24,12 +24,13 @@
         displayManager = {
           lightdm.enable = true;
           defaultSession = "kodi";
+          autoLogin = {
+            enable = true;
+            user = "pi";
+          };
         };
 
-        desktopManager.kodi = {
-          enable = true;
-          package = pkgs.callPackage ./kodi.nix { };
-        };
+        desktopManager.kodi.enable = true;
       };
     };
 }
