@@ -16,7 +16,8 @@ in
   # NixOS wants to enable GRUB by default
   boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
-  boot.loader.generic-extlinux-compatible.enable = true;
+  # leave this disabled - it's incompatible with `boot.loader.raspberryPi.enable = true`
+  boot.loader.generic-extlinux-compatible.enable = false;
 
   boot.loader.raspberryPi = {
     enable = true;
