@@ -93,6 +93,18 @@ all to be performed on `atlas` unless specified otherwise
 * no fixed address
 * useful when there are no other `x86_64-linux` environments available, e.g. rebuilding everything from scratch and i need to produce [bootstrap images](#bootstrap-images)
 
+### [osmc](./configurations/osmc)
+
+* `aarch64-linux` server
+* `192.168.0.104`
+* not related to the OSMC distro, but definitely inspired by it.  replaces an old OSMC installation and wanted to keep the hostname
+
+#### manual steps
+
+all to be performed on `osmc` unless specified otherwise
+
+1. once booted and logged in (automatically), you'll need to confirm that you want to use the addons installed and then config them.  might move more stuff to `advancedsettings.xml` to automate
+
 ### [pi-baker](./configurations/pi-baker)
 
 * `aarch64-linux` [bootstrap image](#bootstrap-images)
