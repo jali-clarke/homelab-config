@@ -14,9 +14,10 @@
           selfSourceInfo = self.sourceInfo;
         };
 
-      mkPkgs = { system, hostname }:
+      mkPkgs = { system, hostname, extraPkgsConfig ? {} }:
         import nixpkgs {
           inherit system;
+          config = extraPkgsConfig;
           overlays = [
             (overlay { inherit system hostname; })
           ];
@@ -26,10 +27,10 @@
       nixosConfigurations =
         let
           nixosSystemFromDir =
-            { system, subdirName, configurationFile ? "configuration.nix" }:
+            { system, subdirName, configurationFile ? "configuration.nix", extraPkgsConfig ? {} }:
             nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem {
               inherit system;
-              pkgs = mkPkgs { inherit system; hostname = subdirName; };
+              pkgs = mkPkgs { inherit extraPkgsConfig system; hostname = subdirName; };
 
               specialArgs = {
                 ciphertexts = homelab-secrets.defaultPackage.${system};
@@ -47,7 +48,7 @@
           atlas = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "atlas"; };
           bootstrap-bill = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "bootstrap-bill"; };
           nixos-oblivion = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "nixos-oblivion"; };
-          osmc = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "osmc"; };
+          osmc = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "osmc"; extraPkgsConfig = { allowUnfree = true; }; };
           pi-baker = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "pi-baker"; };
           speet = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "speet"; };
           weedle = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "weedle"; };

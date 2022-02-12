@@ -1,5 +1,5 @@
 # inspired by https://nixos.wiki/wiki/NixOS_on_ARM/Raspberry_Pi_4
-{ config, pkgs, ciphertexts, nixos-hardware-modules, ... }:
+{ config, lib, pkgs, ciphertexts, nixos-hardware-modules, ... }:
 let
   meta = config.homelab-config.meta;
 
