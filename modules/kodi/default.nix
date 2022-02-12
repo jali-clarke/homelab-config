@@ -33,7 +33,10 @@
           };
         };
 
-        desktopManager.kodi.enable = true;
+        desktopManager.kodi = {
+          enable = true;
+          package = pkgs.callPackage ./kodi.nix { };
+        };
       };
 
       networking.firewall = {
