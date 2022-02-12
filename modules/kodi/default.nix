@@ -8,6 +8,11 @@
         type = types.bool;
         default = false;
       };
+
+      remoteControlPort = mkOption {
+        type = types.port;
+        default = 80;
+      };
     };
 
   config =
@@ -31,6 +36,11 @@
         };
 
         desktopManager.kodi.enable = true;
+      };
+
+      networking.firewall = {
+        allowedTCPPorts = [ cfg.remoteControlPort ];
+        allowedUDPPorts = [ cfg.remoteControlPort ];
       };
     };
 }
