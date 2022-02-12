@@ -27,7 +27,10 @@ in
   #   '';
   # };
 
-  hardware.raspberry-pi."4".fkms-3d.enable = true;
+  hardware.raspberry-pi."4" = {
+    audio.enable = true;
+    fkms-3d.enable = true;
+  };
 
   # boot.initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
 
