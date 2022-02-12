@@ -2,6 +2,7 @@
   imports = [
     ./acme-cloudflare
     ./common-config
+    ./kodi
     ./kubernetes
     ./meta
     ./nexus

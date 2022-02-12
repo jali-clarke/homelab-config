@@ -2,10 +2,11 @@
   description = "env for managing bare metal infra";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
   inputs.homelab-secrets.url = "git+ssh://git@github.com/jali-clarke/homelab-secrets";
   inputs.flake-utils.url = "github:numtide/flake-utils";
 
-  outputs = { self, nixpkgs, homelab-secrets, flake-utils }:
+  outputs = { self, nixpkgs, nixos-hardware, homelab-secrets, flake-utils }:
     let
       overlay = { system, hostname }:
         import ./overlay {
@@ -29,7 +30,12 @@
             nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem {
               inherit system;
               pkgs = mkPkgs { inherit system; hostname = subdirName; };
-              specialArgs.ciphertexts = homelab-secrets.defaultPackage.${system};
+
+              specialArgs = {
+                ciphertexts = homelab-secrets.defaultPackage.${system};
+                nixos-hardware-modules = nixos-hardware.nixosModules;
+              };
+
               modules = [
                 homelab-secrets.nixosModule
                 (./configurations + "/${subdirName}/${configurationFile}")
@@ -41,6 +47,7 @@
           atlas = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "atlas"; };
           bootstrap-bill = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "bootstrap-bill"; };
           nixos-oblivion = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "nixos-oblivion"; };
+          osmc = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "osmc"; };
           pi-baker = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "pi-baker"; };
           speet = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "speet"; };
           weedle = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "weedle"; };
