@@ -61,4 +61,6 @@ in
     id_osmc = secretFilePi ciphertexts."id_osmc.age";
     "id_osmc.pub" = secretFilePi ciphertexts."id_osmc.pub.age";
   };
+
+  homelab-config.kodi.enable = true;
 }
