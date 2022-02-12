@@ -16,16 +16,16 @@ in
   # NixOS wants to enable GRUB by default
   boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
-  # leave this disabled - it's incompatible with `boot.loader.raspberryPi.enable = true`
-  boot.loader.generic-extlinux-compatible.enable = false;
+  boot.loader.generic-extlinux-compatible.enable = true;
 
-  boot.loader.raspberryPi = {
-    enable = true;
-    version = 4;
-    firmwareConfig = ''
-      dtparam=audio=on
-    '';
-  };
+  # leave this disabled - it's incompatible with `boot.loader.generic-extlinux-compatible.enable = false`
+  # boot.loader.raspberryPi = {
+  #   enable = true;
+  #   version = 4;
+  #   firmwareConfig = ''
+  #     dtparam=audio=on
+  #   '';
+  # };
 
   hardware.raspberry-pi."4".fkms-3d.enable = true;
 
