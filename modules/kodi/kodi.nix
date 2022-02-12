@@ -2,6 +2,7 @@
 let
   callPackage = kodi.packages.callPackage;
   otherAddons = [
+    (callPackage ./addons/plugin.video.crunchyroll { })
     (callPackage ./addons/plugin.video.embycon { })
   ];
 
