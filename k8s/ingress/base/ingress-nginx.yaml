@@ -31,7 +31,7 @@ spec:
                 pathOverride: "{{ingressPublishService}}"
         chart: ingress-nginx
         repoURL: https://kubernetes.github.io/ingress-nginx
-        targetRevision: "4.0.3"
+        targetRevision: "4.0.17"
       destination:
         server: https://kubernetes.default.svc
         namespace: "{{ingressResourceName}}"
