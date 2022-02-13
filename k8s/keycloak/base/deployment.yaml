@@ -16,14 +16,25 @@ spec:
         kubernetes.io/arch: amd64
       containers:
       - name: keycloak
-        image: quay.io/keycloak/keycloak:16.1.1
-        env:
-        - name: PROXY_ADDRESS_FORWARDING
-          value: "true"
+        image: quay.io/keycloak/keycloak-x:16.1.1
+        command:
+        - /opt/keycloak/bin/kc.sh
+        - start
+        args:
+        - --auto-build
+        - --db=$DB_VENDOR
+        - --db-url-host=$DB_ADDR:$DB_PORT
+        - --db-url-database=$DB_DATABASE
+        - --db-username=$DB_USER
+        - --db-password=$DB_PASSWORD
+        - --http-enabled=true
+        - --proxy=passthrough
+        # this is intended to run behind a proxy that verifies host header
+        - --hostname-strict=false
         ports:
         - name: http
           containerPort: 8080
         readinessProbe:
           httpGet:
-            path: /auth/realms/master
+            path: /realms/master
             port: 8080
