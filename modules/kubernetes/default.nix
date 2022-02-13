@@ -38,12 +38,6 @@
     let
       cfg = config.homelab-config.k8s;
       masterHostname = if cfg.isMaster then config.networking.hostName else assert (cfg.masterHostname != null); cfg.masterHostname;
-
-      ssh = "${pkgs.openssh}/bin/ssh";
-      joinCluster = pkgs.writeScriptBin "join_cluster" ''
-        #!${pkgs.runtimeShell} -xe
-        ${ssh} -i ${cfg.sshKeyPath} pi@${cfg.masterIP} -- "sudo cat /var/lib/kubernetes/secrets/apitoken.secret" | sudo nixos-kubernetes-node-join
-      '';
     in
     lib.mkIf cfg.enable (
       lib.mkMerge [
@@ -120,13 +114,25 @@
               }
             ];
 
-            environment.systemPackages = [
-              joinCluster
-            ];
-
             services.kubernetes = {
               kubelet.kubeconfig.server = "https://${masterHostname}:443";
               apiserverAddress = "https://${masterHostname}:443";
+            };
+
+            systemd.services.kubernetes-auto-join-cluster = {
+              description = "Joins the cluster automatically";
+              serviceConfig = {
+                RemainAfterExit = "yes";
+                Type = "oneshot";
+              };
+
+              script = ''
+                SSH_OPTS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+                TOKEN="$(${pkgs.openssh}/bin/ssh $SSH_OPTS -i ${cfg.sshKeyPath} pi@${cfg.masterIP} -- sudo cat /var/lib/kubernetes/secrets/apitoken.secret)"
+                echo "$TOKEN" | /run/current-system/sw/bin/nixos-kubernetes-node-join
+              '';
+              after = [ "kubelet.service" ];
+              wantedBy = [ "kubelet.service" ];
             };
           }
         )

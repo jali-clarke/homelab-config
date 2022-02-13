@@ -114,14 +114,14 @@ all to be performed on `osmc` unless specified otherwise
 
 * `aarch64-linux` server
 * `192.168.0.101`
-* `aarch64-linux` k8s worker - can join k8s cluster simply with `join_cluster`
+* `aarch64-linux` k8s worker - should automatically join cluster
 
 #### manual steps
 
 all to be performed on `speet` unless specified otherwise
 
-1. join the cluster with `sudo join_cluster`
-    * if this fails, have a look at https://nixos.wiki/wiki/Kubernetes#Join_Cluster_not_working - you may need to restart `cfssl` on the cluster master
+1. ensure that the node has successfully joined the cluster upon system activation, e.g. `journalctl -eu kubernetes-auto-join-cluster.service`
+    * if this fails, have a look at https://nixos.wiki/wiki/Kubernetes#Join_Cluster_not_working - you may need to restart `cfssl` on the cluster master and then re-run the `kubernetes-auto-join-cluster` service
 
 ### [weedle](./configurations/weedle)
 
