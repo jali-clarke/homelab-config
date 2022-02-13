@@ -2,7 +2,6 @@
 let
   # fails if the source tree is not clean, i.e. uncommitted changes
   shortRev = assert selfSourceInfo ? shortRev ; selfSourceInfo.shortRev;
-  thisRepoURI = "github:jali-clarke/homelab-config";
 
   # %Y%m%d%H%M%S
   lastModifiedDate = selfSourceInfo.lastModifiedDate;
@@ -13,7 +12,8 @@ let
   lastModifiedMinute = builtins.substring 10 2 lastModifiedDate;
   lastModifiedSecond = builtins.substring 12 2 lastModifiedDate;
 in
-{
-  versionedFlakeURI = "${thisRepoURI}/${shortRev}#nixosConfigurations.${hostname}";
+rec {
+  thisRepoURI = "github:jali-clarke/homelab-config";
+  versionedFlakeURI = "${thisRepoURI}/${shortRev}#${hostname}";
   lastModifiedFormatted = "${lastModifiedYear}-${lastModifiedMonth}-${lastModifiedDay} ${lastModifiedHour}:${lastModifiedMinute}:${lastModifiedSecond} UTC";
 }
