@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: cassandra
-        image: cassandra:4.0.1
+        image: cassandra:4.0.2
         resources:
           limits:
             cpu: 250m
