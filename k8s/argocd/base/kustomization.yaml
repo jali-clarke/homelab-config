@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: argocd
 resources:
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.2.5/manifests/install.yaml
+# the applicationset controller will be bundled with argocd 2.3, safe to remove the below once it's in
 - https://raw.githubusercontent.com/argoproj-labs/applicationset/v0.3.0/manifests/install.yaml
 - clusterrolebinding.yaml
 - namespace.yaml
