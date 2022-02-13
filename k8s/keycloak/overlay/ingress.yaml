@@ -16,14 +16,14 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: "/auth/realms/homelab"
+        path: "/realms/homelab"
         backend:
           service:
             name: keycloak
             port:
               number: 8080
       - pathType: Prefix
-        path: "/auth/resources"
+        path: "/resources"
         backend:
           service:
             name: keycloak

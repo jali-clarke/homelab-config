@@ -7,7 +7,7 @@ data:
   url: https://argocd.jali-clarke.ca
   oidc.config: |
     name: Keycloak
-    issuer: https://keycloak.jali-clarke.ca/auth/realms/homelab
+    issuer: https://keycloak.jali-clarke.ca/realms/homelab
     clientID: $oidc.keycloak.clientID
     clientSecret: $oidc.keycloak.clientSecret
     requestedScopes: ["openid", "profile", "email", "groups"]

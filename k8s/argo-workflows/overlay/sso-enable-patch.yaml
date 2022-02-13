@@ -6,7 +6,7 @@ metadata:
 data:
   sso: |
     # This is the root URL of the OIDC provider (required).
-    issuer: https://keycloak.jali-clarke.ca/auth/realms/homelab
+    issuer: https://keycloak.jali-clarke.ca/realms/homelab
     sessionExpiry: 24h
     clientId:
       name: oauth2-secret

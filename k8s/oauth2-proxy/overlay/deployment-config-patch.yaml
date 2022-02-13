@@ -16,7 +16,7 @@ spec:
         - --cookie-domain=.jali-clarke.ca
         - --cookie-expire=24h0m0s
         - --whitelist-domain=.jali-clarke.ca
-        - --oidc-issuer-url=https://keycloak.jali-clarke.ca/auth/realms/homelab
+        - --oidc-issuer-url=https://keycloak.jali-clarke.ca/realms/homelab
         - --redirect-url=https://auth.jali-clarke.ca/oauth2/callback
         envFrom:
         - secretRef:
