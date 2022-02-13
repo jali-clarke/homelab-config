@@ -59,7 +59,7 @@ for raspberry pis specifically
 
 ### upgrading
 
-if you want to see which version of a flake is installed, you can do `system_flake_version` and it will print out the versioned flake URI.  this includes the system's hostname and the revision hash of the flake source, as well as the date of that revision.
+if you want to see which version of a flake is installed, you can do `system_flake_version --show` and it will print out the versioned flake URI.  this includes the system's hostname and the revision hash of the flake source, as well as the date of that revision.
 
 once installed, the above configurations will automatically use their own hostname with the configurations when installing; you need only do `system_flake_version -i <key_path> --update <ref>`, where `ref` is optional but if provided can be a `tag`, `commit` sha, `branch`, etc.  usually no reboot is necessary after but if the kernel is upgraded or something you should probably reboot to make sure all is well (rolling back if not).
 
