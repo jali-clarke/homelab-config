@@ -9,8 +9,7 @@ data:
     PermitUserEnvironment yes
   startup.sh: |
     #!/bin/bash -xe
-    echo -ne "$PASSWORD\n$PASSWORD" | passwd root
-    
+
     mkdir -p /root/.ssh
 
     for authorized_key in $(ls /authorized_keys_mnt/*); do
@@ -20,11 +19,22 @@ data:
     chmod 600 /root/.ssh/authorized_keys
     echo "PATH=$PATH" >> /root/.ssh/environment
     
-    chown root:root /var/empty
-    
     mkdir -p /etc/ssh
     cp /ssh_host_key_mnt/* /etc/ssh
+
+    mkdir -p /var/empty
+    chmod 755 /var/empty
+
+    sed -i '/^root:/d' /etc/passwd
+    echo "root:x:0:0::/root:$(which bash)" >> /etc/passwd
+    sed -i 's/^root:!/root:*/' /etc/shadow
+
+    echo "sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin" >> /etc/passwd
+    echo "sshd:x:74:" >> /etc/group
+
     chmod 600 /etc/ssh/ssh_host_rsa_key
     chmod 644 /etc/ssh/ssh_host_rsa_key.pub
 
-    exec `which sshd` -D -p 22 -f /sshd_config_mnt/sshd_config
+    mkdir -p /run
+    chmod a+rwx /run
+    exec `which sshd` -D -e -p 22 -f /sshd_config_mnt/sshd_config
