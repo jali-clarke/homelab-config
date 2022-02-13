@@ -8,8 +8,11 @@ spec:
   - name: dev-env-ci
     inputs:
       parameters:
-      - name: repoFullName
       - name: repoRef
+      - name: repoFullName
+        value: jali-clarke/dev-env
+      - name: reportContext
+        value: build
     dag:
       tasks:
       - name: report-scheduled
@@ -19,8 +22,12 @@ spec:
             value: "{{inputs.parameters.repoFullName}}"
           - name: commitSha
             value: "{{inputs.parameters.repoRef}}"
+          - name: context
+            value: "{{inputs.parameters.reportContext}}"
           - name: state
-            value: scheduled
+            value: pending
+          - name: description
+            value: build scheduled
         templateRef:
           name: github-commit-status
           template: github-commit-status
@@ -33,6 +40,8 @@ spec:
             value: "{{inputs.parameters.repoFullName}}"
           - name: repoRef
             value: "{{inputs.parameters.repoRef}}"
+          - name: reportContext
+            value: "{{inputs.parameters.reportContext}}"
         template: build
 
       - name: report-suceeded
@@ -43,8 +52,12 @@ spec:
             value: "{{inputs.parameters.repoFullName}}"
           - name: commitSha
             value: "{{inputs.parameters.repoRef}}"
+          - name: context
+            value: "{{inputs.parameters.reportContext}}"
           - name: state
-            value: suceeded
+            value: success
+          - name: description
+            value: build and deploy commit (if any) succeeded
         templateRef:
           name: github-commit-status
           template: github-commit-status
@@ -57,8 +70,12 @@ spec:
             value: "{{inputs.parameters.repoFullName}}"
           - name: commitSha
             value: "{{inputs.parameters.repoRef}}"
+          - name: context
+            value: "{{inputs.parameters.reportContext}}"
           - name: state
-            value: failed
+            value: failure
+          - name: description
+            value: build or deploy commit failed
         templateRef:
           name: github-commit-status
           template: github-commit-status
@@ -71,6 +88,7 @@ spec:
       parameters:
       - name: repoFullName
       - name: repoRef
+      - name: reportContext
     dag:
       tasks:
       - name: report-running
@@ -80,8 +98,12 @@ spec:
             value: "{{inputs.parameters.repoFullName}}"
           - name: commitSha
             value: "{{inputs.parameters.repoRef}}"
+          - name: context
+            value: "{{inputs.parameters.reportContext}}"
           - name: state
-            value: running
+            value: pending
+          - name: description
+            value: build running
         templateRef:
           name: github-commit-status
           template: github-commit-status
