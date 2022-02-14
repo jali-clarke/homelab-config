@@ -19,6 +19,9 @@ spec:
         - success
       - name: description
         default: ""
+      # workflow.namespace + workflow.name are globals
+      - name: target_url
+        default: "https://argo.jali-clarke.ca/workflows/{{workflow.namespace}}/{{workflow.name}}"
     script:
       image: curlimages/curl:7.81.0
       command: [ash]
@@ -26,9 +29,7 @@ spec:
         CONTEXT="{{inputs.parameters.context}}"
         STATE="{{inputs.parameters.state}}"
         DESCRIPTION="{{inputs.parameters.description}}"
-
-        # workflow.namespace + workflow.name are globals
-        TARGET_URL="https://argo.jali-clarke.ca/workflows/{{workflow.namespace}}/{{workflow.name}}"
+        TARGET_URL="{{inputs.parameters.target_url}}"
 
         COMMIT_URL="https://api.github.com/repos/{{inputs.parameters.repoFullName}}/statuses/{{inputs.parameters.commitSha}}"
         PAYLOAD="{\"state\":\"$STATE\",\"target_url\":\"$TARGET_URL\",\"description\":\"$DESCRIPTION\",\"context\":\"$CONTEXT\"}"
