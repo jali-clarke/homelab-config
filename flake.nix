@@ -51,6 +51,7 @@
           osmc = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "osmc"; extraPkgsConfig = { allowUnfree = true; }; };
           pi-baker = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "pi-baker"; };
           speet = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "speet"; };
+          spoot = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "spoot"; };
           weedle = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "weedle"; };
         };
     } // flake-utils.lib.eachDefaultSystem (

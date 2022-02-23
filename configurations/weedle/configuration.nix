@@ -32,6 +32,8 @@ in
   age.secrets = {
     "id_atlas.pub".file = ciphertexts."id_atlas.pub.age";
     "id_speet.pub".file = ciphertexts."id_speet.pub.age";
+    "id_spoot.pub".file = ciphertexts."id_spoot.pub.age";
+
     id_weedle = secretFilePi ciphertexts."id_weedle.age";
     "id_weedle.pub" = secretFilePi ciphertexts."id_weedle.pub.age";
   };
@@ -40,6 +42,7 @@ in
     authorizedKeyPaths = [
       config.age.secrets."id_atlas.pub".path
       config.age.secrets."id_speet.pub".path
+      config.age.secrets."id_spoot.pub".path
     ];
 
     authorizedKeysExtraActivationDeps = [ "agenix" ];

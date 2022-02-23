@@ -123,6 +123,19 @@ all to be performed on `speet` unless specified otherwise
 1. ensure that the node has successfully joined the cluster upon system activation, e.g. `journalctl -eu kubernetes-auto-join-cluster.service`
     * if this fails, have a look at https://nixos.wiki/wiki/Kubernetes#Join_Cluster_not_working - you may need to restart `cfssl` on the cluster master and then re-run the `kubernetes-auto-join-cluster` service
 
+### [spoot](./configurations/spoot)
+
+* `aarch64-linux` server
+* `192.168.0.106`
+* `aarch64-linux` k8s worker - should automatically join cluster
+
+#### manual steps
+
+all to be performed on `spoot` unless specified otherwise
+
+1. ensure that the node has successfully joined the cluster upon system activation, e.g. `journalctl -eu kubernetes-auto-join-cluster.service`
+    * if this fails, have a look at https://nixos.wiki/wiki/Kubernetes#Join_Cluster_not_working - you may need to restart `cfssl` on the cluster master and then re-run the `kubernetes-auto-join-cluster` service
+
 ### [weedle](./configurations/weedle)
 
 * `x86_64-linux` server
