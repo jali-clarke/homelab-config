@@ -18,6 +18,8 @@ spec:
         helm:
           values: |
             controller:
+              nodeSelector:
+                kubernetes.io/arch: amd64
               service:
                 loadBalancerIP: "{{loadBalancerIP}}"
                 externalTrafficPolicy: Local
