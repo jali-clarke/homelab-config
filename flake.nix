@@ -6,7 +6,7 @@
   inputs.homelab-secrets.url = "git+ssh://git@github.com/jali-clarke/homelab-secrets";
   inputs.flake-utils.url = "github:numtide/flake-utils";
 
-  outputs = { self, nixpkgs, nixos-hardware, homelab-secrets, flake-utils }:
+  outputs = flakeInputs@{ self, nixpkgs, nixos-hardware, homelab-secrets, flake-utils }:
     let
       overlay = { system, hostname }:
         import ./overlay {
@@ -33,6 +33,7 @@
               pkgs = mkPkgs { inherit extraPkgsConfig system; hostname = subdirName; };
 
               specialArgs = {
+                inherit flakeInputs;
                 ciphertexts = homelab-secrets.defaultPackage.${system};
                 nixos-hardware-modules = nixos-hardware.nixosModules;
               };

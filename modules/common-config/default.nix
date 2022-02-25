@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, flakeInputs, ... }:
 let
   maxOpenFiles = toString (1024 * 1024);
   maxInotifyInstances = toString (128 * 8);
@@ -38,6 +38,20 @@ in
     };
 
     package = pkgs.nixFlakes;
+    nixPath = [ "nixpkgs=${pkgs.path}" ];
+    registry.nixpkgs = {
+      exact = true;
+      from = {
+        type = "indirect";
+        id = "nixpkgs";
+      };
+      to = {
+        type = "github";
+        owner = "NixOS";
+        repo = "nixpkgs";
+        rev = flakeInputs.nixpkgs.rev;
+      };
+    };
 
     settings.trusted-users = [ "root" "pi" ];
     extraOptions = ''
