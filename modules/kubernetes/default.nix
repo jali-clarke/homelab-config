@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, options, ... }: {
   options.homelab-config.k8s =
     let
       inherit (lib) types mkOption;
@@ -72,8 +72,16 @@
               roles = lib.optionals cfg.isMaster [ "master" ] ++ lib.optionals cfg.schedulable [ "node" ];
               masterAddress = masterHostname;
               easyCerts = true;
-              addons.dns.enable = true;
               kubelet.extraOpts = "--fail-swap-on=false";
+
+              addons.dns = {
+                enable = true;
+                # use arm64 image where needed
+                coredns = options.services.kubernetes.addons.dns.coredns.default // lib.optionalAttrs (pkgs.system == "aarch64-linux") {
+                  imageDigest = "sha256:e98e05b50afc6606d3e0a66e264175910651746262e4a4823299ec6c827ef72a";
+                  sha256 = "sha256-qIXGQszDDnmsVhPGzbDoz8TrS1OK8VRWcQmvicgV3Zk=";
+                };
+              };
             };
 
             environment.systemPackages = [
