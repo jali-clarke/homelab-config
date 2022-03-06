@@ -6,8 +6,6 @@ spec:
   template:
     spec:
       serviceAccountName: argocd-repo-server
-      nodeSelector:
-        kubernetes.io/arch: amd64
       containers:
       - name: argocd-repo-server
         volumeMounts:
