@@ -16,7 +16,7 @@ spec:
         kubernetes.io/arch: amd64
       containers:
       - name: keycloak
-        image: quay.io/keycloak/keycloak-x:16.1.1
+        image: quay.io/keycloak/keycloak:17.0.0
         command:
         - /opt/keycloak/bin/kc.sh
         - start
