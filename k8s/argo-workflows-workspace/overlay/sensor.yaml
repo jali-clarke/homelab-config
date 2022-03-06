@@ -9,7 +9,6 @@ spec:
   - name: dev-env-master-push
     eventSourceName: github
     eventName: homelab
-    # transform not available till argo events v1.6.0
     filters:
       data:
       - path: body.X-GitHub-Event
