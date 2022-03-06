@@ -40,10 +40,7 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        # should be /oauth2, but prefix rules must be distinct for the same host, even across different ingressClass
-        # https://github.com/kubernetes/ingress-nginx/issues/7546 was solved, waiting for
-        # https://github.com/kubernetes/ingress-nginx/commit/04035cc1c2487a73f47450e3d2f45721391de4fe to be released
-        path: "/"
+        path: "/oauth2"
         backend:
           service:
             name: oauth2-proxy
