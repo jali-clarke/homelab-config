@@ -8,6 +8,6 @@ resources:
 - serviceaccount.yaml
 patchesStrategicMerge:
 # make sure to update argocd-repo-server-deploy.yaml if you bump the veresion below
-- https://raw.githubusercontent.com/argoproj-labs/argocd-vault-plugin/v1.8.0/manifests/argocd-cm.yaml
+- https://raw.githubusercontent.com/argoproj-labs/argocd-vault-plugin/v1.9.0/manifests/argocd-cm.yaml
 - argocd-repo-server-deploy.yaml
 - disable-tls-patch.yaml

@@ -26,17 +26,27 @@ spec:
       initContainers:
       - name: download-tools
         image: alpine:3.8
-        command: [sh, -c]
+        command: [ash, -c]
 
         # Don't forget to update this to whatever the stable release version is
         # Note the lack of the `v` prefix unlike the git tag
+        # the script given below is parsed weirdly - anything not separated by double newlines is treated as a single line
         env:
-          - name: AVP_VERSION
-            value: "1.8.0"
+        - name: AVP_VERSION
+          value: "1.9.0"
         args:
           - >-
-            wget -O argocd-vault-plugin
-            https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v${AVP_VERSION}/argocd-vault-plugin_${AVP_VERSION}_linux_amd64 &&
+            if [ "$(uname -m)" == "aarch64" ]; then
+              LINUX_ARCH=arm64
+            else
+              LINUX_ARCH=amd64
+            fi
+
+            DOWNLOAD_LINK="https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v${AVP_VERSION}/argocd-vault-plugin_${AVP_VERSION}_linux_${LINUX_ARCH}"
+
+            echo "downloading ${DOWNLOAD_LINK}"
+
+            wget -O argocd-vault-plugin "${DOWNLOAD_LINK}" &&
             chmod +x argocd-vault-plugin &&
             mv argocd-vault-plugin /custom-tools/
         volumeMounts:
