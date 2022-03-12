@@ -1,7 +1,7 @@
 {
   description = "env for managing bare metal infra";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
   inputs.homelab-secrets.url = "git+ssh://git@github.com/jali-clarke/homelab-secrets";
   inputs.flake-utils.url = "github:numtide/flake-utils";
