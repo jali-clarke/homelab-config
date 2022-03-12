@@ -120,3 +120,6 @@ spec:
         templateRef:
           name: nix-flakes
           template: nix-flakes-github
+  ttlStrategy:
+    secondsAfterSuccess: 259200 # 3 days
+    secondsAfterFailure: 604800 # 1 week
