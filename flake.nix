@@ -126,6 +126,7 @@
               pkgs.diffutils
               pkgs.dnsutils
               pkgs.git
+              pkgs.inetutils
               pkgs.k9s
               pkgs.kubectl
               pkgs.kubernetes-helm
@@ -133,7 +134,6 @@
               pkgs.nixpkgs-fmt
               pkgs.openssl
               pkgs.qemu
-              pkgs.telnet
               pkgs.vim
 
               buildBootstrapBill
