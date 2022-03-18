@@ -23,7 +23,7 @@ spec:
       - name: target_url
         default: "https://argo.jali-clarke.ca/workflows/{{workflow.namespace}}/{{workflow.name}}"
     script:
-      image: curlimages/curl:7.81.0
+      image: curlimages/curl:7.82.0
       command: [ash]
       source: |
         CONTEXT="{{inputs.parameters.context}}"
