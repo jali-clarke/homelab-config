@@ -69,7 +69,7 @@ rules:
   - get
   - update
 - apiGroups:
-  - ''
+  - ""
   resources:
   - pods
   - pods/exec
@@ -82,7 +82,7 @@ rules:
   - patch
   - delete
 - apiGroups:
-  - ''
+  - ""
   resources:
   - configmaps
   verbs:
@@ -90,11 +90,13 @@ rules:
   - watch
   - list
 - apiGroups:
-  - ''
+  - ""
   resources:
   - persistentvolumeclaims
+  - persistentvolumeclaims/finalizers
   verbs:
   - create
+  - update
   - delete
   - get
 - apiGroups:
@@ -122,14 +124,29 @@ rules:
   - list
   - watch
 - apiGroups:
-  - ''
+  - ""
   resources:
   - serviceaccounts
   verbs:
   - get
   - list
 - apiGroups:
-  - ''
+  - argoproj.io
+  resources:
+  - workflowtaskresults
+  verbs:
+  - list
+  - watch
+  - deletecollection
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ""
   resources:
   - secrets
   verbs:
@@ -147,7 +164,7 @@ rules:
   - patch
   - delete
 - apiGroups:
-  - ''
+  - ""
   resources:
   - events
   verbs:
@@ -168,7 +185,7 @@ metadata:
   name: argo-server-role
 rules:
 - apiGroups:
-  - ''
+  - ""
   resources:
   - configmaps
   verbs:
@@ -176,16 +193,16 @@ rules:
   - watch
   - list
 - apiGroups:
-  - ''
+  - ""
   resources:
   - secrets
   verbs:
   - get
-  - list
   - create
+  - list
   - watch
 - apiGroups:
-  - ''
+  - ""
   resources:
   - pods
   - pods/exec
@@ -196,7 +213,7 @@ rules:
   - watch
   - delete
 - apiGroups:
-  - ''
+  - ""
   resources:
   - events
   verbs:
@@ -204,7 +221,7 @@ rules:
   - create
   - patch
 - apiGroups:
-  - ''
+  - ""
   resources:
   - serviceaccounts
   verbs:
