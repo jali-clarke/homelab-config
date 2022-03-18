@@ -28,7 +28,7 @@ spec:
         #!/usr/bin/env nix-shell
         #!nix-shell -p {{inputs.parameters.bootstrapDerivations}}
         #!nix-shell -i bash
-        set +xeo pipefail
+        set -xeo pipefail
 
         git config --global user.name "jali-clarke"
         git config --global user.email "jinnah.ali-clarke@outlook.com"
