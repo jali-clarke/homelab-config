@@ -35,7 +35,7 @@ spec:
         # the script given below is parsed weirdly - anything not separated by double newlines is treated as a single line
         env:
         - name: AVP_VERSION
-          value: "1.9.0"
+          value: "1.10.0"
         args:
           - >-
             if [ "$(uname -m)" == "aarch64" ]; then
