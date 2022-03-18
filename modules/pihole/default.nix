@@ -43,7 +43,7 @@
     in
     lib.mkIf cfg.enable {
       virtualisation.oci-containers.containers.pihole = {
-        image = "pihole/pihole:2022.02";
+        image = "pihole/pihole:2022.02.1";
 
         environment = {
           IPv6 = if cfg.ipv6Enabled then "True" else "False";
