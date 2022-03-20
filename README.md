@@ -65,7 +65,7 @@ once installed, the above configurations will automatically use their own hostna
 
 ## configurations
 
-all ips below are made static in our router instead of in code for my own convenience.  all configurations, including [bootstrap images](#bootstrap-images), have `ssh` access with username `pi`.
+all ips below are made static via DHCP instead of each machine's individual config for my own convenience.  all configurations, including [bootstrap images](#bootstrap-images), have `ssh` access with username `pi`.
 
 ### [atlas](./configurations/atlas)
 
@@ -73,6 +73,7 @@ all ips below are made static in our router instead of in code for my own conven
 * `192.168.0.103`
 * fileserver exporting `nfs` and `smb` (`samba`) shares backed by `zfs` with auto-snapshotting via `sanoid`, replicated to [weedle](#weedle) via `syncoid`
 * email notifications out of `zed` on scrub and etc
+* `dhcp` for our network
 * `pihole` dns + other dnsmasq config
 * `nexus` artifact hosting for container images and other artifacts
 
