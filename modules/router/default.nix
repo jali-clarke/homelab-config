@@ -47,6 +47,8 @@
         interfaces = [ cfg.dhcpInterface ];
         machines = cfg.dhcpMachines;
         extraConfig = ''
+          ddns-updates off;
+
           option subnet-mask 255.255.255.0;
           option broadcast-address ${networkPrefix}.255;
           option routers ${networkPrefix}.1;
