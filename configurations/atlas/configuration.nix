@@ -51,7 +51,17 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = meta.atlas.hostName; # Define your hostname.
+  networking = {
+    dhcpcd.enable = false;
+
+    hostName = meta.atlas.hostName; # Define your hostname.
+    defaultGateway = "192.168.0.1";
+    nameservers = [ meta.atlas.networkIP ];
+    interfaces.eth0 = {
+      useDHCP = lib.mkForce false;
+      ipv4.addresses = [{ address = meta.atlas.networkIP; prefixLength = 24; }];
+    };
+  };
 
   homelab-config.acme-cloudflare = {
     enable = true;
