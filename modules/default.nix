@@ -8,6 +8,7 @@
     ./nexus
     ./nginx-proxy
     ./pihole
+    ./router
     ./users
     ./vault
     ./zfs

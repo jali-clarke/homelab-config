@@ -18,6 +18,10 @@
                 type = types.str;
               };
 
+              macAddress = mkOption {
+                type = types.nullOr types.str;
+              };
+
               networkIP = mkOption {
                 type = types.str;
               };

@@ -183,6 +183,21 @@ in
       '';
   };
 
+  homelab-config.router =
+    let
+      shouldCreateEntry = hostInfo: hostInfo.macAddress != null;
+      mkMachineEntry = hostInfo: {
+        inherit (hostInfo) hostName;
+        ethernetAddress = hostInfo.macAddress;
+        ipAddress = hostInfo.networkIP;
+      };
+    in
+    {
+      enable = true;
+      dhcpMachines = builtins.map mkMachineEntry (builtins.filter shouldCreateEntry (builtins.attrValues meta));
+      dnsServer = meta.atlas.networkIP;
+    };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
