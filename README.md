@@ -81,7 +81,7 @@ all ips below are made static via DHCP instead of each machine's individual conf
 
 all to be performed on `atlas` unless specified otherwise
 
-1. do `sudo smbpasswd -a pi` and set a password in order to setup the `pi` `samba` use
+1. do `sudo smbpasswd -a pi` and set a password in order to setup the `pi` `samba` user
 
 ### [bootstrap-bill](./configurations/bootstrap-bill)
 
