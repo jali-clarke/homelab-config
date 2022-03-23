@@ -76,6 +76,7 @@ all ips below are made static via DHCP instead of each machine's individual conf
 * `dhcp` for our network
 * `pihole` dns + other dnsmasq config
 * `nexus` artifact hosting for container images and other artifacts
+* planned as openvpn client (as vpn gateway)
 
 #### manual steps
 
@@ -87,6 +88,22 @@ all to be performed on `atlas` unless specified otherwise
 
 * `x86_64-linux` [bootstrap image](#bootstrap-images)
 * supports emulation of `aarch64-linux` binaries
+
+### [cerberus](./configurations/cerberus)
+
+* `x86_64-linux` server on hetzner cloud provisioned via terraform
+* ip address TBA
+* planned as openvpn server
+
+#### manual steps
+
+all to be performed on `cerberus` unless specified otherwise.  can watch along in the server's console in hetzner cloud for debugging purposes
+
+1. `nix develop` (or `nix develop -c zsh`)
+2. `cd terraform`
+3. `terraform init && terraform apply`, setting credentials and confirming as necessary
+4. wait about 5 mins for the [`nixos-infect`](https://github.com/elitak/nixos-infect) script to do its thing
+5. follow the steps from [for `x86_64-linux` systems](#for-x86_64-linux-systems) as necessary, probably from step 5 there
 
 ### [nixos-oblivion](./configurations/nixos-oblivion)
 
