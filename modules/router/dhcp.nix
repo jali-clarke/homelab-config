@@ -42,7 +42,7 @@
     let
       cfg = config.homelab-config.router.dhcp;
       broadcastAddress = builtins.concatStringsSep "." (
-        lib.take 3 (builtins.filter builtins.isString (builtins.split "\\." cfg.subnet)) ++ ["255"]
+        lib.take 3 (builtins.filter builtins.isString (builtins.split "\\." cfg.subnet)) ++ [ "255" ]
       );
 
       assertFalse = optPath: {
@@ -52,9 +52,9 @@
     in
     lib.mkIf cfg.enable {
       assertions = builtins.map assertFalse [
-        ["networking" "dhcpcd" "enable"]
-        ["networking" "useDHCP"]
-        ["networking" "interfaces" cfg.listenInterface "useDHCP"]
+        [ "networking" "dhcpcd" "enable" ]
+        [ "networking" "useDHCP" ]
+        [ "networking" "interfaces" cfg.listenInterface "useDHCP" ]
       ];
 
       services.dhcpd4 = {
