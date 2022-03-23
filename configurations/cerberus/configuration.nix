@@ -20,6 +20,12 @@ in
     "wg_server_key".file = ciphertexts."wg_server_key.age";
   };
 
+  homelab-config.router.tables = {
+    enable = true;
+    allowedIcmpInterfaces = [ "eth0" ];
+    allowedTcpInterfaces.eth0 = [ 22 ];
+  };
+
   homelab-config.users = {
     allowPasswordAuth = false;
     authorizedKeyPaths = [
