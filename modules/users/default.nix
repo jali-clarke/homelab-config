@@ -39,7 +39,20 @@
         }
       )
       {
-        users.mutableUsers = false;
+        assertions = [
+          {
+            assertion = !cfg.allowPasswordAuth -> cfg.authorizedKeyPaths != [ ];
+            message = "if homelab-config.users.allowPasswordAuth is false, homelab-config.users.authorizedKeyPaths must be non-empty";
+          }
+        ];
+
+        users = {
+          mutableUsers = false;
+
+          # this is fine due to the assertion above and activation script below
+          allowNoPasswordLogin = !cfg.allowPasswordAuth;
+        };
+
         users.users.pi = {
           isNormalUser = true;
           extraGroups = [ "wheel" ] ++ cfg.extraGroups; # Enable ‘sudo’ for the user.
