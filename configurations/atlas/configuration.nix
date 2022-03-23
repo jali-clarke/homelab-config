@@ -193,7 +193,7 @@ in
       '';
   };
 
-  homelab-config.router =
+  homelab-config.router.dhcp =
     let
       shouldCreateEntry = hostInfo: hostInfo.macAddress != null;
       mkMachineEntry = hostInfo: {
@@ -204,8 +204,11 @@ in
     in
     {
       enable = true;
-      dhcpMachines = builtins.map mkMachineEntry (builtins.filter shouldCreateEntry (builtins.attrValues meta));
+      defaultGateway = "192.168.0.2";
       dnsServer = meta.atlas.networkIP;
+      rangeStart = "192.168.0.4";
+      rangeEnd = "192.168.0.199";
+      staticLeases = builtins.map mkMachineEntry (builtins.filter shouldCreateEntry (builtins.attrValues meta));
     };
 
   # This value determines the NixOS release from which the default
