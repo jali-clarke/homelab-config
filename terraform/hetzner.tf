@@ -9,8 +9,6 @@ resource "hcloud_ssh_key" "dev_env" {
 
 resource "hcloud_server" "cerberus" {
   name        = "cerberus"
-  # NixOS images aren't provided by default.  you'll have to do something like this
-  # https://github.com/nix-community/nixos-install-scripts/blob/master/hosters/hetzner-cloud/nixos-install-hetzner-cloud.sh
   image       = "debian-11" 
   server_type = "cx11"
   location    = "nbg1"
@@ -21,4 +19,12 @@ resource "hcloud_server" "cerberus" {
 
   delete_protection  = true
   rebuild_protection = true
+
+  # NixOS images aren't provided by default, so we use nixos-infect
+  user_data = <<-EOT
+    #!/bin/sh
+    curl https://raw.githubusercontent.com/elitak/nixos-infect/36e19e3b306abf70df6f4a6580b226b6a11a85f9/nixos-infect \
+      | NIX_CHANNEL=nixpkgs-unstable bash 2>&1 \
+      | tee /tmp/infect.log
+  EOT
 }
