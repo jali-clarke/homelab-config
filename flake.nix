@@ -70,6 +70,14 @@
             pkgs = mkPkgs { inherit system; hostname = "<devShell>"; };
             meta = import ./lib/get-meta.nix { inherit pkgs; };
 
+            terraform = pkgs.terraform.withPlugins (
+              ps: [
+                ps.cloudflare
+                ps.hcloud
+                ps.vault
+              ]
+            );
+
             kubectl = "${pkgs.kubectl}/bin/kubectl";
             nixos-generate = "${pkgs.nixos-generators}/bin/nixos-generate";
             ssh = "${pkgs.openssh}/bin/ssh";
@@ -134,6 +142,7 @@
               pkgs.nixpkgs-fmt
               pkgs.openssl
               pkgs.qemu
+              terraform
               pkgs.vim
 
               buildBootstrapBill
