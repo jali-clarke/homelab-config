@@ -51,7 +51,7 @@
 
           option subnet-mask 255.255.255.0;
           option broadcast-address ${networkPrefix}.255;
-          option routers ${networkPrefix}.1;
+          option routers ${networkPrefix}.2;
           option domain-name-servers ${cfg.dnsServer};
           option domain-name "jali-clarke.ca";
           subnet ${networkPrefix}.0 netmask 255.255.255.0 {
