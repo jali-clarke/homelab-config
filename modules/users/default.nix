@@ -5,6 +5,11 @@
       inherit (lib) types mkOption;
     in
     {
+      allowPasswordAuth = mkOption {
+        type = types.bool;
+        default = true;
+      };
+
       authorizedKeyPaths = mkOption {
         type = types.listOf types.path;
         default = [ ];
@@ -26,13 +31,16 @@
       cfg = config.homelab-config.users;
     in
     lib.mkMerge [
+      (
+        lib.mkIf cfg.allowPasswordAuth {
+          age.secrets.pi_password_file.file = ciphertexts."pi_password_file.age";
+          # note - if this is ever rotated, you MUST delete the /etc/shadow entry for the pi user before switching config
+          users.users.pi.passwordFile = config.age.secrets.pi_password_file.path;
+        }
+      )
       {
-        age.secrets.pi_password_file.file = ciphertexts."pi_password_file.age";
-
         users.mutableUsers = false;
         users.users.pi = {
-          # note - if this is ever rotated, you MUST delete the /etc/shadow entry for the pi user before switching config
-          passwordFile = config.age.secrets.pi_password_file.path;
           isNormalUser = true;
           extraGroups = [ "wheel" ] ++ cfg.extraGroups; # Enable ‘sudo’ for the user.
         };
