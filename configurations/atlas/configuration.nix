@@ -26,6 +26,7 @@ in
     id_atlas = secretFilePi ciphertexts."id_atlas.age";
     "id_atlas.pub" = secretFilePi ciphertexts."id_atlas.pub.age";
     "cloudflare_creds.env".file = ciphertexts."cloudflare_creds.env.age";
+    "wg_client_gateway_key".file = ciphertexts."wg_client_gateway_key.age";
   };
 
   homelab-config.zfs = {

@@ -145,6 +145,7 @@
               pkgs.qemu
               terraform
               pkgs.vim
+              pkgs.wireguard-tools
 
               buildBootstrapBill
               buildPiBaker

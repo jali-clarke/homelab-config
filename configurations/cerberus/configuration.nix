@@ -17,6 +17,7 @@ in
     id_cerberus = secretFilePi ciphertexts."id_cerberus.age";
     "id_cerberus.pub" = secretFilePi ciphertexts."id_cerberus.pub.age";
     "id_dev_env.pub" = secretFilePi ciphertexts."id_dev_env.pub.age";
+    "wg_server_key".file = ciphertexts."wg_server_key.age";
   };
 
   homelab-config.users = {
