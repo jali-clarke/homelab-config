@@ -76,7 +76,7 @@ all ips below are made static via DHCP instead of each machine's individual conf
 * `dhcp` for our network
 * `pihole` dns + other dnsmasq config
 * `nexus` artifact hosting for container images and other artifacts
-* planned as openvpn client (as vpn gateway)
+* planned as wireguard client (as vpn gateway, ip pending)
 
 #### manual steps
 
@@ -93,7 +93,7 @@ all to be performed on `atlas` unless specified otherwise
 
 * `x86_64-linux` server on hetzner cloud provisioned via terraform
 * ip address TBA
-* planned as openvpn server
+* planned as wireguard server
 
 #### manual steps
 
