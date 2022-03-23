@@ -48,6 +48,7 @@
         {
           atlas = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "atlas"; };
           bootstrap-bill = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "bootstrap-bill"; };
+          cerberus = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "cerberus"; };
           nixos-oblivion = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "nixos-oblivion"; };
           osmc = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "osmc"; extraPkgsConfig = { allowUnfree = true; }; };
           pi-baker = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "pi-baker"; };
