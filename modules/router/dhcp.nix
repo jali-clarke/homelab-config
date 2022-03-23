@@ -44,21 +44,17 @@
       broadcastAddress = builtins.concatStringsSep "." (
         lib.take 3 (builtins.filter builtins.isString (builtins.split "\\." cfg.subnet)) ++ ["255"]
       );
+
+      assertFalse = optPath: {
+        assertion = !(lib.getAttrFromPath optPath config);
+        message = "${builtins.concatStringsSep "." (["config"] ++ optPath)} should be false if using config.homelab-config.router.dhcp";
+      };
     in
     lib.mkIf cfg.enable {
-      assertions = [
-        {
-          assertion = !config.networking.dhcpcd.enable;
-          message = "networking.dhcpcd.enable should be false if using config.homelab-config.router.dhcp";
-        }
-        {
-          assertion = !config.networking.useDHCP;
-          message = "networking.useDHCP should be false if using config.homelab-config.router.dhcp";
-        }
-        {
-          assertion = !config.networking.interfaces.${cfg.listenInterface}.useDHCP;
-          message = "networking.interfaces.<listenInterface>.useDHCP should be false if using config.homelab-config.router.dhcp";
-        }
+      assertions = builtins.map assertFalse [
+        ["networking" "dhcpcd" "enable"]
+        ["networking" "useDHCP"]
+        ["networking" "interfaces" cfg.listenInterface "useDHCP"]
       ];
 
       services.dhcpd4 = {
