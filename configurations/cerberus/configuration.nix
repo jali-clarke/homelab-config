@@ -17,16 +17,6 @@ in
     id_cerberus = secretFilePi ciphertexts."id_cerberus.age";
     "id_cerberus.pub" = secretFilePi ciphertexts."id_cerberus.pub.age";
     "id_dev_env.pub" = secretFilePi ciphertexts."id_dev_env.pub.age";
-    "cloudflare_creds.env".file = ciphertexts."cloudflare_creds.env.age";
-  };
-
-
-  homelab-config.acme-cloudflare = {
-    enable = true;
-    credentialsFile = config.age.secrets."cloudflare_creds.env".path;
-    domains = [
-      "cerberus.jali-clarke.ca"
-    ];
   };
 
   homelab-config.users = {
