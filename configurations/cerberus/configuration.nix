@@ -24,6 +24,7 @@ in
     enable = true;
     allowedIcmpInterfaces = [ "eth0" ];
     allowedTcpInterfaces.eth0 = [ 22 ];
+    allowedUdpInterfaces.eth0 = [ 51820 ];
   };
 
   homelab-config.users = {
