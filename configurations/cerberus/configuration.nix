@@ -1,5 +1,7 @@
 { config, pkgs, lib, ciphertexts, ... }:
 let
+  wireguardPort = 51820;
+
   secretFilePi = secretFilePath: {
     file = secretFilePath;
     owner = "pi";
@@ -24,7 +26,7 @@ in
     enable = true;
     allowedIcmpInterfaces = [ "eth0" ];
     allowedTcpInterfaces.eth0 = [ 22 ];
-    allowedUdpInterfaces.eth0 = [ 51820 ];
+    allowedUdpInterfaces.eth0 = [ wireguardPort ];
   };
 
   homelab-config.users = {
@@ -37,6 +39,28 @@ in
   };
 
   networking.hostName = "cerberus";
+
+  networking.wireguard = {
+    enable = true;
+    interfaces.wg-homelab = {
+      ips = [ "192.168.1.1/24" ];
+      listenPort = wireguardPort;
+      privateKeyFile = config.age.secrets."wg_server_key".path;
+
+      peers = [
+        {
+          # client gatway
+          publicKey = "uvG7qleIRUR7+ekAF/znMwGqqxsWHPKzJ6VjFrWoq20=";
+          allowedIPs = [ "192.168.1.2/32" ];
+        }
+        {
+          # my phone
+          publicKey = "gaowMC14zZPk8hjK2N3GRXb6QyeGWaRvyyunlT4cYnw=";
+          allowedIPs = [ "192.168.1.101/32" ];
+        }
+      ];
+    };
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
