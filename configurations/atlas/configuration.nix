@@ -4,6 +4,7 @@ let
   nexusPort = 8080;
   piholePort = 8081;
   vaultPort = 8082;
+  wireguardPort = 51820;
 
   meta = config.homelab-config.meta;
 
@@ -211,6 +212,25 @@ in
       rangeEnd = "192.168.0.199";
       staticLeases = builtins.map mkMachineEntry (builtins.filter shouldCreateEntry (builtins.attrValues meta));
     };
+
+  networking.wireguard = {
+    enable = true;
+    interfaces.wg-homelab = {
+      ips = [ "192.168.1.2/24" ];
+      listenPort = wireguardPort;
+      privateKeyFile = config.age.secrets."wg_client_gateway_key".path;
+
+      peers = [
+        {
+          # server
+          publicKey = "au8MlRKPPYaPJ4N4bISWnClNo5sS0DSf7EJBAUYJqkA=";
+          allowedIPs = [ "192.198.1.0/24" ];
+          endpoint = "cerberus.jali-clarke.ca:${builtins.toString wireguardPort}";
+          persistentKeepalive = 25;
+        }
+      ];
+    };
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
