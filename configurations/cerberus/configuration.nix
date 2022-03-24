@@ -27,6 +27,7 @@ in
     allowedIcmpInterfaces = [ "eth0" ];
     allowedTcpInterfaces.eth0 = [ 22 ];
     allowedUdpInterfaces.eth0 = [ wireguardPort ];
+    masqueradeInterfaces.eth0 = "192.168.1.0/24";
   };
 
   homelab-config.users = {
