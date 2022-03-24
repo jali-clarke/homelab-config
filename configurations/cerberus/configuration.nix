@@ -50,7 +50,7 @@ in
 
       peers = [
         {
-          # client gatway
+          # client gateway
           publicKey = "uvG7qleIRUR7+ekAF/znMwGqqxsWHPKzJ6VjFrWoq20=";
           allowedIPs = [ "192.168.1.2/32" ];
         }
