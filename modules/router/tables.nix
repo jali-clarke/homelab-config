@@ -23,11 +23,18 @@
         type = types.attrsOf (types.nonEmptyListOf types.port);
         default = { };
       };
+
+      masqueradeInterfaces = mkOption {
+        type = types.attrsOf types.nonEmptyStr;
+        default = { };
+      };
     };
 
   config =
     let
       cfg = config.homelab-config.router.tables;
+
+      ruleTab = "\n    ";
       commaSeparated = lib.concatStringsSep ", ";
 
       mkIcmpRule = allowedIcmpInterfaces:
@@ -43,18 +50,51 @@
 
       mkL4Rules = protocol: allowedInterfaces:
         if allowedInterfaces == { }
-        then "# iifname <interface> ${protocol} dport {<ports>} accept"
+        then "# ${mkL4Rule protocol "<interface>" ["<ports>"]}"
         else
           let
             ruleLines = builtins.attrValues (builtins.mapAttrs (mkL4Rule protocol) allowedInterfaces);
           in
-          lib.concatStringsSep "\n    " ruleLines;
+          lib.concatStringsSep ruleTab ruleLines;
+
+      mkOutgoingForwardRule = masqueradeInterface: sourceRange: "oifname ${masqueradeInterface} ip saddr ${sourceRange} accept";
+
+      mkOutgoingForwardRules = masqueradeInterfaces:
+        if masqueradeInterfaces == { }
+        then "# ${mkOutgoingForwardRule "<interface>" "<source-range>"}"
+        else
+          let
+            ruleLines = builtins.attrValues (builtins.mapAttrs mkOutgoingForwardRule masqueradeInterfaces);
+          in
+          lib.concatStringsSep ruleTab ruleLines;
+
+      mkIncomingForwardRule = masqueradeInterface: "iifname ${masqueradeInterface} ct state {related, established} accept";
+
+      mkIncomingForwardRules = masqueradeInterfaces:
+        if masqueradeInterfaces == { }
+        then "# ${mkIncomingForwardRule "<interface>"}"
+        else
+          let
+            ruleLines = builtins.map mkIncomingForwardRule (builtins.attrNames masqueradeInterfaces);
+          in
+          lib.concatStringsSep ruleTab ruleLines;
+
+      mkMasqueradeRule = masqueradeInterface: sourceRange: "oifname ${masqueradeInterface} ip saddr ${sourceRange} masquerade";
+
+      mkMasqueradeRules = masqueradeInterfaces:
+        if masqueradeInterfaces == { }
+        then "# ${mkMasqueradeRule "<interface>" "<source-range>"}"
+        else
+          let
+            ruleLines = builtins.attrValues (builtins.mapAttrs mkMasqueradeRule masqueradeInterfaces);
+          in
+          lib.concatStringsSep ruleTab ruleLines;
     in
     lib.mkIf cfg.enable {
       networking.nftables = {
         enable = true;
         ruleset = ''
-          table ip6 filter {
+          table ip6 main {
             chain input {
               # drop all incoming ipv6 traffic by default
               type filter hook input priority filter; policy drop;
@@ -77,7 +117,7 @@
             }
           }
 
-          table ip filter {
+          table ip main {
             chain input {
               # drop all incoming traffic by default
               type filter hook input priority filter; policy drop;
@@ -104,8 +144,21 @@
             }
             
             chain forward {
-              # disable forwarding
+              # disable forwarding by default
               type filter hook forward priority filter; policy drop;
+
+              # allow outgoing for interfaces specified by homelab-config.router.tables.masqueradeInterfaces
+              ${mkOutgoingForwardRules cfg.masqueradeInterfaces}
+
+              # allow incoming for established connections for interfaces specified by homelab-config.router.tables.masqueradeInterfaces
+              ${mkIncomingForwardRules cfg.masqueradeInterfaces}
+            }
+
+            chain postrouting {
+              type nat hook postrouting priority srcnat; policy accept;
+
+              # masquerade outgoing traffic for interfaces specified by homelab-config.router.tables.masqueradeInterfaces
+              ${mkMasqueradeRules cfg.masqueradeInterfaces}
             }
           }
         '';
