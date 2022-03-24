@@ -213,13 +213,6 @@ in
       staticLeases = builtins.map mkMachineEntry (builtins.filter shouldCreateEntry (builtins.attrValues meta));
     };
 
-  homelab-config.router.tables = {
-    enable = true;
-    allowedIcmpInterfaces = [ "eth0" ];
-    allowedTcpInterfaces.eth0 = "ALL";
-    allowedUdpInterfaces.eth0 = "ALL";
-  };
-
   networking.wireguard = {
     enable = true;
     interfaces.wg-homelab = {

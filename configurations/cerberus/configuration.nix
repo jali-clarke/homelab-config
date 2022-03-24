@@ -22,12 +22,79 @@ in
     "wg_server_key".file = ciphertexts."wg_server_key.age";
   };
 
-  homelab-config.router.tables = {
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+
+  networking.nftables = {
     enable = true;
-    allowedIcmpInterfaces = [ "eth0" ];
-    allowedTcpInterfaces.eth0 = [ 22 ];
-    allowedUdpInterfaces.eth0 = [ wireguardPort ];
-    masqueradeInterfaces.eth0 = "192.168.1.0/24";
+    ruleset = ''
+      table ip6 main {
+        chain input {
+          # drop all incoming ipv6 traffic by default
+          type filter hook input priority filter; policy drop;
+
+          # accept any packets coming from established connections that originated from this machine
+          ct state {established, related} accept
+
+          # accept anything coming from localhost
+          iifname lo accept
+        }
+
+        chain output {
+          # allow all outgoing connections
+          type filter hook output priority filter; policy accept;
+        }
+
+        chain forward {
+          # disable forwarding
+          type filter hook forward priority filter; policy drop;
+        }
+      }
+
+      table ip main {
+        chain input {
+          # drop all incoming traffic by default
+          type filter hook input priority filter; policy drop;
+
+          # accept any packets coming from established connections that originated from this machine
+          ct state {established, related} accept
+
+          # accept anything coming from localhost
+          iifname lo accept
+
+          # accept pings on all interfaces
+          iifname eth0 icmp type echo-request accept
+
+          # accept ssh from wan
+          iifname eth0 tcp dport 22 accept
+
+          # accept wireguard tunnel from wan
+          iifname eth0 udp dport ${builtins.toString wireguardPort} accept
+        }
+
+        chain output {
+          # allow all outgoing connections
+          type filter hook output priority filter; policy accept;
+        }
+
+        chain forward {
+          # disable forwarding by default
+          type filter hook forward priority filter; policy drop;
+
+          # allow outgoing for wan as gateway
+          oifname eth0 ip saddr 192.168.1.0/24 accept
+
+          # allow incoming for established wan connections
+          iifname eth0 ct state {established, related} accept
+        }
+
+        chain postrouting {
+          type nat hook postrouting priority srcnat; policy accept;
+
+          # masquerade outgoing traffic for eth0 as wan gatway
+          oifname eth0 ip saddr 192.168.1.0/24 masquerade
+        }
+      }
+    '';
   };
 
   homelab-config.users = {
