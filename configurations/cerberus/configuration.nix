@@ -61,8 +61,8 @@ in
           # accept anything coming from localhost
           iifname lo accept
 
-          # accept pings on all interfaces
-          iifname eth0 icmp type echo-request accept
+          # accept ping on all interfaces
+          icmp type echo-request accept
 
           # accept ssh from wan
           iifname eth0 tcp dport 22 accept
