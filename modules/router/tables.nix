@@ -91,6 +91,10 @@
           lib.concatStringsSep ruleTab ruleLines;
     in
     lib.mkIf cfg.enable {
+      boot.kernel.sysctl = lib.mkIf (cfg.masqueradeInterfaces != { }) {
+        "net.ipv4.ip_forward" = 1;
+      };
+
       networking.nftables = {
         enable = true;
         ruleset = ''
