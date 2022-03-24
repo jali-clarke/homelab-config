@@ -10,6 +10,11 @@
         default = false;
       };
 
+      defaultIncomingVerdict = mkOption {
+        type = types.enum ["accept" "drop"];
+        default = "drop";
+      };
+
       allowedIcmpInterfaces = mkOption {
         type = types.listOf types.nonEmptyStr;
         default = [ ];
@@ -127,8 +132,8 @@
 
           table ip main {
             chain input {
-              # drop all incoming traffic by default
-              type filter hook input priority filter; policy drop;
+              # drop all incoming traffic according to homelab-config.router.tables.defaultIncomingVerdict
+              type filter hook input priority filter; policy ${cfg.defaultIncomingVerdict};
 
               # accept any packets coming from established connections that originated from this machine
               ct state {established, related} accept
@@ -152,8 +157,8 @@
             }
             
             chain forward {
-              # disable forwarding by default
-              type filter hook forward priority filter; policy drop;
+              # disable forwarding according to homelab-config.router.tables.defaultIncomingVerdict
+              type filter hook forward priority filter; policy ${cfg.defaultIncomingVerdict};
 
               # allow outgoing for interfaces specified by homelab-config.router.tables.masqueradeInterfaces
               ${mkOutgoingForwardRules cfg.masqueradeInterfaces}
