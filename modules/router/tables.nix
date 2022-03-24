@@ -2,6 +2,7 @@
   options.homelab-config.router.tables =
     let
       inherit (lib) mkOption types;
+      portListType = types.either (types.enum [ "ALL" ]) (types.nonEmptyListOf types.port);
     in
     {
       enable = mkOption {
@@ -15,12 +16,12 @@
       };
 
       allowedTcpInterfaces = mkOption {
-        type = types.attrsOf (types.nonEmptyListOf types.port);
+        type = types.attrsOf portListType;
         default = { };
       };
 
       allowedUdpInterfaces = mkOption {
-        type = types.attrsOf (types.nonEmptyListOf types.port);
+        type = types.attrsOf portListType;
         default = { };
       };
 
@@ -43,10 +44,13 @@
         else "iifname {${commaSeparated allowedIcmpInterfaces}} icmp type echo-request accept";
 
       mkL4Rule = protocol: interfaceName: allowedPorts:
-        let
-          portsString = commaSeparated (builtins.map builtins.toString allowedPorts);
-        in
-        "iifname ${interfaceName} ${protocol} dport {${portsString}} accept";
+        if allowedPorts == "ALL"
+        then "iifname ${interfaceName} ${protocol} accept"
+        else
+          let
+            portsString = commaSeparated (builtins.map builtins.toString allowedPorts);
+          in
+          "iifname ${interfaceName} ${protocol} dport {${portsString}} accept";
 
       mkL4Rules = protocol: allowedInterfaces:
         if allowedInterfaces == { }
