@@ -86,6 +86,9 @@ in
           # allow incoming for established wan connections
           iifname eth0 ct state {established, related} accept
 
+          # allow traffic within the vpn
+          ip saddr 192.168.128.0/24 ip daddr 192.168.128.0/24 accept
+
           # allow outgoing for my local network as router
           oifname wg-homelab ip saddr 192.168.128.0/24 ip daddr 192.168.0.0/24 accept
 
