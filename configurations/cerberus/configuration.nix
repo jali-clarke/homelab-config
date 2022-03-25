@@ -85,6 +85,12 @@ in
 
           # allow incoming for established wan connections
           iifname eth0 ct state {established, related} accept
+
+          # allow outgoing for my local network as router
+          oifname wg-homelab ip saddr 192.168.128.0/24 ip daddr 192.168.0.0/24 accept
+
+          # allow incoming from my local network as router
+          iifname wg-homelab ip saddr 192.168.0.0/24 ip daddr 192.168.128.0/24 accept
         }
 
         chain postrouting {
@@ -119,7 +125,7 @@ in
         {
           # client gateway
           publicKey = "uvG7qleIRUR7+ekAF/znMwGqqxsWHPKzJ6VjFrWoq20=";
-          allowedIPs = [ "192.168.128.2/32" ];
+          allowedIPs = [ "192.168.128.2/32" "192.168.0.0/24" ];
         }
         {
           # my phone
