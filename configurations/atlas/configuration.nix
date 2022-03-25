@@ -213,6 +213,8 @@ in
       staticLeases = builtins.map mkMachineEntry (builtins.filter shouldCreateEntry (builtins.attrValues meta));
     };
 
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+
   networking.wireguard = {
     enable = true;
     interfaces.wg-homelab = {
