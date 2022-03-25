@@ -81,7 +81,7 @@ in
           type filter hook forward priority filter; policy drop;
 
           # allow outgoing for wan as gateway
-          oifname eth0 ip saddr 192.168.1.0/24 accept
+          oifname eth0 ip saddr 192.168.128.0/24 accept
 
           # allow incoming for established wan connections
           iifname eth0 ct state {established, related} accept
@@ -91,7 +91,7 @@ in
           type nat hook postrouting priority srcnat; policy accept;
 
           # masquerade outgoing traffic for eth0 as wan gatway
-          oifname eth0 ip saddr 192.168.1.0/24 masquerade
+          oifname eth0 ip saddr 192.168.128.0/24 masquerade
         }
       }
     '';
@@ -111,7 +111,7 @@ in
   networking.wireguard = {
     enable = true;
     interfaces.wg-homelab = {
-      ips = [ "192.168.1.1/24" ];
+      ips = [ "192.168.128.1/24" ];
       listenPort = wireguardPort;
       privateKeyFile = config.age.secrets."wg_server_key".path;
 
@@ -119,12 +119,12 @@ in
         {
           # client gateway
           publicKey = "uvG7qleIRUR7+ekAF/znMwGqqxsWHPKzJ6VjFrWoq20=";
-          allowedIPs = [ "192.168.1.2/32" ];
+          allowedIPs = [ "192.168.128.2/32" ];
         }
         {
           # my phone
           publicKey = "gaowMC14zZPk8hjK2N3GRXb6QyeGWaRvyyunlT4cYnw=";
-          allowedIPs = [ "192.168.1.101/32" ];
+          allowedIPs = [ "192.168.128.101/32" ];
         }
       ];
     };

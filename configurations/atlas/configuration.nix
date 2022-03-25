@@ -216,7 +216,7 @@ in
   networking.wireguard = {
     enable = true;
     interfaces.wg-homelab = {
-      ips = [ "192.168.1.2/24" ];
+      ips = [ "192.168.128.2/24" ];
       listenPort = wireguardPort;
       privateKeyFile = config.age.secrets."wg_client_gateway_key".path;
 
@@ -224,7 +224,7 @@ in
         {
           # server
           publicKey = "au8MlRKPPYaPJ4N4bISWnClNo5sS0DSf7EJBAUYJqkA=";
-          allowedIPs = [ "192.198.1.0/24" ];
+          allowedIPs = [ "192.198.128.0/24" ];
           endpoint = "cerberus.jali-clarke.ca:${builtins.toString wireguardPort}";
           persistentKeepalive = 25;
         }
