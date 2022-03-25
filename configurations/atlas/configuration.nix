@@ -223,7 +223,7 @@ in
         {
           # server
           publicKey = "au8MlRKPPYaPJ4N4bISWnClNo5sS0DSf7EJBAUYJqkA=";
-          allowedIPs = [ "192.198.128.0/24" ];
+          allowedIPs = [ "192.168.128.0/24" ];
           endpoint = "cerberus.jali-clarke.ca:${builtins.toString wireguardPort}";
           persistentKeepalive = 25;
         }
