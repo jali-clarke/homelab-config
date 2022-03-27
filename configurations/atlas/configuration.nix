@@ -57,7 +57,7 @@ in
     dhcpcd.enable = false;
 
     hostName = meta.atlas.hostName; # Define your hostname.
-    defaultGateway = "192.168.0.2";
+    defaultGateway = "192.168.0.1";
     nameservers = [ meta.atlas.networkIP ];
     interfaces.eth0 = {
       useDHCP = lib.mkForce false;
@@ -206,7 +206,7 @@ in
     in
     {
       enable = true;
-      defaultGateway = "192.168.0.2";
+      defaultGateway = "192.168.0.1";
       dnsServer = meta.atlas.networkIP;
       rangeStart = "192.168.0.4";
       rangeEnd = "192.168.0.199";
