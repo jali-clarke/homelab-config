@@ -218,7 +218,7 @@ in
   networking.wireguard = {
     enable = true;
     interfaces.wg-homelab = {
-      ips = [ "192.168.128.2/24" ];
+      ips = [ "192.168.0.4/24" "192.168.128.2/24" ];
       privateKeyFile = config.age.secrets."wg_client_gateway_key".path;
 
       peers = [
