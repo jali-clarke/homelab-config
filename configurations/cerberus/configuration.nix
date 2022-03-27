@@ -51,6 +51,12 @@ in
       }
 
       table ip main {
+        set routable_subnets {
+          type ipv4_addr
+          flags interval
+          elements = {192.168.0.0/24, 192.168.128.0/24}
+        }
+
         chain input {
           # drop all incoming traffic by default
           type filter hook input priority filter; policy drop;
@@ -81,26 +87,20 @@ in
           type filter hook forward priority filter; policy drop;
 
           # allow outgoing for wan as gateway
-          oifname eth0 ip saddr 192.168.128.0/24 accept
+          oifname eth0 ip saddr @routable_subnets accept
 
           # allow incoming for established wan connections
           iifname eth0 ct state {established, related} accept
 
-          # allow traffic within the vpn
-          ip saddr 192.168.128.0/24 ip daddr 192.168.128.0/24 accept
-
-          # allow outgoing for my local network as router
-          oifname wg-homelab ip saddr 192.168.128.0/24 ip daddr 192.168.0.0/24 accept
-
-          # allow incoming from my local network as router
-          iifname wg-homelab ip saddr 192.168.0.0/24 ip daddr 192.168.128.0/24 accept
+          # allow traffic within / between routable subnets
+          iifname wg-homelab oifname wg-homelab ip saddr @routable_subnets ip daddr @routable_subnets accept
         }
 
         chain postrouting {
           type nat hook postrouting priority srcnat; policy accept;
 
           # masquerade outgoing traffic for eth0 as wan gatway
-          oifname eth0 ip saddr 192.168.128.0/24 masquerade
+          oifname eth0 ip saddr @routable_subnets masquerade
         }
       }
     '';
