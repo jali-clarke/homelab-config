@@ -218,6 +218,9 @@ in
   networking.wireguard = {
     enable = true;
     interfaces.wg-homelab = {
+      # we don't want to route 0.0.0.0/0 by default,
+      # just for connections coming in from 192.168.0.4
+      allowedIPsAsRoutes = false;
       ips = [ "192.168.0.4/24" "192.168.128.2/24" ];
       privateKeyFile = config.age.secrets."wg_client_gateway_key".path;
 
@@ -225,7 +228,7 @@ in
         {
           # server
           publicKey = "au8MlRKPPYaPJ4N4bISWnClNo5sS0DSf7EJBAUYJqkA=";
-          allowedIPs = [ "192.168.128.0/24" ];
+          allowedIPs = [ "0.0.0.0/0" ];
           endpoint = "cerberus.jali-clarke.ca:${builtins.toString wireguardPort}";
           persistentKeepalive = 25;
         }
