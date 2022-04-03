@@ -14,7 +14,9 @@ spec:
       - serviceName: cert-manager
       - serviceName: ddns
       - serviceName: external-dns
+      - serviceName: keycloak
       - serviceName: metallb-system
+      - serviceName: mysql
       - serviceName: oauth2-proxy
   template:
     metadata:

@@ -9,8 +9,6 @@ spec:
       - serviceName: cassandra
       - serviceName: dev
       - serviceName: emby
-      - serviceName: keycloak
-      - serviceName: mysql
       - serviceName: nix-cache
       - serviceName: torrents
   template:
