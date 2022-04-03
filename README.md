@@ -169,15 +169,30 @@ all to be performed on `weedle` unless specified otherwise
 
 ## k8s
 
-this repo also contains [infrastructure-as-code](./k8s) for all the k8s services running on the cluster.  if you want to deploy from scratch, do the following:
+this repo also contains [infrastructure-as-code](./k8s) for all the k8s services running on the cluster
 
-1. make sure secrets are configured accordingly in vault
+### deployment
+
+if you want to deploy from scratch, do the following:
+
+1. make sure secrets are configured accordingly in vault, including CA cert stuff for k8s -> vault access
 2. `nix develop` in the root of this repo
 3. `kubectl apply -k k8s/argocd/overlay`
-4. go to the `argocd` dashboard (probably `https://argocd.jali-clarke.ca`) and make sure it's alive and well
+4. make sure the `argocd` pods are alive and well
 5. `kubectl apply -k k8s/applicationsets/basic-infrastructure`
-6. back to the `argocd` dashboard to make sure everything's coming up
+6. go to the `argocd` dashboard to make sure everything's coming up
 7. deploy everything else: `kubectl apply -k k8s/applicationsets/all-the-services`
 8. back to the dashboard to make sure everything else is up
 
 if you just want to deploy a change, start from step 5 or 7 as necessary instead of going all the way to the beginning
+
+### resetting the cluster state
+
+for each node (can be parallelized, but make sure step 1 is done for the cluster master first):
+
+1. disable kubernetes-related services / modules via nixos config
+2. restart the node and make sure that there are no remote mounts for pods (next step is fairly destructive)
+3. `sudo rm -rf /var/lib/kubernetes/ /var/lib/etcd/ /var/lib/cfssl/ /var/lib/kubelet/ /etc/kube-flannel/ /etc/kubernetes/`
+4. re-enable kubernetes-related services / modules via nixos config
+5. make sure nodes have rejoined the cluster
+6. follow the [deployment](#deployment) steps above
