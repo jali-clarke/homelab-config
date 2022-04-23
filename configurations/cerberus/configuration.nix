@@ -135,6 +135,11 @@ in
           publicKey = "gaowMC14zZPk8hjK2N3GRXb6QyeGWaRvyyunlT4cYnw=";
           allowedIPs = [ "192.168.128.101/32" ];
         }
+        {
+          # work laptop
+          publicKey = "i0k/UrLV7CAnhBaKufbZC/enSxFbEfg5B2t4gVjlfEM=";
+          allowedIPs = [ "192.168.128.102/32" ];
+        }
       ];
     };
   };
