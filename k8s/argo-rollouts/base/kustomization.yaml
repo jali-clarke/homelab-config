@@ -2,9 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: argo-rollouts
 resources:
-# pinned due to https://github.com/argoproj/argo-rollouts/issues/1507 - change when v1.2 is released
-- https://raw.githubusercontent.com/argoproj/argo-rollouts/v1.2.0-rc2/manifests/dashboard-install.yaml
-- https://raw.githubusercontent.com/argoproj/argo-rollouts/v1.2.0-rc2/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-rollouts/v1.2.1/manifests/dashboard-install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-rollouts/v1.2.1/manifests/install.yaml
 - namespace.yaml
 patches:
 - image-tag-patch.yaml
