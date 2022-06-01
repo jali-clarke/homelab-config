@@ -6,4 +6,4 @@
   value: sso
 - op: replace
   path: /spec/template/spec/containers/0/image
-  value: quay.io/argoproj/argocli:v3.3.1
+  value: quay.io/argoproj/argocli:v3.3.6
