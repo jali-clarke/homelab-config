@@ -52,13 +52,13 @@
       virtualisation.oci-containers.containers.pihole =
         let
           imageName = "pihole/pihole";
-          finalImageTag = "2022.02.1";
+          finalImageTag = "2022.05";
 
           pulledImage = pkgs.dockerTools.pullImage {
             inherit imageName finalImageTag;
             # warning - below is for the amd64 image.  too lazy to set this up for other archs
-            imageDigest = "sha256:e2dff636c08214c8ca575e924ffbcd2e8e3ce10552c1582390a23e63d486d573";
-            sha256 = "sha256-qm2UmqckWcHJkA1oWKbls4ZRnCPiJ8p9u6P2Z9hc/iY=";
+            imageDigest = "sha256:f56885979dcffeb902d2ca51828c92118199222ffb8f6644505e7881e11eeb85";
+            sha256 = "sha256-AWexkM9bBFjxxfHt+gUA+8VMQGtnrZyeo7hxeyzqwyM=";
           };
         in
         {
