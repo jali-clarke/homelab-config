@@ -212,8 +212,8 @@ in
       enable = true;
       defaultGateway = "192.168.0.1";
       dnsServer = meta.atlas.networkIP;
-      rangeStart = "192.168.0.5";
-      rangeEnd = "192.168.0.199";
+      rangeStart = "192.168.0.20";
+      rangeEnd = "192.168.0.99";
       staticLeases = builtins.map mkMachineEntry (builtins.filter shouldCreateEntry (builtins.attrValues meta));
     };
 
