@@ -4,7 +4,7 @@ resources:
 # see also when updating:
 # - argo-server-config-json6902-patch.yaml
 # - workflow-controller-image-json6902-patch.yaml
-- https://raw.githubusercontent.com/argoproj/argo-workflows/v3.3.6/manifests/namespace-install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-workflows/v3.3.8/manifests/namespace-install.yaml
 patches:
 - disable-tls-patch.yaml
 - workflow-controller-config-patch.yaml
