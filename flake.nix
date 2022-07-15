@@ -118,16 +118,6 @@
 
               ${kubectl} config set-context homelab --cluster=homelab --user=homelab-admin
             '';
-
-            updateKnownGood = pkgs.writeScriptBin "update_known_good" ''
-              #!${pkgs.runtimeShell} -e
-
-              for tag in $(${pkgs.git}/bin/git tag | ${pkgs.gnugrep}/bin/grep known-good); do
-                ${pkgs.git}/bin/git tag -f $tag $1
-              done
-
-              ${pkgs.git}/bin/git push -f --tag
-            '';
           in
           pkgs.mkShell {
             name = "bare-metal-shell";
@@ -151,7 +141,6 @@
               buildPiBaker
               buildConfig
               fetchKubeconfig
-              updateKnownGood
             ];
           };
       }
