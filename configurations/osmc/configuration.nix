@@ -13,6 +13,10 @@ in
     nixos-hardware-modules.raspberry-pi-4
   ];
 
+  nix.extraOptions = ''
+    extra-platforms = armv7l-linux
+  '';
+
   # NixOS wants to enable GRUB by default
   boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
