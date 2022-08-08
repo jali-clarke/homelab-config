@@ -9,5 +9,6 @@ patchesStrategicMerge:
 # make sure to update argocd-repo-server-deploy.yaml if you bump the version below
 - https://raw.githubusercontent.com/argoproj-labs/argocd-vault-plugin/v1.11.0/manifests/argocd-cm.yaml
 - argocd-applicationset-controller-patch.yaml
+- argocd-server-pin-to-amd64-nodes.yaml
 - argocd-repo-server-deploy.yaml
 - disable-tls-patch.yaml
