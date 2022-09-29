@@ -23,7 +23,13 @@ in
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
 
+  hardware.pulseaudio = {
+    enable = true;
+    support32Bit = true;
+  };
+
   hardware.opengl = {
+    enable = true;
     driSupport = true;
 
     # can't set this yet because of a bad assert @
