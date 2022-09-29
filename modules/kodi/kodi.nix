@@ -1,6 +1,6 @@
-{ fetchFromGitHub, kodi }:
+{ fetchFromGitHub, kodi-wayland }:
 let
-  callPackage = kodi.packages.callPackage;
+  callPackage = kodi-wayland.packages.callPackage;
   otherAddons = [
     (callPackage ./addons/plugin.video.crunchyroll { })
     (callPackage ./addons/plugin.video.embycon { })
@@ -21,7 +21,7 @@ let
       }
     );
 in
-kodi.withPackages (
+kodi-wayland.withPackages (
   addons: otherAddons ++ [
     addons.netflix
     (fix-osmc-skin addons.osmc-skin)

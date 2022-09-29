@@ -13,6 +13,11 @@
         type = types.port;
         default = 80;
       };
+
+      package = mkOption {
+        type = types.package;
+        default = pkgs.callPackage ./kodi.nix { };
+      };
     };
 
   config =
@@ -37,20 +42,10 @@
       sound.enable = true;
       hardware.pulseaudio.enable = true;
 
-      services.xserver = {
+      services.cage = {
         enable = true;
-
-        displayManager = {
-          autoLogin = {
-            enable = true;
-            user = "pi";
-          };
-        };
-
-        desktopManager.kodi = {
-          enable = true;
-          package = pkgs.callPackage ./kodi.nix { };
-        };
+        user = "pi";
+        program = "${cfg.package}/bin/kodi-standalone";
       };
 
       networking.firewall = {
@@ -61,7 +56,7 @@
       system.activationScripts.writeKodiAdvancedSettings = {
         deps = [ "users" "groups" ];
         text = ''
-          USERDATA_DIR="/home/${config.services.xserver.displayManager.autoLogin.user}/.kodi/userdata"
+          USERDATA_DIR="/home/${config.services.cage.user}/.kodi/userdata"
           ADVANCEDSETTINGS_XML="$USERDATA_DIR/advancedsettings.xml"
 
           mkdir -p "$USERDATA_DIR"
