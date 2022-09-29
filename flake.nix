@@ -8,29 +8,29 @@
 
   outputs = flakeInputs@{ self, nixpkgs, nixos-hardware, homelab-secrets, flake-utils }:
     let
-      overlay = { system, hostname }:
+      overlay = hostname:
         import ./overlay {
           inherit hostname;
           selfSourceInfo = self.sourceInfo;
         };
 
-      mkPkgs = { system, hostname, extraPkgsConfig ? { } }:
+      mkPkgs = { system, hostname, extraPkgsConfig ? { }, extraOverlays ? [ ] }:
         import nixpkgs {
           inherit system;
           config = extraPkgsConfig;
           overlays = [
-            (overlay { inherit system hostname; })
-          ];
+            (overlay hostname)
+          ] ++ extraOverlays;
         };
     in
     {
       nixosConfigurations =
         let
           nixosSystemFromDir =
-            { system, subdirName, configurationFile ? "configuration.nix", extraPkgsConfig ? { } }:
+            { system, subdirName, configurationFile ? "configuration.nix", extraPkgsConfig ? { }, extraOverlays ? [ ] }:
             nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem {
               inherit system;
-              pkgs = mkPkgs { inherit extraPkgsConfig system; hostname = subdirName; };
+              pkgs = mkPkgs { inherit extraPkgsConfig extraOverlays system; hostname = subdirName; };
 
               specialArgs = {
                 inherit flakeInputs;
@@ -50,7 +50,26 @@
           bootstrap-bill = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "bootstrap-bill"; };
           cerberus = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "cerberus"; };
           nixos-oblivion = nixosSystemFromDir { system = "x86_64-linux"; subdirName = "nixos-oblivion"; };
-          osmc = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "osmc"; extraPkgsConfig = { allowUnfree = true; }; };
+
+          # kodi's netflix plugin requires 32-bit userspace
+          osmc = nixosSystemFromDir rec {
+            system = "aarch64-linux";
+            subdirName = "osmc";
+            extraPkgsConfig = { allowUnfree = true; };
+            extraOverlays = [
+              (
+                final: prev: {
+                  pkgsArm32 = mkPkgs {
+                    inherit extraPkgsConfig;
+                    hostname = subdirName;
+                    system = "armv7l-linux";
+                    extraOverlays = [ (import ./overlay/arm32Fixes.nix) ];
+                  };
+                }
+              )
+            ];
+          };
+
           pi-baker = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "pi-baker"; };
           speet = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "speet"; };
           spoot = nixosSystemFromDir { system = "aarch64-linux"; subdirName = "spoot"; };
