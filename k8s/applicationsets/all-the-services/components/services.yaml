@@ -8,7 +8,6 @@ spec:
       elements:
       - serviceName: cassandra
       - serviceName: dev
-      - serviceName: emby
       - serviceName: jellyfin
       - serviceName: nix-cache
       - serviceName: torrents
