@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: jellyfin
+spec:
+  template:
+    spec:
+      containers:
+      - name: jellyfin
+        volumeMounts:
+        - name: jellyfin-cache
+          mountPath: /cache
+        - name: jellyfin-config
+          mountPath: /config
+        - name: jellyfin-media
+          mountPath: /media
+      volumes:
+      - name: jellyfin-cache
+        persistentVolumeClaim:
+          claimName: jellyfin-cache-pvc
+      - name: jellyfin-config
+        persistentVolumeClaim:
+          claimName: jellyfin-config-pvc
+      - name: jellyfin-media
+        persistentVolumeClaim:
+          claimName: jellyfin-media-pvc
