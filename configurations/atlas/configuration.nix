@@ -184,6 +184,7 @@ in
             "argocd"
             "argo-rollouts"
             "emby"
+            "jellyfin"
 
             "dev"
             "files.dev"
