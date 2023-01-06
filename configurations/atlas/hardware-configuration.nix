@@ -56,9 +56,15 @@
       fsType = "zfs";
     };
 
-  fileSystems."/mnt/storage/k8s_drive/emby_config" =
+  fileSystems."/mnt/storage/k8s_drive/jellyfin_cache" =
     {
-      device = "storage/emby_config";
+      device = "storage/jellyfin_cache";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/storage/k8s_drive/jellyfin_config" =
+    {
+      device = "storage/jellyfin_config";
       fsType = "zfs";
     };
 
