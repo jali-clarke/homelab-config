@@ -17,7 +17,7 @@ spec:
         beta.kubernetes.io/arch: amd64
       containers:
       - name: jellyfin
-        image: jellyfin/jellyfin:10.8.8-amd64
+        image: jellyfin/jellyfin:10.8.9-amd64
         resources:
           requests:
             cpu: 1000m
