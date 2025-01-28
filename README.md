@@ -1,10 +1,10 @@
 # homelab-config
 
-configuration as code for our homelab
+configuration as code for my homelab
 
 ## what / why
 
-i've been in a number of situations where i had to do a rebuild of our homelab machines due to either disk failure, hardware upgrades, etc, and this is kind of annoying to do when your (brain) memory isn't amazing.  it's especially annoying when it isn't reproduceable.
+i've been in a number of situations where i had to do a rebuild of my homelab machines due to either disk failure, hardware upgrades, etc, and this is kind of annoying to do when your (brain) memory isn't amazing.  it's especially annoying when it isn't reproduceable.
 
 enter the almighty [NixOS](https://nixos.org/) - an OS whose package manager and configuration language is [Nix](https://nixos.org/explore.html).  this allows us to declaratively define configuration for entire systems and even share / modularize configuration across systems.  with [nix flakes](https://nixos.wiki/wiki/Flakes), this becomes almost 100% reproduceable across time and machines.
 
@@ -74,7 +74,7 @@ all ips below are made static via DHCP instead of each machine's individual conf
   * also `192.168.0.4` local - this is used as the vpn gateway ip for other machines on the network.  same (virtual) nic as `192.168.128.2`
 * fileserver exporting `nfs` and `smb` (`samba`) shares backed by `zfs` with auto-snapshotting via `sanoid`, replicated to [weedle](#weedle) via `syncoid`
 * email notifications out of `zed` on scrub and etc
-* `dhcp` for our network
+* `dhcp` for my network
 * `pihole` dns + other dnsmasq config
 * `nexus` artifact hosting for container images and other artifacts
 
