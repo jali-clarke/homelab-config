@@ -132,7 +132,7 @@ in
         }
         {
           # my phone
-          publicKey = "gaowMC14zZPk8hjK2N3GRXb6QyeGWaRvyyunlT4cYnw=";
+          publicKey = "EvTdorlgqy2skKGpp6orsQNH8a6fNGAv4hIgJN23QR4=";
           allowedIPs = [ "192.168.128.101/32" ];
         }
         {
