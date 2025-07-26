@@ -204,3 +204,4 @@ on master node:
 1. `sudo su`
 2. `rm -rf /var/lib/cfssl /var/lib/kubernetes/secrets`
 3. `reboot now`
+4. update the ca cert in vault, else argocd can't sync

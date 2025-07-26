@@ -7,7 +7,7 @@ spec:
   - list:
       elements:
       - serviceName: cassandra
-      - serviceName: dev
+      # - serviceName: dev # we don't need this anymore since we dev on a linux machine
       - serviceName: jellyfin
       - serviceName: nix-cache
       - serviceName: torrents
