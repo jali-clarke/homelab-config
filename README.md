@@ -196,3 +196,11 @@ for each node (can be parallelized, but make sure step 1 is done for the cluster
 4. re-enable kubernetes-related services / modules via nixos config
 5. make sure nodes have rejoined the cluster
 6. follow the [deployment](#deployment) steps above
+
+### nothing's starting because certs are all expired
+
+on master node:
+
+1. `sudo su`
+2. `rm -rf /var/lib/cfssl /var/lib/kubernetes/secrets`
+3. `reboot now`
